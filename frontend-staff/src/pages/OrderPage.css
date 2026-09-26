@@ -1,0 +1,259 @@
+/* frontend/src/pages/OrderPage.css (ฉบับแก้ไข) */
+
+/* --- 1. โครงสร้างหน้าหลัก (กรอบโทรศัพท์) --- */
+.order-page-container {
+  /* (ลบ max-width, height, margin, border-radius, box-shadow) */
+  
+  /* (ใหม่) ทำให้มันยืดเต็มกรอบ Layout */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f4f4f4;
+  
+  /* (สำคัญ) ป้องกันไม่ให้ Header/Footer หดตัวเมื่อเปิด Dropdown */
+  overflow: hidden;
+}
+
+/* --- 2. Header (เหมือนเดิม) --- */
+.order-header {
+    display: flex;
+    /* (ใหม่) จัดแนวตั้งให้เต็ม */
+    align-items: stretch; 
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    /* (ใหม่) กำหนดความสูงคงที่ */
+    height: 60px; 
+    /* (ลบ padding ออกจากตัว container) */
+}
+
+.dropdown-container { 
+    font-size: 1.1rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    user-select: none;
+    
+    /* (ใหม่) ให้ยืดเต็มพื้นที่ */
+    flex: 1; 
+    
+
+    padding: 0 10px 0 0; 
+    border-right: 1px solid #e0e0e0;
+    
+    /* (ใหม่) จัดของข้างใน */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.arrow-down { 
+    border: solid #333; /* สีเข้ม */
+    border-width: 0 2px 2px 0; /* บางลง */
+    display: inline-block;
+    padding: 4px; /* ขนาดลูกศร */
+    transform: rotate(45deg);
+    margin-left: 10px;
+}
+
+.search-icon { 
+    font-size: 1.6rem; /* (ปรับ) ขนาดไอคอนแว่นขยาย */
+    
+    /* (ใหม่) จัดไอคอนให้อยู่กลาง */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* (ใหม่) กำหนดความกว้างของช่องคลิก */
+    width: 60px; 
+    cursor: pointer;
+    color: #333;
+}
+.search-icon:hover {
+    background-color: #f9f9f9;
+}
+
+.category-dropdown {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+    /* ทำให้ติดอยู่ใต้ Header */
+    flex-shrink: 0; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.category-option {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+.category-option:hover {
+    background-color: #f9f9f9;
+}
+
+.category-option.active {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #c84e4e; /* สีเดียวกับป้ายราเมง */
+}
+
+/* --- 3. ส่วนเมนู (ที่จะเลื่อนได้) --- */
+.menu-list {
+    /* --- 👇 นี่คือส่วนที่แก้ไขหลัก --- */
+    
+    /* 3.1 ทำให้ส่วนนี้ "ยืด" จนเต็มพื้นที่ที่เหลือ */
+    flex: 1; 
+    
+    /* 3.2 ทำให้ "เฉพาะ" ส่วนนี้เลื่อนได้ */
+    overflow-y: auto; 
+    
+    /* 3.3 เพิ่มช่องว่างด้านล่างเผื่อความสวยงาม */
+    padding-bottom: 20px;
+}
+
+.category-section {
+    margin-top: 15px;
+}
+
+.category-title {
+    background-color: #c84e4e;
+    color: white;
+    font-size: 1rem;
+    padding: 8px 15px;
+    margin: 0;
+    border-radius: 6px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+#ของทอด { background-color: #c19a4a; }
+#เครื่องดื่ม { background-color: #3f8fb0; }
+#อื่นๆ { background-color: #777; }
+
+/* --- 4. ตารางเมนู (กลับไปเป็น 3 คอลัมน์) --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 👈 กลับมาแล้ว */
+    gap: 10px;
+    padding: 0 15px;
+}
+
+/* --- 5. Footer (ปุ่มส่ง) --- */
+.order-footer {
+    /* (ลบ position: fixed และ bottom, left, right ทั้งหมด) */
+    
+    background-color: #ffffff;
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    
+    /* เพิ่ม: ป้องกันไม่ให้ Footer หด */
+    flex-shrink: 0; 
+}
+
+.submit-order-btn {
+    background-color: #84a96b; /* สีเขียว */
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submit-order-btn:hover {
+    background-color: #769a5f;
+}
+
+.qty-badge {
+    background-color: #ffffff; /* พื้นหลังสีขาว */
+    color: #84a96b; /* ตัวเลขสีเขียว (สีเดียวกับปุ่ม) */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* ทำเป็นวงกลม */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.search-bar-active {
+    flex: 1; /* ยืดเต็มพื้นที่ Header */
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.search-input {
+    flex: 1; /* ยืดช่องพิมพ์ให้เต็ม */
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px; /* ขอบมน */
+    font-size: 1rem;
+    outline: none;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.search-input:focus {
+    border-color: #84a96b; /* สีเขียวเมื่อพิมพ์ */
+    background-color: #fff;
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #777;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.close-search-btn:hover {
+    color: #333;
+}
+
+/* --- (ใหม่) CSS สำหรับปุ่ม Back ในหน้า Order --- */
+.back-btn-order {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    z-index: 10;
+}
+
+.arrow-left-order {
+    border: solid #333; /* สีเข้ม */
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(135deg); /* หมุนลูกศรไปทางซ้าย */
+}
+
+.hamburger-btn-order {
+  background: none;
+  border: none;
+  color: #333; /* (สีของ Header สีขาว) */
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 15px 0 0; /* (เว้นระยะห่างด้านขวา) */
+}

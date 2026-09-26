@@ -1,0 +1,103 @@
+/* 1. โครงสร้าง Layout (บังคับเต็มจอ) */
+.history-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    width: 100%;
+    background-color: #f4f4f4;
+}
+
+/* 2. Header (สีแดง) */
+.history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #a11c1c;
+    padding: 0 10px;
+    height: 60px;
+    color: white;
+    flex-shrink: 0;
+}
+.history-header h1 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}
+/* (ใช้ CSS ปุ่ม Hamburger จาก TableSelectPage.css) */
+.header-placeholder {
+  width: 40px;
+}
+/* (เราต้องประกาศ .hamburger-btn ที่นี่ด้วย) */
+.hamburger-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  text-align: center;
+}
+
+/* 3. รายการบิล */
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+.no-history {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-style: italic;
+}
+
+.history-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
+.history-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+    color: #555;
+}
+.history-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+.history-total {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+.history-method {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.history-method.cash {
+    background-color: #84a96b;
+    color: white;
+}
+.history-method.qr {
+    background-color: #3f8fb0;
+    color: white;
+}
+
+.history-card.clickable {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.history-card.clickable:hover {
+    background-color: #f9f9f9;
+}

@@ -1,0 +1,158 @@
+/* 1. โครงสร้าง Layout (เหมือนเดิม) */
+.payment-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #f4f4f4;
+}
+
+/* 2. Header (เหมือนเดิม) */
+.payment-header {
+    display: flex;
+    align-items: center;
+    background-color: #8B4513;
+    color: white;
+    padding: 0 10px;
+    height: 60px;
+    flex-shrink: 0;
+}
+.payment-header h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 0;
+    margin-left: -40px; 
+}
+.payment-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    z-index: 10;
+}
+.arrow-left-payment {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(135deg);
+}
+
+/* 3. ส่วนเนื้อหา (เหมือนเดิม) */
+.payment-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.total-summary {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.total-amount {
+    font-size: 1.8rem;
+    color: #8B4513;
+}
+
+/* 4. ปุ่มเลือก (เหมือนเดิม) */
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.payment-btn {
+    padding: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.payment-btn:hover {
+    transform: scale(1.02);
+}
+.cash-btn {
+    background-color: #84a96b;
+    color: white;
+}
+.qr-btn {
+    background-color: #3f8fb0;
+    color: white;
+}
+
+/* 5. (CSS เดิม) หน้าเงินสด */
+.cash-payment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.cash-payment-section label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+}
+.cash-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.change-display {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 1px solid #ddd;
+}
+.change-amount {
+    font-size: 1.5rem;
+    color: #28a745;
+}
+.confirm-cash-btn {
+    margin-top: 10px;
+}
+
+
+/* --- 👇 (นี่คือ CSS ใหม่) 6. หน้า QR --- */
+.qr-payment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.qr-payment-section label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+.qr-code-wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.qr-payment-section p {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    margin: 0;
+}
+.confirm-qr-btn {
+    margin-top: 10px;
+}

@@ -1,0 +1,25 @@
+/* src/layouts/StaffLayout.css (ฉบับแก้ไข) */
+
+.staff-layout {
+  /* 1. นี่คือ "กรอบโทรศัพท์" (ย้ายมาจาก Page CSS) */
+  max-width: 450px;
+  width: 100%;
+  height: 85vh;
+  margin: 0 auto; /* (จัดกลาง) */
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  
+  /* 2. (สำคัญ) ตั้งเป็น Anchor */
+  position: relative;
+  
+  /* 3. จัดการเนื้อหา (Sidebar + Content) */
+  display: flex;
+  overflow: hidden; /* (สำคัญ) ป้องกัน Sidebar ล้นกรอบ */
+}
+
+.staff-content {
+  width: 100%;
+  height: 100%;
+  position: relative; /* (เผื่อสำหรับ Modal ในอนาคต) */
+  z-index: 1;
+}

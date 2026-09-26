@@ -1,0 +1,76 @@
+/* src/pages/TableSelectPage.css (ฉบับแก้ไข) */
+
+.table-select-container {
+  /* (ลบ max-width, height, margin, border-radius, box-shadow) */
+  
+  /* (ใหม่) ทำให้มันยืดเต็มกรอบ Layout */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f4f4f4; /* (สีพื้นหลังของหน้านี้) */
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #a11c1c;
+  padding: 0 10px;
+  height: 60px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.table-header h1 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  text-align: center;
+}
+
+.header-placeholder {
+  width: 40px;
+}
+
+.table-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+/* (โค้ด .table-button และอื่นๆ เหมือนเดิม) */
+.table-button {
+    height: 80px;
+    border: 2px solid #ccc;
+    background-color: #ffffff;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.table-button:hover { transform: scale(1.05); }
+.table-button.open { color: #333; }
+.table-button.occupied {
+    background-color: #c84e4e;
+    color: white;
+    border-color: #c84e4a;
+}
+.table-button.closed {
+    background-color: #f0f0f0;
+    color: #999;
+}

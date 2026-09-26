@@ -1,0 +1,102 @@
+/* 1. โครงสร้าง Layout (บังคับเต็มจอ) */
+.detail-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #f4f4f4;
+}
+
+/* 2. Header (สีน้ำตาล) */
+.detail-header {
+    display: flex;
+    align-items: center;
+    background-color: #8B4513;
+    color: white;
+    padding: 0 10px;
+    height: 60px;
+    flex-shrink: 0;
+}
+.detail-header h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 0;
+    margin-left: -40px; 
+}
+.detail-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    z-index: 10;
+}
+.arrow-left-detail {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(135deg);
+}
+
+/* 3. (สำคัญ) เราใช้ CSS Class จาก BillPage.css ซ้ำ */
+/* (เราไม่จำเป็นต้องคัดลอก .bill-list, .bill-item ฯลฯ มาอีก ถ้ามันถูก Import ใน App.jsx) */
+/* (แต่เพื่อความปลอดภัย เราจะคัดลอกมาครับ) */
+
+.bill-list {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    padding: 0;
+}
+.bill-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box; 
+}
+.bill-item-details {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    min-width: 0; 
+}
+.bill-item-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+.bill-item-qty {
+    font-size: 0.9rem;
+    color: #777;
+}
+.bill-item-notes {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+}
+.bill-item-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0; 
+    margin-left: 10px; 
+}
+.bill-total-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+.bill-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}

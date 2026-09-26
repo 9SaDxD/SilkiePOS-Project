@@ -1,0 +1,17 @@
+/* src/index.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  
+  /* 1. ตั้งค่าพื้นหลัง "นอกจอ" ให้เป็นสีเทาอ่อน */
+  background-color: #d1d5db; 
+  
+  /* 2. (ใหม่) เพิ่ม Padding ให้ #root */
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
