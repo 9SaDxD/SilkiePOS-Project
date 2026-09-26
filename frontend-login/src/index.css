@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  
+  /* ตั้งค่าพื้นหลัง "นอกจอ" ให้เป็นสีเทาอ่อน */
+  background-color: #f0f2f5;
+  
+  /* จัดหน้า Login ให้อยู่กลาง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
