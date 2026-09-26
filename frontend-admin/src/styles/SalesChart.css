@@ -1,0 +1,47 @@
+.sales-chart-container {
+  width: 100%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  min-height: 350px;
+}
+/* Dropdown */
+.sales-chart-dropdown {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.sales-chart-dropdown label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #b22222;
+}
+
+.sales-chart-dropdown select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* ปรับขนาด Chart ให้ตอบสนองกับมือถือ */
+@media screen and (max-width: 768px) {
+  .sales-chart-container {
+    padding: 15px;
+    min-height: 280px;
+  }
+
+  .sales-chart-dropdown {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .sales-chart-dropdown label {
+    font-size: 14px;
+  }
+}

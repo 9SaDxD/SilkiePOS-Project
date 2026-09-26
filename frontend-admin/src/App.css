@@ -1,0 +1,24 @@
+.main-layout {
+  display: flex;
+  height: 100vh;       /* ให้เต็มหน้าจอ */
+  width: 100%;
+  overflow: hidden;    /* ป้องกัน content ล้น */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;         /* กำหนดความกว้างคงที่ */
+  /* (สีพื้นหลังมาจาก Sidebar.css) */
+  box-sizing: border-box;
+  overflow-y: auto;     /* scroll ถ้าเมนูยาว */
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;              /* ขยายเต็มพื้นที่ที่เหลือ */
+  padding: 20px;
+  overflow: auto;       /* scroll ถ้า content ยาว */
+  display: flex;
+  flex-direction: column;
+  background-color: #fffaf9; /* (สีพื้นหลังแอป) */
+}

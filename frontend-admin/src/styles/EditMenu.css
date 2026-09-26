@@ -1,0 +1,151 @@
+/* ⭐ กรอบใหญ่สุดครอบทั้งหน้า */
+.main-wrapper {
+  width: 95%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 30px;
+  background: #fffaf9;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+}
+
+/* (ใหม่) เพิ่ม h3 */
+.new-card h3 {
+  grid-column: span 2;
+  text-align: center;
+  margin: 0 0 10px 0;
+  color: #b22222;
+}
+
+/* ⭐ ฟอร์มเพิ่มของทุกหน้า */
+.new-card {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto 30px auto;
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ช่อง input และ file */
+.new-card input,
+.new-card select { /* (ใหม่) เพิ่ม select */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* (ใหม่) */
+}
+
+/* (ใหม่) ทำให้ input ที่ disabled เป็นสีเทา */
+.new-card input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+/* ช่องกินเต็ม 2 คอลัมน์ */
+.new-card input[type="file"],
+.full-row,
+.add-btn-full {
+  grid-column: span 2;
+}
+
+/* preview รูป */
+.menu-preview {
+  width: 100%;
+  max-width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* จัด preview ให้อยู่กลาง */
+.full-row {
+  justify-self: center;
+}
+
+/* ปุ่มเพิ่ม */
+.add-btn-full {
+  background: #ff6b6b;
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  grid-column: span 2;
+}
+.add-btn-full:hover {
+  background: #ff4b4b;
+}
+
+/* (ใหม่) กลุ่มปุ่ม (บันทึก / ยกเลิก) */
+.button-group {
+  grid-column: span 2;
+  display: flex;
+  gap: 10px;
+}
+.button-group .add-btn {
+  background: #4CAF50; /* สีเขียว */
+  color: white;
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.button-group .delete-btn {
+  background: #f44336; /* สีแดง */
+  color: white;
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+/* ตาราง mockup */
+.table-wrapper {
+  overflow-x: auto;
+}
+.employees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.employees-table th,
+.employees-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+.employees-table th {
+  background-color: #f2f2f2;
+}
+.btn-edit,
+.btn-delete {
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.btn-edit {
+  background-color: #4caf50;
+  color: white;
+}
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}

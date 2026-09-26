@@ -1,0 +1,100 @@
+/* Container หลัก */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 25px;
+  box-sizing: border-box;
+  background: #fff2f0; /* สีพื้นอ่อนเพื่อให้ Card เด่น */
+  font-family: "Noto Sans JP", sans-serif;
+  color: #3a0d0d;
+}
+
+/* Title */
+.dashboard-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #b22222; /* แดงตุ๋นเข้ม */
+  margin-bottom: 30px;
+}
+
+/* Flex layout ซ้าย-ขวา */
+.dashboard-flex {
+  display: flex;
+  gap: 25px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Left Column - Cards */
+.dashboard-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  min-height: 0;
+}
+
+.dashboard-left > * {
+  flex: 1;
+  min-height: 0;
+  background: linear-gradient(145deg, #ffb3b3, #ff4c4c); /* สีแดงเข้มเด่นขึ้น */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12); /* เงาเด่นขึ้น */
+  color: #fff; /* ตัวหนังสือสีขาวชัดเจน */
+  font-weight: 600;
+  border: 1px solid #b22222; /* ขอบเพิ่มมิติ */
+}
+
+/* Right Column - Chart */
+.dashboard-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+.chart-container,
+.table-container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: linear-gradient(145deg, #ffd6d6, #ff9999); /* สีแดงอ่อนแต่ต่างจาก Card */
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  color: #3a0d0d; /* ตัวหนังสือเข้ม */
+  font-weight: 600;
+  border: 1px solid #b22222;
+}
+
+/* Chart title */
+.chart-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #b22222;
+  margin-bottom: 15px;
+}
+
+/* Responsive มือถือ */
+@media (max-width: 768px) {
+  .dashboard-flex {
+    flex-direction: column;
+  }
+
+  .dashboard-left > *,
+  .chart-container,
+  .table-container {
+    padding: 15px;
+  }
+
+  .dashboard-title {
+    font-size: 26px;
+  }
+
+  .chart-title {
+    font-size: 20px;
+  }
+}

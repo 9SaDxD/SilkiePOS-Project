@@ -1,0 +1,99 @@
+/* src/pages/Dashboard.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;        /* ยืดเต็ม parent */
+  padding: 30px;
+  font-family: "Noto Sans JP", sans-serif;
+  background-color: #fffaf9;
+  color: #4a1a1a;
+  box-sizing: border-box;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #b22222;
+}
+
+/* Flex ซ้าย-ขวา */
+.dashboard-flex {
+  display: flex;
+  gap: 20px;
+  flex: 1;             /* ยืดเต็มพื้นที่ที่เหลือ */
+  min-height: 0;       /* สำคัญสำหรับ flex child */
+  overflow: hidden;
+}
+
+/* Left Column */
+.dashboard-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+.dashboard-left > * {
+  flex: 1;             /* Card ซ้ายสูงเท่ากัน */
+}
+
+/* Right Column */
+.dashboard-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Chart หรือ Table Container */
+.chart-container,
+.table-container {
+  flex: 1;
+  min-height: 0;       /* สำคัญ */
+  overflow: auto;      /* ให้ scroll ถ้า content เยอะ */
+  margin-top: 20px;
+}
+
+.chart-title,
+.right-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #b22222;
+  margin-bottom: 10px;
+}
+
+/* Card Style */
+.dashboard-card {
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #8b0000;
+}
+
+.card-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a1a1a;
+}
