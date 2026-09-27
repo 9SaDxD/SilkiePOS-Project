@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './StaffSidebar.css'; 
 
@@ -21,16 +21,16 @@ const StaffSidebar = ({ isOpen, onLogout, onClose }) => {
         
         <nav className="sidebar-nav">
           <NavLink to="/" className="nav-item" onClick={onClose}>
-            <i className="fas fa-th-large"></i> Table (เลือกโต๊ะ)
+            <i className="fas fa-th-large"></i> Table (เน€เธฅเธทเธญเธเนเธ•เนเธฐ)
           </NavLink>
-          {/* (ปุ่ม Order จะทำหน้าที่เหมือนปุ่ม Table) */}
+          {/* (เธเธธเนเธก Order เธเธฐเธ—เธณเธซเธเนเธฒเธ—เธตเนเน€เธซเธกเธทเธญเธเธเธธเนเธก Table) */}
           <NavLink to="/" className="nav-item" onClick={onClose}>
-            <i className="fas fa-clipboard-list"></i> Order (สั่งอาหาร)
+            <i className="fas fa-clipboard-list"></i> Order (เธชเธฑเนเธเธญเธฒเธซเธฒเธฃ)
           </NavLink>
 
-          {/* --- 👇 (นี่คือปุ่มใหม่) --- */}
+          {/* --- ๐‘ (เธเธตเนเธเธทเธญเธเธธเนเธกเนเธซเธกเน) --- */}
           <NavLink to="/history" className="nav-item" onClick={onClose}>
-            <i className="fas fa-history"></i> History (ประวัติบิล)
+            <i className="fas fa-history"></i> History (เธเธฃเธฐเธงเธฑเธ•เธดเธเธดเธฅ)
           </NavLink>
         </nav>
         
@@ -45,3 +45,4 @@ const StaffSidebar = ({ isOpen, onLogout, onClose }) => {
 };
 
 export default StaffSidebar;
+

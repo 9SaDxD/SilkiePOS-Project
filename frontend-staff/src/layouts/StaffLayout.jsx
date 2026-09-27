@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import StaffSidebar from './StaffSidebar'; // (ไฟล์นี้เราต้องสร้างในขั้นตอนต่อไป)
-import './StaffLayout.css'; // (ไฟล์นี้เราต้องสร้างในขั้นตอนต่อไป)
+import StaffSidebar from './StaffSidebar'; // (เนเธเธฅเนเธเธตเนเน€เธฃเธฒเธ•เนเธญเธเธชเธฃเนเธฒเธเนเธเธเธฑเนเธเธ•เธญเธเธ•เนเธญเนเธ)
+import './StaffLayout.css'; // (เนเธเธฅเนเธเธตเนเน€เธฃเธฒเธ•เนเธญเธเธชเธฃเนเธฒเธเนเธเธเธฑเนเธเธ•เธญเธเธ•เนเธญเนเธ)
 
-// URL ของประตูหน้า (Login Hub)
-const LOGIN_HUB_URL = 'http://localhost:5173';
+// URL เธเธญเธเธเธฃเธฐเธ•เธนเธซเธเนเธฒ (Login Hub)
+const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
 
 const StaffLayout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loadingAuth, setLoadingAuth] = useState(true);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // (State ควบคุม Sidebar)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // (State เธเธงเธเธเธธเธก Sidebar)
   const navigate = useNavigate();
 
-  // 1. ตรวจสอบ Token เมื่อแอปเริ่มทำงาน
+  // 1. เธ•เธฃเธงเธเธชเธญเธ Token เน€เธกเธทเนเธญเนเธญเธเน€เธฃเธดเนเธกเธ—เธณเธเธฒเธ
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('userRole');
 
-    // (ต้องเป็น Staff หรือ Admin)
+    // (เธ•เนเธญเธเน€เธเนเธ Staff เธซเธฃเธทเธญ Admin)
     if (token && (userRole === 'Staff' || userRole === 'Admin')) {
       setIsAuthenticated(true);
     } else {
@@ -27,45 +27,46 @@ const StaffLayout = () => {
     setLoadingAuth(false);
   }, []);
 
-  // 2. ฟังก์ชัน Logout
+  // 2. เธเธฑเธเธเนเธเธฑเธ Logout
   const handleLogout = () => {
     localStorage.clear();
     setIsAuthenticated(false);
     window.location.replace(LOGIN_HUB_URL); 
   };
 
-  // 3. ฟังก์ชันเปิด/ปิด Sidebar
+  // 3. เธเธฑเธเธเนเธเธฑเธเน€เธเธดเธ”/เธเธดเธ” Sidebar
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // 4. รอเช็ค Auth
+  // 4. เธฃเธญเน€เธเนเธ Auth
   if (loadingAuth) {
-    return <div>กำลังตรวจสอบสิทธิ์...</div>;
+    return <div>เธเธณเธฅเธฑเธเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเน...</div>;
   }
 
-  // 5. ถ้าไม่มีสิทธิ์ -> เด้งกลับ
+  // 5. เธ–เนเธฒเนเธกเนเธกเธตเธชเธดเธ—เธเธดเน -> เน€เธ”เนเธเธเธฅเธฑเธ
   if (!isAuthenticated) {
     window.location.replace(LOGIN_HUB_URL);
     return null;
   }
 
-  // 6. ถ้ามีสิทธิ์ -> แสดง Layout
+  // 6. เธ–เนเธฒเธกเธตเธชเธดเธ—เธเธดเน -> เนเธชเธ”เธ Layout
   return (
     <div className="staff-layout">
-      {/* (Sidebar จะซ่อนอยู่ และเปิด/ปิดด้วย State) */}
+      {/* (Sidebar เธเธฐเธเนเธญเธเธญเธขเธนเน เนเธฅเธฐเน€เธเธดเธ”/เธเธดเธ”เธ”เนเธงเธข State) */}
       <StaffSidebar 
         isOpen={isSidebarOpen} 
         onLogout={handleLogout}
-        onClose={toggleSidebar} // (กดที่ Link ใน Sidebar เพื่อปิด)
+        onClose={toggleSidebar} // (เธเธ”เธ—เธตเน Link เนเธ Sidebar เน€เธเธทเนเธญเธเธดเธ”)
       />
       
-      {/* (นี่คือที่ที่หน้า TableSelect, Order, Bill จะมาแสดง) */}
+      {/* (เธเธตเนเธเธทเธญเธ—เธตเนเธ—เธตเนเธซเธเนเธฒ TableSelect, Order, Bill เธเธฐเธกเธฒเนเธชเธ”เธ) */}
       <div className="staff-content">
-        <Outlet context={{ toggleSidebar }} /> {/* 👈 (ส่งฟังก์ชัน toggle ให้ลูก) */}
+        <Outlet context={{ toggleSidebar }} /> {/* ๐‘ (เธชเนเธเธเธฑเธเธเนเธเธฑเธ toggle เนเธซเนเธฅเธนเธ) */}
       </div>
     </div>
   );
 };
 
 export default StaffLayout;
+

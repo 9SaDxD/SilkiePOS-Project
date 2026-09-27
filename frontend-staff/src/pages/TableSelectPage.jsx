@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import './TableSelectPage.css';
@@ -12,7 +12,7 @@ function TableSelectPage() {
     useEffect(() => {
         const fetchTables = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/staff/tables');
+                const res = await axios.get('https://silkiepos-project.onrender.com/api/staff/tables');
                 setTables(res.data);
             } catch (err) { console.error("Error fetching tables", err); } 
             finally { setLoading(false); }
@@ -32,17 +32,17 @@ function TableSelectPage() {
 
     return (
         <div className="table-select-container">
-            {/* --- (แก้ไข) Header --- */}
+            {/* --- (เนเธเนเนเธ) Header --- */}
             <header className="table-header">
-                {/* 1. ปุ่มซ้าย (Hamburger) */}
+                {/* 1. เธเธธเนเธกเธเนเธฒเธข (Hamburger) */}
                 <button className="hamburger-btn" onClick={toggleSidebar}>
-                    ☰
+                    โฐ
                 </button>
                 
-                {/* 2. Title (ตรงกลาง) */}
-                <h1>เลือกโต๊ะ</h1>
+                {/* 2. Title (เธ•เธฃเธเธเธฅเธฒเธ) */}
+                <h1>เน€เธฅเธทเธญเธเนเธ•เนเธฐ</h1>
                 
-                {/* 3. (ใหม่) ตัวยึดพื้นที่ (ขวา) */}
+                {/* 3. (เนเธซเธกเน) เธ•เธฑเธงเธขเธถเธ”เธเธทเนเธเธ—เธตเน (เธเธงเธฒ) */}
                 <div className="header-placeholder"></div>
             </header>
             {/* --------------------- */}
@@ -63,3 +63,5 @@ function TableSelectPage() {
 }
 
 export default TableSelectPage;
+
+
