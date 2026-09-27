@@ -1,19 +1,19 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './EditItemPage.css'; 
 
 const AVAILABLE_NOTES = [
-    'เนเธกเนเน€เธญเธฒเธเธฑเธ',
-    'เนเธกเนเน€เธญเธฒเน€เธเธฒ',
-    'เนเธกเนเน€เธญเธฒเธซเธกเธน',
-    'เนเธกเนเน€เธญเธฒเนเธเน',
-    'เนเธกเนเน€เธญเธฒเนเธเน'
+    'ไม่เอาผัก',
+    'ไม่เอาเงา',
+    'ไม่เอาหมู',
+    'ไม่เอาไก่',
+    'ไม่เอาไข่'
 ];
 
 function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
     
     const [tempQty, setTempQty] = useState(cartItem.quantity);
     const [tempNotes, setTempNotes] = useState(cartItem.notes || []);
-    // --- ๐‘ (เนเธซเธกเน) 1. State เธชเธณเธซเธฃเธฑเธ Comment ---
+    // --- 👇 (ใหม่) 1. State สำหรับ Comment ---
     const [tempComment, setTempComment] = useState(cartItem.comment || '');
 
     const handleNoteToggle = (note) => {
@@ -24,13 +24,13 @@ function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
         }
     };
     
-    // --- ๐‘ (เนเธเนเนเธ) 2. เธชเนเธ tempComment เธเธฅเธฑเธเนเธ ---
+    // --- 👇 (แก้ไข) 2. ส่ง tempComment กลับไป ---
     const handleSave = () => {
         onSave(item.menuId, tempQty, tempNotes, tempComment);
     };
 
     const handleDelete = () => {
-        if (window.confirm(`เธเธธเธ“เธ•เนเธญเธเธเธฒเธฃเธฅเธ ${item.name} เธญเธญเธเธเธฒเธเธญเธญเน€เธ”เธญเธฃเนเนเธเนเธซเธฃเธทเธญเนเธกเน?`)) {
+        if (window.confirm(`คุณต้องการลบ ${item.name} ออกจากออเดอร์ใช่หรือไม่?`)) {
             onDelete(item.menuId);
         }
     };
@@ -44,14 +44,14 @@ function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
                 </button>
                 <h1>{item.name}</h1>
                 <button className="save-btn" onClick={handleSave}>
-                    เธเธฑเธเธ—เธถเธ
+                    บันทึก
                 </button>
             </header>
 
             <main className="edit-body">
-                {/* 1. เธชเนเธงเธเธเธณเธเธงเธ */}
+                {/* 1. ส่วนจำนวน */}
                 <div className="edit-section quantity-section">
-                    <label>เธเธณเธเธงเธ</label>
+                    <label>จำนวน</label>
                     <div className="quantity-control-edit">
                         <button className="quantity-btn-edit" onClick={() => setTempQty(q => q > 1 ? q - 1 : 1)}>-</button>
                         <input 
@@ -64,9 +64,9 @@ function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
                     </div>
                 </div>
 
-                {/* 2. เธชเนเธงเธ Checkbox */}
+                {/* 2. ส่วน Checkbox */}
                 <div className="edit-section notes-section">
-                    <label>เธชเธดเนเธเธ—เธตเนเนเธกเนเธ•เนเธญเธเธเธฒเธฃ</label>
+                    <label>สิ่งที่ไม่ต้องการ</label>
                     <div className="notes-list">
                         {AVAILABLE_NOTES.map(note => (
                             <label key={note} className="note-option">
@@ -82,12 +82,12 @@ function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
                     </div>
                 </div>
 
-                {/* --- ๐‘ (เนเธซเธกเน) 3. เธชเนเธงเธ Comment --- */}
+                {/* --- 👇 (ใหม่) 3. ส่วน Comment --- */}
                 <div className="edit-section comment-section">
-                    <label>เธเธญเธกเน€เธกเธเธ—เน</label>
+                    <label>คอมเมนท์</label>
                     <textarea
                         className="comment-textarea"
-                        placeholder="เน€เธเนเธ เน€เธเธดเนเธกเนเธเน, เนเธกเนเน€เธเนเธ”..."
+                        placeholder="เช่น เพิ่มไข่, ไม่เผ็ด..."
                         value={tempComment}
                         onChange={(e) => setTempComment(e.target.value)}
                     />
@@ -96,7 +96,7 @@ function EditItemPage({ item, cartItem, onClose, onSave, onDelete }) {
 
             <footer className="edit-footer">
                 <button className="delete-menu-btn" onClick={handleDelete}>
-                    เธฅเธเน€เธกเธเธน
+                    ลบเมนู
                 </button>
             </footer>
         </div>

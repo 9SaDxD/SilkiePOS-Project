@@ -1,6 +1,6 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// 1. (เนเธซเธกเน) Import hooks เธชเธณเธซเธฃเธฑเธเธญเนเธฒเธ URL เนเธฅเธฐเธเธณเธ—เธฒเธ
+// 1. (ใหม่) Import hooks สำหรับอ่าน URL และนำทาง
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 
 import MenuCard from '../components/MenuCard';
@@ -8,13 +8,13 @@ import OrderSummary from '../components/OrderSummary';
 import EditItemPage from '../components/EditItemPage'; 
 import './OrderPage.css';
 
-// ... (เนเธเนเธ” groupMenusByCategory เนเธฅเธฐ filterCategories เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+// ... (โค้ด groupMenusByCategory และ filterCategories เหมือนเดิม) ...
 const groupMenusByCategory = (menus) => {
     const groups = {
-        Ramen: { key: 'Ramen', title: 'เธฃเธฒเน€เธกเธ', items: [] },
-        Fry: { key: 'Fry', title: 'เธเธญเธเธ—เธญเธ”', items: [] },
-        Drink: { key: 'Drink', title: 'เน€เธเธฃเธทเนเธญเธเธ”เธทเนเธก', items: [] },
-        Other: { key: 'Other', title: 'เธญเธทเนเธเน', items: [] },
+        Ramen: { key: 'Ramen', title: 'ราเมง', items: [] },
+        Fry: { key: 'Fry', title: 'ของทอด', items: [] },
+        Drink: { key: 'Drink', title: 'เครื่องดื่ม', items: [] },
+        Other: { key: 'Other', title: 'อื่นๆ', items: [] },
     };
     for (const menu of menus) {
         if (groups[menu.kitchenType]) {
@@ -26,20 +26,20 @@ const groupMenusByCategory = (menus) => {
     return Object.values(groups).filter(group => group.items.length > 0);
 };
 const filterCategories = [
-    { key: 'All', title: 'เน€เธกเธเธนเธ—เธฑเนเธเธซเธกเธ”' },
-    { key: 'Ramen', title: 'เธฃเธฒเน€เธกเธ' },
-    { key: 'Fry', title: 'เธเธญเธเธ—เธญเธ”' },
-    { key: 'Drink', title: 'เน€เธเธฃเธทเนเธญเธเธ”เธทเนเธก' },
+    { key: 'All', title: 'เมนูทั้งหมด' },
+    { key: 'Ramen', title: 'ราเมง' },
+    { key: 'Fry', title: 'ของทอด' },
+    { key: 'Drink', title: 'เครื่องดื่ม' },
 ];
 
 
 function OrderPage() {
-    // 2. (เนเธซเธกเน) เน€เธฃเธตเธขเธเนเธเน hooks
-    const { tableId } = useParams(); // เธญเนเธฒเธ "tableId" เธเธฒเธ URL
-    const navigate = useNavigate();   // เธ•เธฑเธงเธเนเธงเธขเธเธฒเธเธฅเธฑเธ
+    // 2. (ใหม่) เรียกใช้ hooks
+    const { tableId } = useParams(); // อ่าน "tableId" จาก URL
+    const navigate = useNavigate();   // ตัวช่วยพากลับ
     const { toggleSidebar } = useOutletContext();
 
-    // ... (States เธ—เธฑเนเธเธซเธกเธ”เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+    // ... (States ทั้งหมดเหมือนเดิม) ...
     const [menus, setMenus] = useState([]);
     const [groupedMenus, setGroupedMenus] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -51,7 +51,7 @@ function OrderPage() {
     const [editingItemId, setEditingItemId] = useState(null); 
     const [currentOrder, setCurrentOrder] = useState({});
 
-    // ... (useEffect fetchMenus เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+    // ... (useEffect fetchMenus เหมือนเดิม) ...
     useEffect(() => {
         const fetchMenus = async () => {
             try {
@@ -64,7 +64,7 @@ function OrderPage() {
         fetchMenus();
     }, []);
 
-    // ... (Handlers (handleItemAdd, Remove, Update, Delete) เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+    // ... (Handlers (handleItemAdd, Remove, Update, Delete) เหมือนเดิม) ...
     const handleItemAdd = (menuId) => {
         const cartItem = currentOrder[menuId];
         if (cartItem) {
@@ -98,12 +98,12 @@ function OrderPage() {
     };
     const handleOpenSummary = () => {
         if (getTotalItemCount() === 0) {
-            alert("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃ"); return;
+            alert("กรุณาเลือกรายการอาหาร"); return;
         }
         setIsSummaryOpen(true);
     };
 
-    // --- ๐‘ 3. (เนเธเนเนเธ) เธเธตเนเธเธทเธญเธชเนเธงเธเธ—เธตเน "เธชเนเธเนเธเธเธฃเธฑเธง" ---
+    // --- 👇 3. (แก้ไข) นี่คือส่วนที่ "ส่งไปครัว" ---
     const handleConfirmOrder = async () => {
         const items = Object.keys(currentOrder).map(menuId => {
             const cartItem = currentOrder[menuId];
@@ -115,31 +115,31 @@ function OrderPage() {
             };
         });
         
-        // (เนเธซเธกเน) เนเธเน tableId เธเธฒเธ URL เธ—เธตเนเน€เธฃเธฒเธญเนเธฒเธเธกเธฒ
+        // (ใหม่) ใช้ tableId จาก URL ที่เราอ่านมา
         const orderData = {
             tableId: tableId, 
             items: items
         };
 
         try {
-            // (เนเธซเธกเน) เธขเธดเธ API เนเธเธ—เธตเน Backend
+            // (ใหม่) ยิง API ไปที่ Backend
             const response = await axios.post('https://silkiepos-project.onrender.com/api/staff/orders', orderData);
             
-            console.log("เธชเนเธเธญเธญเน€เธ”เธญเธฃเนเธชเธณเน€เธฃเนเธ:", response.data);
-            alert(`เธญเธญเน€เธ”เธญเธฃเนเธชเธณเธซเธฃเธฑเธเนเธ•เนเธฐ ${tableId} เธ–เธนเธเธชเนเธเนเธเธ—เธตเนเธเธฃเธฑเธงเนเธฅเนเธง!`);
+            console.log("ส่งออเดอร์สำเร็จ:", response.data);
+            alert(`ออเดอร์สำหรับโต๊ะ ${tableId} ถูกส่งไปที่ครัวแล้ว!`);
             
-            // เธฅเนเธฒเธเธ•เธฐเธเธฃเนเธฒ, เธเธดเธ”เธซเธเนเธฒเธชเธฃเธธเธ, เนเธฅเธฐเธเธฒเธเธฅเธฑเธเธซเธเนเธฒเนเธฃเธ
+            // ล้างตะกร้า, ปิดหน้าสรุป, และพากลับหน้าแรก
             setCurrentOrder({});
             setIsSummaryOpen(false);
-            navigate('/'); // ๐‘ เธเธฒเธเธฅเธฑเธเธซเธเนเธฒเน€เธฅเธทเธญเธเนเธ•เนเธฐ
+            navigate('/'); // 👈 พากลับหน้าเลือกโต๊ะ
 
         } catch (error) {
             console.error("Error creating order:", error);
-            alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธชเนเธเธญเธญเน€เธ”เธญเธฃเน: " + error.message);
+            alert("เกิดข้อผิดพลาดในการส่งออเดอร์: " + error.message);
         }
     };
 
-    // ... (Logic เธเธณเธเธงเธ“ (getTotalItemCount, getTotalPrice) เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+    // ... (Logic คำนวณ (getTotalItemCount, getTotalPrice) เหมือนเดิม) ...
     const getTotalItemCount = () => {
         return Object.values(currentOrder).reduce((sum, item) => sum + item.quantity, 0);
     };
@@ -154,7 +154,7 @@ function OrderPage() {
         }, 0);
     };
     
-    // ... (Logic เธเธฒเธฃเธเธฃเธญเธ displayGroups เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ...
+    // ... (Logic การกรอง displayGroups เหมือนเดิม) ...
     let displayGroups = selectedCategory === 'All'
         ? groupedMenus
         : groupedMenus.filter(group => group.key === selectedCategory);
@@ -168,11 +168,11 @@ function OrderPage() {
     }
     const currentCategoryTitle = filterCategories.find(c => c.key === selectedCategory)?.title;
 
-    // --- RENDER (เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก เนเธ•เนเน€เธเธดเนเธกเธเธธเนเธก Back) ---
-    if (loading) return <div className="order-page-container"><div>เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</div></div>;
+    // --- RENDER (เหมือนเดิม แต่เพิ่มปุ่ม Back) ---
+    if (loading) return <div className="order-page-container"><div>กำลังโหลด...</div></div>;
 
     if (editingItemId) {
-        /* ... (เนเธเนเธ”เนเธชเธ”เธ EditItemPage เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ... */
+        /* ... (โค้ดแสดง EditItemPage เหมือนเดิม) ... */
         const menuToEdit = menus.find(m => m.menuId === editingItemId);
         const cartItemToEdit = currentOrder[editingItemId];
         return (
@@ -187,7 +187,7 @@ function OrderPage() {
     }
 
     if (isSummaryOpen) {
-        /* ... (เนเธเนเธ”เนเธชเธ”เธ OrderSummary เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ... */
+        /* ... (โค้ดแสดง OrderSummary เหมือนเดิม) ... */
         const summaryItems = Object.keys(currentOrder).map(menuId => {
             const menu = menus.find(m => m.menuId === menuId);
             const cartItem = currentOrder[menuId];
@@ -210,23 +210,23 @@ function OrderPage() {
 
     return (
         <div className="order-page-container">
-            {/* --- Header (เนเธเนเนเธ: เน€เธเธดเนเธกเธเธธเนเธก Back) --- */}
+            {/* --- Header (แก้ไข: เพิ่มปุ่ม Back) --- */}
             <header className="order-header">
                 {isSearchOpen ? (
                     <div className="search-bar-active">
-                        {/* ... (เนเธเนเธ” Search) ... */}
-                        <input type="text" className="search-input" placeholder="เธเนเธเธซเธฒ..."
+                        {/* ... (โค้ด Search) ... */}
+                        <input type="text" className="search-input" placeholder="ค้นหา..."
                             value={searchText} onChange={(e) => setSearchText(e.target.value)} autoFocus />
-                        <button className="close-search-btn" onClick={() => { setIsSearchOpen(false); setSearchText(''); }}>โ•</button>
+                        <button className="close-search-btn" onClick={() => { setIsSearchOpen(false); setSearchText(''); }}>✕</button>
                     </div>
                 ) : (
                     <>
-                        {/* 4. (เนเธซเธกเน) เธเธธเนเธก Back เน€เธเธทเนเธญเธเธฅเธฑเธเนเธเธซเธเนเธฒเน€เธฅเธทเธญเธเนเธ•เนเธฐ */}
+                        {/* 4. (ใหม่) ปุ่ม Back เพื่อกลับไปหน้าเลือกโต๊ะ */}
                         <button className="back-btn-order" onClick={() => navigate('/')}>
                             <i className="arrow-left-order"></i>
                         </button>
                         <button className="hamburger-btn-order" onClick={toggleSidebar}>
-                            โฐ
+                            ☰
                         </button>
                         <div
                             className="dropdown-container"
@@ -245,7 +245,7 @@ function OrderPage() {
                 )}
             </header>
 
-            {/* ... (Dropdown, MenuList, Footer เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก) ... */}
+            {/* ... (Dropdown, MenuList, Footer เหมือนเดิม) ... */}
             {!isSearchOpen && isDropdownOpen && (
                 <div className="category-dropdown">
                     {filterCategories.map((category) => (
@@ -280,14 +280,14 @@ function OrderPage() {
                     ))
                 ) : (
                     <div style={{textAlign: 'center', padding: '20px', color: '#999'}}>
-                        เนเธกเนเธเธเน€เธกเธเธนเธ—เธตเนเธเธธเธ“เธเนเธเธซเธฒ
+                        ไม่พบเมนูที่คุณค้นหา
                     </div>
                 )}
             </main>
             <footer className="order-footer">
                 <button className="submit-order-btn" onClick={handleOpenSummary}>
                     <div className="qty-badge">{getTotalItemCount()}</div>
-                    <span>เธชเนเธเธญเธญเน€เธ”เธญเธฃเน ({getTotalPrice().toLocaleString()} เธฟ)</span>
+                    <span>ส่งออเดอร์ ({getTotalPrice().toLocaleString()} ฿)</span>
                 </button>
             </footer>
         </div>

@@ -1,9 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
 import { SwipeableList, SwipeableListItem, SwipeAction } from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css'; 
 import './OrderSummary.css';
 
-// (เนเธเนเนเธ) 1. เธฃเธฑเธ onEditItem
+// (แก้ไข) 1. รับ onEditItem
 function OrderSummary({ items, totalPrice, onClose, onConfirm, onDeleteItem, onEditItem }) {
     
     const createTrailingActions = (itemId) => (
@@ -13,7 +13,7 @@ function OrderSummary({ items, totalPrice, onClose, onConfirm, onDeleteItem, onE
                 onClick={() => onDeleteItem(itemId)}
                 destructive={true}
             >
-                <div className="swipe-action-delete">๐—‘๏ธ</div>
+                <div className="swipe-action-delete">🗑️</div>
             </SwipeAction>
         ]
     );
@@ -23,7 +23,7 @@ function OrderSummary({ items, totalPrice, onClose, onConfirm, onDeleteItem, onE
             
             <header className="summary-header">
                 <button className="back-btn" onClick={onClose}> <i className="arrow-left"></i> </button>
-                <h1>เธญเธญเน€เธ”เธญเธฃเน</h1>
+                <h1>ออเดอร์</h1>
             </header>
 
             <main className="summary-list">
@@ -34,13 +34,13 @@ function OrderSummary({ items, totalPrice, onClose, onConfirm, onDeleteItem, onE
                             trailingActions={createTrailingActions(item.id)}
                             fullSwipe={false}
                         >
-                            {/* (เนเธเนเนเธ) 2. เน€เธเธดเนเธก onClick เธ—เธตเนเธเธตเน */}
+                            {/* (แก้ไข) 2. เพิ่ม onClick ที่นี่ */}
                             <div className="summary-item clickable" onClick={() => onEditItem(item.id)}>
                                 <span className="item-icon">&#9998;</span>
                                 <div className="item-details">
                                     <span className="item-name">{item.name}</span>
                                     <span className="item-qty">x{item.quantity}</span>
-                                    {/* (เนเธซเธกเน) 3. เนเธชเธ”เธ notes (เธ–เนเธฒเธกเธต) */}
+                                    {/* (ใหม่) 3. แสดง notes (ถ้ามี) */}
                                     {item.notes && item.notes.length > 0 && (
                                         <span className="item-notes">
                                             {item.notes.map(note => `-${note}`).join(' ')}
@@ -56,14 +56,14 @@ function OrderSummary({ items, totalPrice, onClose, onConfirm, onDeleteItem, onE
 
             <footer className="summary-total-section">
                 <div className="total-row">
-                    <span>เธฃเธฒเธเธฒเธฃเธงเธกเธ—เธฑเนเธเธซเธกเธ”</span>
+                    <span>ราคารวมทั้งหมด</span>
                     <span>{totalPrice.toFixed(2)} B</span>
                 </div>
             </footer>
 
             <footer className="order-footer">
                 <button className="submit-order-btn confirm-btn" onClick={onConfirm}>
-                    เธขเธทเธเธขเธฑเธเธญเธญเน€เธ”เธญเธฃเน
+                    ยืนยันออเดอร์
                 </button>
             </footer>
         </div>

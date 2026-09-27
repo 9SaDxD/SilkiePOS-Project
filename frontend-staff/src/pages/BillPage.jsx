@@ -1,6 +1,6 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom'; // (เนเธเนเนเธ) เน€เธเธดเนเธก useOutletContext
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom'; // (แก้ไข) เพิ่ม useOutletContext
 import { SwipeableList, SwipeableListItem, SwipeAction } from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css'; 
 import './BillPage.css';
@@ -8,9 +8,9 @@ import './BillPage.css';
 function BillPage() {
     const { tableId } = useParams();
     const navigate = useNavigate();
-    // (เนเธเนเนเธ) เน€เธฃเธฒเธ•เนเธญเธเธ”เธถเธ toggleSidebar เธกเธฒ เนเธกเนเธเธฐเนเธกเนเนเธ”เนเนเธเน (เน€เธเธฃเธฒเธฐเธซเธเนเธฒเธเธตเนเนเธกเนเธกเธต Hamburger)
-    // เน€เธเธทเนเธญเธเนเธญเธเธเธฑเธ Error "useOutletContext is not defined" เนเธเธซเธเนเธฒเธญเธทเนเธ
-    // **เธญเธฑเธเน€เธ”เธ•:** เน€เธฃเธฒเธเธฐเธฅเธ useOutletContext เธญเธญเธเธเธฒเธเธซเธเนเธฒเธเธตเน
+    // (แก้ไข) เราต้องดึง toggleSidebar มา แม้จะไม่ได้ใช้ (เพราะหน้านี้ไม่มี Hamburger)
+    // เพื่อป้องกัน Error "useOutletContext is not defined" ในหน้าอื่น
+    // **อัปเดต:** เราจะลบ useOutletContext ออกจากหน้านี้
     
     const [loading, setLoading] = useState(true);
     const [billData, setBillData] = useState(null);
@@ -26,7 +26,7 @@ function BillPage() {
             if (err.response && err.response.status === 404) {
                  navigate(`/order/${tableId}`);
             } else {
-                alert("เนเธกเนเธเธเธเธดเธฅเธ—เธตเนเนเธเนเธเธฒเธเธญเธขเธนเน");
+                alert("ไม่พบบิลที่ใช้งานอยู่");
                 navigate('/'); 
             }
         } finally {
@@ -39,7 +39,7 @@ function BillPage() {
     }, [fetchBill]);
 
     const handleDeleteItem = async (itemId, itemName) => {
-        if (!window.confirm(`เธเธธเธ“เธ•เนเธญเธเธเธฒเธฃเธขเธเน€เธฅเธดเธ "${itemName}" เนเธเนเธซเธฃเธทเธญเนเธกเน?`)) {
+        if (!window.confirm(`คุณต้องการยกเลิก "${itemName}" ใช่หรือไม่?`)) {
             return;
         }
         try {
@@ -51,16 +51,16 @@ function BillPage() {
             console.error("Error deleting item", err);
             if (err.response && err.response.data && err.response.data.message) {
                 if (err.response.data.message.includes('already completed')) {
-                    alert('เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธขเธเน€เธฅเธดเธเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเน€เธชเธฃเนเธเธชเธกเธเธนเธฃเธ“เนเนเธฅเนเธงเนเธ”เน');
+                    alert('ไม่สามารถยกเลิกรายการที่เสร็จสมบูรณ์แล้วได้');
                     setLoading(false);
                     
                     return;
                 }
-                alert(`เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธขเธเน€เธฅเธดเธเธฃเธฒเธขเธเธฒเธฃเนเธ”เน: ${err.response.data.message}`);
+                alert(`ไม่สามารถยกเลิกรายการได้: ${err.response.data.message}`);
                 setLoading(false);
                 return;
             } else {
-                alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธฅเธเธฃเธฒเธขเธเธฒเธฃ: " + err.message);
+                alert("เกิดข้อผิดพลาดในการลบรายการ: " + err.message);
                 setLoading(false);
                 return;
             }
@@ -75,14 +75,14 @@ function BillPage() {
                 destructive={true}
             >
                 <div className="swipe-action-delete">
-                    ๐—‘๏ธ
+                    🗑️
                 </div>
             </SwipeAction>
         ]
     );
 
     if (loading || !billData) {
-        return <div className="bill-page-container"><div>เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</div></div>;
+        return <div className="bill-page-container"><div>กำลังโหลด...</div></div>;
     }
     
     const { order, items } = billData;
@@ -90,11 +90,11 @@ function BillPage() {
     return (
         <div className="bill-page-container">
             <header className="bill-header">
-                {/* (เน€เธฃเธฒเธฅเธเธเธธเนเธก Hamburger เธญเธญเธเนเธฅเนเธง) */}
+                {/* (เราลบปุ่ม Hamburger ออกแล้ว) */}
                 <button className="payment-back-btn" onClick={() => navigate('/')}>
                     <i className="arrow-left-payment"></i>
                 </button>
-                <h1>เธเธดเธฅเนเธ•เนเธฐ {tableId}</h1>
+                <h1>บิลโต๊ะ {tableId}</h1>
             </header>
 
             <main className="bill-list">
@@ -124,24 +124,24 @@ function BillPage() {
 
             <footer className="bill-total-section">
                 <div className="bill-total-row">
-                    <span>เธฃเธฒเธเธฒเธฃเธงเธกเธ—เธฑเนเธเธซเธกเธ”</span>
+                    <span>ราคารวมทั้งหมด</span>
                     <span>{(order.totalAmount).toFixed(2)} B</span>
                 </div>
             </footer>
 
-            {/* --- ๐‘ (เนเธเนเนเธ) --- */}
+            {/* --- 👇 (แก้ไข) --- */}
             <footer className="bill-footer">
                 <button 
                     className="bill-action-btn order-more-btn"
                     onClick={() => navigate(`/order/${tableId}`)}
                 >
-                    เธชเธฑเนเธเธญเธฒเธซเธฒเธฃเน€เธเธดเนเธก
+                    สั่งอาหารเพิ่ม
                 </button>
                 <button 
                     className="bill-action-btn payment-btn"
-                    onClick={() => navigate(`/payment/${tableId}`)} // ๐‘ เนเธเธซเธเนเธฒเน€เธฅเธทเธญเธเธงเธดเธเธตเธเนเธฒเธขเน€เธเธดเธ
+                    onClick={() => navigate(`/payment/${tableId}`)} // 👈 ไปหน้าเลือกวิธีจ่ายเงิน
                 >
-                    เธเธณเธฃเธฐเน€เธเธดเธ
+                    ชำระเงิน
                 </button>
             </footer>
         </div>

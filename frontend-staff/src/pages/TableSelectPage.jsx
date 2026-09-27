@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import './TableSelectPage.css';
@@ -32,17 +32,17 @@ function TableSelectPage() {
 
     return (
         <div className="table-select-container">
-            {/* --- (เนเธเนเนเธ) Header --- */}
+            {/* --- (แก้ไข) Header --- */}
             <header className="table-header">
-                {/* 1. เธเธธเนเธกเธเนเธฒเธข (Hamburger) */}
+                {/* 1. ปุ่มซ้าย (Hamburger) */}
                 <button className="hamburger-btn" onClick={toggleSidebar}>
-                    โฐ
+                    ☰
                 </button>
                 
-                {/* 2. Title (เธ•เธฃเธเธเธฅเธฒเธ) */}
-                <h1>เน€เธฅเธทเธญเธเนเธ•เนเธฐ</h1>
+                {/* 2. Title (ตรงกลาง) */}
+                <h1>เลือกโต๊ะ</h1>
                 
-                {/* 3. (เนเธซเธกเน) เธ•เธฑเธงเธขเธถเธ”เธเธทเนเธเธ—เธตเน (เธเธงเธฒ) */}
+                {/* 3. (ใหม่) ตัวยึดพื้นที่ (ขวา) */}
                 <div className="header-placeholder"></div>
             </header>
             {/* --------------------- */}
