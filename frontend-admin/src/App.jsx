@@ -14,7 +14,7 @@ import AuthCallback from "./pages/AuthCallback"; // 👈 (ใหม่) Import �
 import "./App.css"; //
 
 // 2. URL ของประตูหน้า (Login Hub)
-const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
+const LOGIN_HUB_URL = 'https://csi400-login.vercel.app';
 
 // 3. Axios Interceptor (เหมือนเดิม)
 axios.interceptors.request.use(
