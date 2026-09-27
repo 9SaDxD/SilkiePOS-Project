@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TopMenu() {
   const [menus, setMenus] = useState([]);
@@ -11,10 +11,10 @@ export default function TopMenu() {
 
   return (
     <div>
-      <h3 style={{color:"#b22222"}}>๐ เน€เธกเธเธนเธเธฒเธขเธ”เธต Top 5</h3>
+      <h3 style={{color:"#b22222"}}>🍜 เมนูขายดี Top 5</h3>
       <ul>
         {menus.map((item, idx) => (
-          <li key={idx}>{idx+1}. {item.name} - {item.qty} เธเธดเนเธ</li>
+          <li key={idx}>{idx+1}. {item.name} - {item.qty} ชิ้น</li>
         ))}
       </ul>
     </div>

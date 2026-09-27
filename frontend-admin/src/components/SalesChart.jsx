@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import"../styles/SalesChart.css";
 import {
@@ -15,14 +15,14 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function SalesChart() {
-  const [period, setPeriod] = useState("daily"); // daily เธซเธฃเธทเธญ weekly
+  const [period, setPeriod] = useState("daily"); // daily หรือ weekly
 
-  // เธเนเธญเธกเธนเธฅเธ•เธฑเธงเธญเธขเนเธฒเธ
+  // ข้อมูลตัวอย่าง
   const dataDaily = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        label: "เธขเธญเธ”เธเธฒเธขเธฃเธฒเธขเธงเธฑเธ (เธฟ)",
+        label: "ยอดขายรายวัน (฿)",
         data: [500, 1200, 800, 1500, 2000, 1700, 2200],
         borderColor: "#b22222",
         backgroundColor: "rgba(178,34,34,0.2)",
@@ -36,7 +36,7 @@ export default function SalesChart() {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
-        label: "เธขเธญเธ”เธเธฒเธขเธฃเธฒเธขเธชเธฑเธเธ”เธฒเธซเน (เธฟ)",
+        label: "ยอดขายรายสัปดาห์ (฿)",
         data: [5000, 7000, 6500, 8000],
         borderColor: "#b22222",
         backgroundColor: "rgba(178,34,34,0.2)",
@@ -52,7 +52,7 @@ export default function SalesChart() {
       legend: { display: true, position: "top" },
       title: {
         display: true,
-        text: period === "daily" ? "เธขเธญเธ”เธเธฒเธขเธฃเธฒเธขเธงเธฑเธ" : "เธขเธญเธ”เธเธฒเธขเธฃเธฒเธขเธชเธฑเธเธ”เธฒเธซเน",
+        text: period === "daily" ? "ยอดขายรายวัน" : "ยอดขายรายสัปดาห์",
         color: "#b22222",
         font: { size: 18 },
       },
@@ -61,22 +61,22 @@ export default function SalesChart() {
     scales: {
       y: {
         beginAtZero: true,
-        title: { display: true, text: "เธขเธญเธ”เธเธฒเธข (เธเธฒเธ—)", color: "#b22222", font: { size: 14 } },
+        title: { display: true, text: "ยอดขาย (บาท)", color: "#b22222", font: { size: 14 } },
       },
       x: {
-        title: { display: true, text: period === "daily" ? "เธงเธฑเธเนเธเธชเธฑเธเธ”เธฒเธซเน" : "เธชเธฑเธเธ”เธฒเธซเน", color: "#b22222", font: { size: 14 } },
+        title: { display: true, text: period === "daily" ? "วันในสัปดาห์" : "สัปดาห์", color: "#b22222", font: { size: 14 } },
       },
     },
   };
 
   return (
     <div>
-      {/* Dropdown เน€เธฅเธทเธญเธเธเนเธงเธเน€เธงเธฅเธฒ */}
+      {/* Dropdown เลือกช่วงเวลา */}
       <div style={{ marginBottom: "15px" }}>
-        <label style={{ marginRight: "10px", fontWeight: 600 }}>เน€เธฅเธทเธญเธเธเนเธงเธเน€เธงเธฅเธฒ:</label>
+        <label style={{ marginRight: "10px", fontWeight: 600 }}>เลือกช่วงเวลา:</label>
         <select value={period} onChange={(e) => setPeriod(e.target.value)}>
-          <option value="daily">เธฃเธฒเธขเธงเธฑเธ</option>
-          <option value="weekly">เธฃเธฒเธขเธชเธฑเธเธ”เธฒเธซเน</option>
+          <option value="daily">รายวัน</option>
+          <option value="weekly">รายสัปดาห์</option>
         </select>
       </div>
 

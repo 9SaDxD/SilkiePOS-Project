@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import "../styles/Sidebar.css"; //
 
@@ -9,40 +9,40 @@ const Sidebar = ({ onLogout }) => {
     if (onLogout) {
         onLogout();
     }
-    // (App.jsx เธเธฐเธเธฑเธ”เธเธฒเธฃเธชเนเธเธเธนเนเนเธเนเธเธฅเธฑเธเนเธเธซเธเนเธฒ Login Hub เน€เธญเธ)
+    // (App.jsx จะจัดการส่งผู้ใช้กลับไปหน้า Login Hub เอง)
   };
 
   return (
     <div className="sidebar">
-      <img src="/images/logo.png" alt="เธซเธฑเธงเธเนเธญ" className="sidebar-logo" />
+      <img src="/images/logo.png" alt="หัวข้อ" className="sidebar-logo" />
 
       <ul className="menu">
         <li>
           <NavLink to="/" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เธซเธเนเธฒเธซเธฅเธฑเธ
+            หน้าหลัก
           </NavLink>
         </li>
         <li>
           <NavLink to="/sales-menu" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เน€เธกเธเธนเธเธฒเธขเธ”เธต
+            เมนูขายดี
           </NavLink>
         </li>
         <li>
           <NavLink to="/edit-menu" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เนเธเนเนเธเน€เธกเธเธน
+            แก้ไขเมนู
           </NavLink>
         </li>
         
-        {/* --- (เธฅเธ "เนเธเนเนเธเธ—เนเธญเธเธเธดเนเธ" เนเธฅเธฐ "เนเธเนเนเธเธเนเธณ" เธญเธญเธ) --- */}
+        {/* --- (ลบ "แก้ไขท็อปปิ้ง" และ "แก้ไขน้ำ" ออก) --- */}
         
         <li>
           <NavLink to="/tables" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เนเธ•เนเธฐ
+            โต๊ะ
           </NavLink>
         </li>
         <li>
           <NavLink to="/staff" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เธเธเธฑเธเธเธฒเธ
+            พนักงาน
           </NavLink>
         </li>
       </ul>

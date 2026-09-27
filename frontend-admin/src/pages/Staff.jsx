@@ -1,15 +1,15 @@
-﻿import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "../styles/Staff.css"; //
 
-// (เนเธซเธกเน) API URL
+// (ใหม่) API URL
 const API_URL = "https://silkiepos-project.onrender.com/api/admin/employees";
 
 export default function Staff() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // (เนเธเนเนเธ) เธเธฃเธฑเธ State เนเธซเนเธ•เธฃเธเธเธฑเธ Model
+  // (แก้ไข) ปรับ State ให้ตรงกับ Model
   const [newEmp, setNewEmp] = useState({
     employeeId: "",
     name: "",
@@ -18,9 +18,9 @@ export default function Staff() {
     role: "Staff",
   });
 
-  const [editEmp, setEditEmp] = useState(null); // State เธชเธณเธซเธฃเธฑเธเธเธญเธฃเนเธกเนเธเนเนเธ
+  const [editEmp, setEditEmp] = useState(null); // State สำหรับฟอร์มแก้ไข
 
-  // --- (เนเธซเธกเน) เธเธฑเธเธเนเธเธฑเธเธ”เธถเธเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ ---
+  // --- (ใหม่) ฟังก์ชันดึงข้อมูลพนักงาน ---
   const fetchEmployees = useCallback(async () => {
     setLoading(true);
     try {
@@ -28,7 +28,7 @@ export default function Staff() {
       setEmployees(response.data);
     } catch (error) {
       console.error("Error fetching employees:", error);
-      alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ”เธถเธเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธเนเธ”เน: " + error.response?.data?.message);
+      alert("ไม่สามารถดึงข้อมูลพนักงานได้: " + error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -41,92 +41,92 @@ export default function Staff() {
   const handleChangeNew = (field, value) =>
     setNewEmp({ ...newEmp, [field]: value });
 
-  // --- (เนเธเนเนเธ) เธเธฑเธเธเนเธเธฑเธ "เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธ" (เน€เธฃเธตเธขเธ API POST) ---
+  // --- (แก้ไข) ฟังก์ชัน "เพิ่มพนักงาน" (เรียก API POST) ---
   const handleAdd = async () => {
     if (!newEmp.employeeId || !newEmp.name || !newEmp.username || !newEmp.password || !newEmp.role) {
-      alert("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธเนเธญเธกเธนเธฅเนเธซเนเธเธฃเธ");
+      alert("กรุณากรอกข้อมูลให้ครบ");
       return;
     }
     try {
       await axios.post(API_URL, newEmp);
-      alert("เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเธชเธณเน€เธฃเนเธ!");
+      alert("เพิ่มพนักงานสำเร็จ!");
       setNewEmp({ employeeId: "", name: "", username: "", password: "", role: "Staff" });
       fetchEmployees();
     } catch (error) {
       console.error("Error adding employee:", error);
-      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
+      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
     }
   };
 
-  // --- (เนเธซเธกเน) เธเธฑเธเธเนเธเธฑเธ "เธฅเธเธเธเธฑเธเธเธฒเธ" (เน€เธฃเธตเธขเธ API DELETE) ---
+  // --- (ใหม่) ฟังก์ชัน "ลบพนักงาน" (เรียก API DELETE) ---
   const handleDelete = async (id) => {
-    if (!window.confirm("เธเธธเธ“เนเธเนเนเธเธซเธฃเธทเธญเนเธกเนเธ—เธตเนเธเธฐเธฅเธเธเธเธฑเธเธเธฒเธเธเธเธเธตเน?")) return;
+    if (!window.confirm("คุณแน่ใจหรือไม่ที่จะลบพนักงานคนนี้?")) return;
     try {
       await axios.delete(`${API_URL}/${id}`);
-      alert("เธฅเธเธเธเธฑเธเธเธฒเธเธชเธณเน€เธฃเนเธ!");
+      alert("ลบพนักงานสำเร็จ!");
       fetchEmployees();
       if (editEmp?._id === id) setEditEmp(null);
     } catch (error) {
       console.error("Error deleting employee:", error);
-      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
+      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
     }
   };
 
   const handleEdit = (emp) => {
-    // (เธ•เธฑเนเธเธเนเธฒ password เน€เธเนเธเธเนเธฒเธงเนเธฒเธ เน€เธเธทเนเธญเนเธซเนเธเธฃเธญเธเนเธซเธกเน เธซเธฃเธทเธญเนเธกเนเธเธฃเธญเธเธเนเนเธ”เน)
+    // (ตั้งค่า password เป็นค่าว่าง เพื่อให้กรอกใหม่ หรือไม่กรอกก็ได้)
     setEditEmp({ ...emp, password: "" });
   };
 
-  // --- (เนเธซเธกเน) เธเธฑเธเธเนเธเธฑเธ "เธเธฑเธเธ—เธถเธเธเธฒเธฃเนเธเนเนเธ" (เน€เธฃเธตเธขเธ API PUT) ---
+  // --- (ใหม่) ฟังก์ชัน "บันทึกการแก้ไข" (เรียก API PUT) ---
   const handleSaveEdit = async () => {
     if (!editEmp) return;
     
-    // (เน€เธฃเธฒเธเธฐเธชเนเธ password เนเธเธเนเธ•เนเธญเน€เธกเธทเนเธญเธกเธตเธเธฒเธฃเธเธดเธกเธเนเนเธซเธกเนเน€เธ—เนเธฒเธเธฑเนเธ)
+    // (เราจะส่ง password ไปก็ต่อเมื่อมีการพิมพ์ใหม่เท่านั้น)
     const dataToSend = { ...editEmp };
     if (!dataToSend.password) {
-      delete dataToSend.password; // เธ–เนเธฒ password เธงเนเธฒเธ เนเธซเนเธฅเธเธญเธญเธ (Backend เธเธฐเนเธ”เนเนเธกเน Hash เธฃเธซเธฑเธชเธงเนเธฒเธ)
+      delete dataToSend.password; // ถ้า password ว่าง ให้ลบออก (Backend จะได้ไม่ Hash รหัสว่าง)
     }
 
     try {
       await axios.put(`${API_URL}/${editEmp._id}`, dataToSend);
-      alert("เธเธฑเธเธ—เธถเธเธเธฒเธฃเนเธเนเนเธเธชเธณเน€เธฃเนเธ!");
+      alert("บันทึกการแก้ไขสำเร็จ!");
       setEditEmp(null);
       fetchEmployees();
     } catch (error) {
       console.error("Error updating employee:", error);
-      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
+      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
     }
   };
 
   return (
     <div className="employees-container">
-      <h2>๐‘ฉโ€๐’ผ เธเธฑเธ”เธเธฒเธฃเธเธเธฑเธเธเธฒเธ</h2>
+      <h2>👩‍💼 จัดการพนักงาน</h2>
 
-      {/* --- (เนเธเนเนเธ) FORM ADD --- */}
+      {/* --- (แก้ไข) FORM ADD --- */}
       <div className="form-card">
-        <h3>โ• เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเนเธซเธกเน</h3>
+        <h3>➕ เพิ่มพนักงานใหม่</h3>
         <div className="form-group">
           <input
             type="text"
-            placeholder="Employee ID (เน€เธเนเธ E001)"
+            placeholder="Employee ID (เช่น E001)"
             value={newEmp.employeeId}
             onChange={(e) => handleChangeNew("employeeId", e.target.value)}
           />
           <input
             type="text"
-            placeholder="เธเธทเนเธญเธเธเธฑเธเธเธฒเธ"
+            placeholder="ชื่อพนักงาน"
             value={newEmp.name}
             onChange={(e) => handleChangeNew("name", e.target.value)}
           />
           <input
             type="text"
-            placeholder="Username (เธชเธณเธซเธฃเธฑเธ Login)"
+            placeholder="Username (สำหรับ Login)"
             value={newEmp.username}
             onChange={(e) => handleChangeNew("username", e.target.value)}
           />
           <input
             type="text"
-            placeholder="Password (เธชเธณเธซเธฃเธฑเธ Login)"
+            placeholder="Password (สำหรับ Login)"
             value={newEmp.password}
             onChange={(e) => handleChangeNew("password", e.target.value)}
           />
@@ -134,32 +134,32 @@ export default function Staff() {
             value={newEmp.role}
             onChange={(e) => handleChangeNew("role", e.target.value)}
           >
-            <option value="Staff">Staff (เธซเธเนเธฒเธฃเนเธฒเธ)</option>
-            <option value="Kitchen_Ramen">Kitchen (เธเธฃเธฑเธงเธฃเธฒเน€เธกเธ)</option>
-            <option value="Kitchen_Fry">Kitchen (เธเธฃเธฑเธงเธ—เธญเธ”)</option>
-            <option value="Admin">Admin (เธเธนเนเธ”เธนเนเธฅ)</option>
+            <option value="Staff">Staff (หน้าร้าน)</option>
+            <option value="Kitchen_Ramen">Kitchen (ครัวราเมง)</option>
+            <option value="Kitchen_Fry">Kitchen (ครัวทอด)</option>
+            <option value="Admin">Admin (ผู้ดูแล)</option>
           </select>
         </div>
-        <button className="btn-primary" onClick={handleAdd}> โ• เน€เธเธดเนเธก </button>
+        <button className="btn-primary" onClick={handleAdd}> ➕ เพิ่ม </button>
       </div>
 
-      {/* --- (เนเธเนเนเธ) TABLE --- */}
+      {/* --- (แก้ไข) TABLE --- */}
       <div className="table-card">
         <table className="employees-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>เธเธทเนเธญ</th>
-              <th>เธ•เธณเนเธซเธเนเธ (Role)</th>
+              <th>ชื่อ</th>
+              <th>ตำแหน่ง (Role)</th>
               <th>Username</th>
-              <th>เธเธฑเธ”เธเธฒเธฃ</th>
+              <th>จัดการ</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan="5">เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</td></tr>
+              <tr><td colSpan="5">กำลังโหลด...</td></tr>
             ) : employees.length === 0 ? (
-              <tr><td colSpan="5">เนเธกเนเธเธเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ</td></tr>
+              <tr><td colSpan="5">ไม่พบข้อมูลพนักงาน</td></tr>
             ) : (
               employees.map((emp) => (
                 <tr key={emp._id}>
@@ -169,13 +169,13 @@ export default function Staff() {
                   <td>{emp.username}</td>
                   <td>
                     <button className="btn-edit" onClick={() => handleEdit(emp)}>
-                      โ๏ธ เนเธเนเนเธ
+                      ✏️ แก้ไข
                     </button>
                     <button
                       className="btn-delete"
-                      onClick={() => handleDelete(emp._id)} // (เนเธเน _id เธเธญเธ MongoDB)
+                      onClick={() => handleDelete(emp._id)} // (ใช้ _id ของ MongoDB)
                     >
-                      ๐—‘๏ธ เธฅเธ
+                      🗑️ ลบ
                     </button>
                   </td>
                 </tr>
@@ -185,14 +185,14 @@ export default function Staff() {
         </table>
       </div>
 
-      {/* --- (เนเธเนเนเธ) EDIT FORM --- */}
+      {/* --- (แก้ไข) EDIT FORM --- */}
       {editEmp && (
         <div className="form-card edit-form">
-          <h3>โ๏ธ เนเธเนเนเธเธเธเธฑเธเธเธฒเธ: {editEmp.name}</h3>
+          <h3>✏️ แก้ไขพนักงาน: {editEmp.name}</h3>
           <div className="form-group">
             <input
               type="text"
-              placeholder="Employee ID (เน€เธเนเธ E001)"
+              placeholder="Employee ID (เช่น E001)"
               value={editEmp.employeeId}
               onChange={(e) =>
                 setEditEmp({ ...editEmp, employeeId: e.target.value })
@@ -200,7 +200,7 @@ export default function Staff() {
             />
             <input
               type="text"
-              placeholder="เธเธทเนเธญเธเธเธฑเธเธเธฒเธ"
+              placeholder="ชื่อพนักงาน"
               value={editEmp.name}
               onChange={(e) =>
                 setEditEmp({ ...editEmp, name: e.target.value })
@@ -216,7 +216,7 @@ export default function Staff() {
             />
             <input
               type="text"
-              placeholder="เธเธฃเธญเธเน€เธเธทเนเธญเธ•เธฑเนเธเธฃเธซเธฑเธชเธเนเธฒเธเนเธซเธกเน"
+              placeholder="กรอกเพื่อตั้งรหัสผ่านใหม่"
               value={editEmp.password}
               onChange={(e) =>
                 setEditEmp({ ...editEmp, password: e.target.value })
@@ -228,17 +228,17 @@ export default function Staff() {
                 setEditEmp({ ...editEmp, role: e.target.value })
               }
             >
-              <option value="Staff">Staff (เธซเธเนเธฒเธฃเนเธฒเธ)</option>
-              <option value="Kitchen_Ramen">Kitchen (เธเธฃเธฑเธงเธฃเธฒเน€เธกเธ)</option>
-              <option value="Kitchen_Fry">Kitchen (เธเธฃเธฑเธงเธ—เธญเธ”)</option>
-              <option value="Admin">Admin (เธเธนเนเธ”เธนเนเธฅ)</option>
+              <option value="Staff">Staff (หน้าร้าน)</option>
+              <option value="Kitchen_Ramen">Kitchen (ครัวราเมง)</option>
+              <option value="Kitchen_Fry">Kitchen (ครัวทอด)</option>
+              <option value="Admin">Admin (ผู้ดูแล)</option>
             </select>
           </div>
           <button className="btn-primary" onClick={handleSaveEdit}>
-            ๐’พ เธเธฑเธเธ—เธถเธ
+            💾 บันทึก
           </button>
           <button className="btn-cancel" onClick={() => setEditEmp(null)}>
-            โ เธขเธเน€เธฅเธดเธ
+            ❌ ยกเลิก
           </button>
         </div>
       )}

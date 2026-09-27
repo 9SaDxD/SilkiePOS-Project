@@ -1,15 +1,15 @@
-﻿// src/pages/Dashboard.jsx (เธเธเธฑเธเธญเธฑเธเน€เธ”เธ•)
-import { useEffect, useState } from "react"; // (เนเธซเธกเน)
-import axios from "axios"; // (เนเธซเธกเน)
+// src/pages/Dashboard.jsx (ฉบับอัปเดต)
+import { useEffect, useState } from "react"; // (ใหม่)
+import axios from "axios"; // (ใหม่)
 import DashboardCard from "../components/DashboardCard";
 import SalesChart from "../components/SalesChart";
 import "../styles/Dashboard.css"; //
 
-// (เนเธซเธกเน) API URL
+// (ใหม่) API URL
 const API_URL = "https://silkiepos-project.onrender.com/api/admin/stats";
 
 export default function Dashboard() {
-  // (เนเธซเธกเน) State เธชเธณเธซเธฃเธฑเธเน€เธเนเธเธเนเธญเธกเธนเธฅ
+  // (ใหม่) State สำหรับเก็บข้อมูล
   const [stats, setStats] = useState({
     todaysSales: 0,
     paidOrdersToday: 0,
@@ -18,7 +18,7 @@ export default function Dashboard() {
   });
   const [loading, setLoading] = useState(true);
 
-  // (เนเธซเธกเน) เธ”เธถเธเธเนเธญเธกเธนเธฅเน€เธกเธทเนเธญเธซเธเนเธฒเนเธซเธฅเธ”
+  // (ใหม่) ดึงข้อมูลเมื่อหน้าโหลด
   useEffect(() => {
     const fetchStats = async () => {
       setLoading(true);
@@ -34,42 +34,42 @@ export default function Dashboard() {
     fetchStats();
   }, []);
   
-  if (loading) return <p>เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ Dashboard...</p>;
+  if (loading) return <p>กำลังโหลดข้อมูล Dashboard...</p>;
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">๐ Ramen POS - เธซเธเนเธฒเธซเธฅเธฑเธ</h1>
+      <h1 className="dashboard-title">🍜 Ramen POS - หน้าหลัก</h1>
 
       <div className="dashboard-main">
-        {/* --- (เนเธเนเนเธ) Left Column - Cards --- */}
+        {/* --- (แก้ไข) Left Column - Cards --- */}
         <div className="dashboard-left">
           <div className="dashboard-grid">
             <DashboardCard 
-              title="เธขเธญเธ”เธเธฒเธขเธงเธฑเธเธเธตเน" 
-              value={`${stats.todaysSales.toLocaleString()} เธฟ`} 
+              title="ยอดขายวันนี้" 
+              value={`${stats.todaysSales.toLocaleString()} ฿`} 
               color="#c56868ff" 
             />
             <DashboardCard 
-              title="Order เน€เธเนเธเธเธดเธฅเนเธฅเนเธง (เธงเธฑเธเธเธตเน)" 
+              title="Order เช็กบิลแล้ว (วันนี้)" 
               value={stats.paidOrdersToday.toLocaleString()} 
               color="#7e3838ff" 
             />
             <DashboardCard 
-              title="Order เธขเธฑเธเนเธกเนเน€เธเนเธเธเธดเธฅ (เธ—เธฑเนเธเธซเธกเธ”)" 
+              title="Order ยังไม่เช็กบิล (ทั้งหมด)" 
               value={stats.pendingOrders.toLocaleString()} 
               color="#582121ff" 
             />
             <DashboardCard 
-              title="เนเธ•เนเธฐเธ—เธตเนเน€เธเธดเธ”เธเธฃเธดเธเธฒเธฃเธญเธขเธนเน" 
+              title="โต๊ะที่เปิดบริการอยู่" 
               value={stats.occupiedTables.toLocaleString()} 
               color="#300a0aff" 
             />
           </div>
         </div>
 
-        {/* Right Column - Chart (เธขเธฑเธเนเธเน Mock data) */}
+        {/* Right Column - Chart (ยังใช้ Mock data) */}
         <div className="dashboard-right">
-          <h3 className="chart-title">๐“ เธฃเธฒเธขเธเธฒเธเธขเธญเธ”เธเธฒเธข</h3>
+          <h3 className="chart-title">📊 รายงานยอดขาย</h3>
           <div className="chart-container">
             <SalesChart />
           </div>
