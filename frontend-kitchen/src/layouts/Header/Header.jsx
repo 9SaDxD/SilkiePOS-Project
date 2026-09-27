@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './Header.css'; //
 
-// (แก้ไข) ลบ onLogout ออกจาก props
+// (เนเธเนเนเธ) เธฅเธ onLogout เธญเธญเธเธเธฒเธ props
 const Header = ({ title, onBack, onRefresh }) => {
   return (
     <div className="kitchen-header" style={{ backgroundColor: "#813a3a" }}>
@@ -11,7 +11,7 @@ const Header = ({ title, onBack, onRefresh }) => {
       {onBack ? (
         <span onClick={onBack} className='bi bi-chevron-left'></span>
       ) : (
-        <span></span> // เว้นที่ว่าง
+        <span></span> // เน€เธงเนเธเธ—เธตเนเธงเนเธฒเธ
       )}
       
       <div className="kitchen-title">{title}</div>
@@ -26,3 +26,4 @@ const Header = ({ title, onBack, onRefresh }) => {
 };
 
 export default Header;
+

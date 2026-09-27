@@ -1,17 +1,17 @@
-import React from 'react';
+﻿import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Choose from './pages/Choose/Choose.jsx';
 import Ramen from './pages/Ramen/Ramen.jsx';
 import Fry from './pages/Fry/Fry.jsx';
 import AuthCallback from './pages/AuthCallback.jsx';
 
-const LOGIN_HUB_URL = 'http://localhost:5173';
+const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   const userRole = localStorage.getItem('userRole');
 
-  // --- 👇 (แก้ไข) ---
+  // --- ๐‘ (เนเธเนเนเธ) ---
   if (token && userRole && (userRole === 'Kitchen' || userRole === 'Admin')) {
   // ------------------
     return children;
@@ -37,3 +37,5 @@ function App() {
 }
 
 export default App;
+
+

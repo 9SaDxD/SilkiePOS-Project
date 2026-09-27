@@ -1,11 +1,11 @@
-// src/pages/Ramen/Ramen.jsx (ฉบับแก้ไข: Smart Merge)
+﻿// src/pages/Ramen/Ramen.jsx (เธเธเธฑเธเนเธเนเนเธ: Smart Merge)
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../layouts/Header/Header';
 import axios from 'axios';
 import './Ramen.css';
 
-const API_URL = 'http://localhost:3000/api/kitchen';
+const API_URL = 'https://silkiepos-project.onrender.com/api/kitchen';
 const kitchenType = "Ramen";
 
 const getAgeClass = (sentAt) => {
@@ -18,12 +18,12 @@ const getAgeClass = (sentAt) => {
 };
 
 const formatTime = (dateString) => {
-    if (!dateString) return "ไม่ระบุเวลา";
+    if (!dateString) return "เนเธกเนเธฃเธฐเธเธธเน€เธงเธฅเธฒ";
     const d = new Date(dateString);
-    if (isNaN(d.getTime())) return "ไม่ระบุเวลา";
+    if (isNaN(d.getTime())) return "เนเธกเนเธฃเธฐเธเธธเน€เธงเธฅเธฒ";
     const hours = d.getHours().toString().padStart(2, "0");
     const minutes = d.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes} น.`;
+    return `${hours}:${minutes} เธ.`;
 };
 
 const Ramen = () => {
@@ -34,7 +34,7 @@ const Ramen = () => {
 
   const fetchOrders = useCallback(async () => {
     try {
-      // 1. ดึงข้อมูลจาก API (จะได้เฉพาะรายการที่ Pending)
+      // 1. เธ”เธถเธเธเนเธญเธกเธนเธฅเธเธฒเธ API (เธเธฐเนเธ”เนเน€เธเธเธฒเธฐเธฃเธฒเธขเธเธฒเธฃเธ—เธตเน Pending)
       const response = await axios.get(`${API_URL}/orders/${kitchenType}`);
       const apiOrders = response.data.items.reduce((acc, item) => {
         const orderId = item.orderId._id; 
@@ -53,22 +53,22 @@ const Ramen = () => {
         return acc;
       }, {});
 
-      // 2. ⭐️ Smart Merge: ผสานข้อมูลจาก API เข้ากับ State ปัจจุบัน
+      // 2. โญ๏ธ Smart Merge: เธเธชเธฒเธเธเนเธญเธกเธนเธฅเธเธฒเธ API เน€เธเนเธฒเธเธฑเธ State เธเธฑเธเธเธธเธเธฑเธ
       setOrders(prevOrders => {
-          // สร้าง Map ของข้อมูลใหม่
+          // เธชเธฃเนเธฒเธ Map เธเธญเธเธเนเธญเธกเธนเธฅเนเธซเธกเน
           const newOrdersMap = { ...apiOrders };
           const finalOrders = [];
 
-          // วนลูปดูข้อมูลเก่า (เพื่อรักษา Done items)
+          // เธงเธเธฅเธนเธเธ”เธนเธเนเธญเธกเธนเธฅเน€เธเนเธฒ (เน€เธเธทเนเธญเธฃเธฑเธเธฉเธฒ Done items)
           prevOrders.forEach(oldOrder => {
               const incomingOrder = newOrdersMap[oldOrder._id];
 
               if (incomingOrder) {
-                  // Case A: บิลนี้ยังมีรายการ Pending มาจาก API
-                  // เราจะเอา Pending จาก API + Done จาก Local State มารวมกัน
+                  // Case A: เธเธดเธฅเธเธตเนเธขเธฑเธเธกเธตเธฃเธฒเธขเธเธฒเธฃ Pending เธกเธฒเธเธฒเธ API
+                  // เน€เธฃเธฒเธเธฐเน€เธญเธฒ Pending เธเธฒเธ API + Done เธเธฒเธ Local State เธกเธฒเธฃเธงเธกเธเธฑเธ
                   const doneItems = oldOrder.items.filter(i => i.itemStatus === 'Done');
                   
-                  // เช็คไม่ให้ item ซ้ำ
+                  // เน€เธเนเธเนเธกเนเนเธซเน item เธเนเธณ
                   const incomingIds = new Set(incomingOrder.items.map(i => i._id));
                   const mergedItems = [...incomingOrder.items];
                   
@@ -80,23 +80,23 @@ const Ramen = () => {
                   
                   incomingOrder.items = mergedItems;
                   finalOrders.push(incomingOrder);
-                  delete newOrdersMap[oldOrder._id]; // ลบออกจาก map เพื่อไม่ให้ใส่ซ้ำ
+                  delete newOrdersMap[oldOrder._id]; // เธฅเธเธญเธญเธเธเธฒเธ map เน€เธเธทเนเธญเนเธกเนเนเธซเนเนเธชเนเธเนเธณ
               } else {
-                  // Case B: บิลนี้ไม่มีใน API แล้ว (แปลว่าเสร็จหมดแล้วใน DB)
-                  // แต่เราอยากเก็บไว้แสดงผล (ขีดฆ่า) จนกว่าจะกดเสิร์ฟ
-                  // ดังนั้นเราจะเก็บ Old Order ไว้ ถ้ามันยังมีรายการอยู่
+                  // Case B: เธเธดเธฅเธเธตเนเนเธกเนเธกเธตเนเธ API เนเธฅเนเธง (เนเธเธฅเธงเนเธฒเน€เธชเธฃเนเธเธซเธกเธ”เนเธฅเนเธงเนเธ DB)
+                  // เนเธ•เนเน€เธฃเธฒเธญเธขเธฒเธเน€เธเนเธเนเธงเนเนเธชเธ”เธเธเธฅ (เธเธตเธ”เธเนเธฒ) เธเธเธเธงเนเธฒเธเธฐเธเธ”เน€เธชเธดเธฃเนเธ
+                  // เธ”เธฑเธเธเธฑเนเธเน€เธฃเธฒเธเธฐเน€เธเนเธ Old Order เนเธงเน เธ–เนเธฒเธกเธฑเธเธขเธฑเธเธกเธตเธฃเธฒเธขเธเธฒเธฃเธญเธขเธนเน
                   if (oldOrder.items.length > 0) {
                       finalOrders.push(oldOrder);
                   }
               }
           });
 
-          // ใส่บิลใหม่ที่เพิ่งเข้ามา (ที่ไม่มีใน prevOrders)
+          // เนเธชเนเธเธดเธฅเนเธซเธกเนเธ—เธตเนเน€เธเธดเนเธเน€เธเนเธฒเธกเธฒ (เธ—เธตเนเนเธกเนเธกเธตเนเธ prevOrders)
           Object.values(newOrdersMap).forEach(newOrder => {
               finalOrders.push(newOrder);
           });
 
-          // เรียงลำดับตามเวลา
+          // เน€เธฃเธตเธขเธเธฅเธณเธ”เธฑเธเธ•เธฒเธกเน€เธงเธฅเธฒ
           return finalOrders.sort((a, b) => new Date(a.sentAt) - new Date(b.sentAt));
       });
 
@@ -104,7 +104,7 @@ const Ramen = () => {
     finally { setLoading(false); }
   }, [kitchenType]);
 
-  // ⭐️ แค่เปลี่ยนสถานะเป็น Done (ขีดฆ่า) ไม่ลบ
+  // โญ๏ธ เนเธเนเน€เธเธฅเธตเนเธขเธเธชเธ–เธฒเธเธฐเน€เธเนเธ Done (เธเธตเธ”เธเนเธฒ) เนเธกเนเธฅเธ
   const handleItemClick = async (itemId, orderId) => {
     try {
       setOrders(prevOrders => 
@@ -123,8 +123,8 @@ const Ramen = () => {
         })
       );
       
-      // ยิง API บอก Backend ว่าเสร็จแล้ว (Backend จะเปลี่ยนเป็น Done และจะไม่ส่งกลับมาในการ fetch ครั้งหน้า)
-      // แต่ Smart Merge ของเราจะเก็บ Done ไว้ให้เห็น
+      // เธขเธดเธ API เธเธญเธ Backend เธงเนเธฒเน€เธชเธฃเนเธเนเธฅเนเธง (Backend เธเธฐเน€เธเธฅเธตเนเธขเธเน€เธเนเธ Done เนเธฅเธฐเธเธฐเนเธกเนเธชเนเธเธเธฅเธฑเธเธกเธฒเนเธเธเธฒเธฃ fetch เธเธฃเธฑเนเธเธซเธเนเธฒ)
+      // เนเธ•เน Smart Merge เธเธญเธเน€เธฃเธฒเธเธฐเน€เธเนเธ Done เนเธงเนเนเธซเนเน€เธซเนเธ
       await axios.post(`${API_URL}/item/${itemId}/toggle`);
 
     } catch (error) { 
@@ -133,21 +133,21 @@ const Ramen = () => {
     }
   };
 
-  // ⭐️ กดเสร็จสิ้นเมื่อทำหมดแล้ว
+  // โญ๏ธ เธเธ”เน€เธชเธฃเนเธเธชเธดเนเธเน€เธกเธทเนเธญเธ—เธณเธซเธกเธ”เนเธฅเนเธง
   const handleHeaderClick = async (order) => { 
-    // เช็คว่าขีดฆ่าครบทุกอันหรือยัง
+    // เน€เธเนเธเธงเนเธฒเธเธตเธ”เธเนเธฒเธเธฃเธเธ—เธธเธเธญเธฑเธเธซเธฃเธทเธญเธขเธฑเธ
     const pendingItems = order.items.filter(item => item.itemStatus !== 'Done');
     
     if (pendingItems.length > 0) { 
-        alert('ยังมีรายการที่ต้องทำ: ' + pendingItems.map(i => i.menuName).join(', ')); 
+        alert('เธขเธฑเธเธกเธตเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธ•เนเธญเธเธ—เธณ: ' + pendingItems.map(i => i.menuName).join(', ')); 
         return; 
     }
     
-    // ลบออกจากหน้าจอ
+    // เธฅเธเธญเธญเธเธเธฒเธเธซเธเนเธฒเธเธญ
     setLastServedOrder(order); 
     setOrders(prevOrders => prevOrders.filter(o => o._id !== order._id));
 
-    // บอก Backend ว่าเสร็จแล้ว
+    // เธเธญเธ Backend เธงเนเธฒเน€เธชเธฃเนเธเนเธฅเนเธง
     try {
       await axios.post(`${API_URL}/order/${order._id}/served`);
     } catch (error) {
@@ -156,8 +156,8 @@ const Ramen = () => {
   };
 
   const handleUndo = async () => {
-    if (!lastServedOrder) { alert("ไม่มีรายการให้ Undo"); return; }
-    // (โค้ด Undo เหมือนเดิม)
+    if (!lastServedOrder) { alert("เนเธกเนเธกเธตเธฃเธฒเธขเธเธฒเธฃเนเธซเน Undo"); return; }
+    // (เนเธเนเธ” Undo เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก)
     const orderToRestore = { ...lastServedOrder, status: 'Ready' };
     const undoneOrderId = lastServedOrder._id;
     setLastServedOrder(null); 
@@ -181,7 +181,7 @@ const Ramen = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header 
-        title={`ครัว${kitchenType}`}
+        title={`เธเธฃเธฑเธง${kitchenType}`}
         onBack={() => navigate("/")} 
         onRefresh={handleUndo}
       />
@@ -195,7 +195,7 @@ const Ramen = () => {
                     className={`order-header-ramen ${isAllDone ? 'ready' : ''} ${getAgeClass(order.sentAt)}`}
                     onClick={() => handleHeaderClick(order)}
                   >
-                    <div className="order-info-ramen"><h3>โต๊ะ {order.table}</h3> {order.time}</div>
+                    <div className="order-info-ramen"><h3>เนเธ•เนเธฐ {order.table}</h3> {order.time}</div>
                   </div>
                   <ul className="menu-list-ramen">
                     {order.items.map((item) => (
@@ -218,3 +218,5 @@ const Ramen = () => {
 };
 
 export default Ramen;
+
+
