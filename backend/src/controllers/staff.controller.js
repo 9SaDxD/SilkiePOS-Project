@@ -1,11 +1,11 @@
-// src/controllers/staff.controller.js (ฉบับอัปเดต)
+﻿// src/controllers/staff.controller.js (เธเธเธฑเธเธญเธฑเธเน€เธ”เธ•)
 const Table = require('../models/Table.model');
 const Order = require('../models/Order.model');
 const OrderItem = require('../models/OrderItem.model');
 const Payment = require('../models/Payment.model');
 const mongoose = require('mongoose');
 
-// --- 1. จัดการโต๊ะ ---
+// --- 1. เธเธฑเธ”เธเธฒเธฃเนเธ•เนเธฐ ---
 exports.createTable = async (req, res) => {
     try {
         const newTable = new Table(req.body); 
@@ -44,7 +44,7 @@ exports.adminDeleteTable = async (req, res) => {
 exports.openTable = async (req, res) => { res.status(400).json({ message: 'Table is opened automatically on first order.' }); };
 exports.closeTable = async (req, res) => { res.status(400).json({ message: 'Table must be closed via payment.' }); };
 
-// --- 2. จัดการบิลและการเงิน ---
+// --- 2. เธเธฑเธ”เธเธฒเธฃเธเธดเธฅเนเธฅเธฐเธเธฒเธฃเน€เธเธดเธ ---
 exports.getTableBill = async (req, res) => {
     const { tableId } = req.params;
     try {
@@ -81,8 +81,8 @@ exports.processPayment = async (req, res) => {
         const orderIdsToPay = table.currentOrderIds;
 
         const checkOrderItems = await OrderItem.find({ orderId: { $in: orderIdsToPay } });
-        // หน้าตรวจสอบว่ามีรายการที่ยังไม่เสร็จสมบูรณ์หรือไม่
-        // ถ้า kitchenType เป็น 'Drink' ให้ข้ามการตรวจสอบนี้
+        // เธซเธเนเธฒเธ•เธฃเธงเธเธชเธญเธเธงเนเธฒเธกเธตเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธขเธฑเธเนเธกเนเน€เธชเธฃเนเธเธชเธกเธเธนเธฃเธ“เนเธซเธฃเธทเธญเนเธกเน
+        // เธ–เนเธฒ kitchenType เน€เธเนเธ 'Drink' เนเธซเนเธเนเธฒเธกเธเธฒเธฃเธ•เธฃเธงเธเธชเธญเธเธเธตเน
         if (checkOrderItems.some(item => item.itemStatus !== 'Done' && item.kitchenType !== 'Drink')) {
             return res.status(400).json({ message: 'Cannot process payment. Some items are not yet completed.' });
         }
@@ -164,45 +164,45 @@ exports.getDashboardStats = async (req, res) => {
 };
 
 /**
- * 📈 GET /api/admin/sales/top-menu
- * (ใหม่) คำนวณเมนูขายดีจากบิลที่จ่ายเงินแล้ว
+ * ๐“ GET /api/admin/sales/top-menu
+ * (เนเธซเธกเน) เธเธณเธเธงเธ“เน€เธกเธเธนเธเธฒเธขเธ”เธตเธเธฒเธเธเธดเธฅเธ—เธตเนเธเนเธฒเธขเน€เธเธดเธเนเธฅเนเธง
  */
 exports.getTopSellingMenus = async (req, res) => {
     try {
         const { period, sort = 'qty' } = req.query; 
 
-        // 1. ⭐️ (Match Stage) สร้างตัวกรองวันที่
+        // 1. โญ๏ธ (Match Stage) เธชเธฃเนเธฒเธเธ•เธฑเธงเธเธฃเธญเธเธงเธฑเธเธ—เธตเน
         const dateMatch = {};
         const startOfDay = new Date();
         startOfDay.setHours(0, 0, 0, 0);
         const endOfDay = new Date();
         endOfDay.setHours(23, 59, 59, 999);
         
-        if (period === 'วันนี้') {
+        if (period === 'เธงเธฑเธเธเธตเน') {
             dateMatch.createdAt = { $gte: startOfDay, $lte: endOfDay };
-        } else if (period === 'สัปดาห์นี้') {
+        } else if (period === 'เธชเธฑเธเธ”เธฒเธซเนเธเธตเน') {
             const startOfWeek = new Date(startOfDay);
             startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
             dateMatch.createdAt = { $gte: startOfWeek, $lte: endOfDay };
-        } else if (period === 'เดือนนี้') {
+        } else if (period === 'เน€เธ”เธทเธญเธเธเธตเน') {
             const startOfMonth = new Date(startOfDay.getFullYear(), startOfDay.getMonth(), 1);
             dateMatch.createdAt = { $gte: startOfMonth, $lte: endOfDay };
         }
-        // (ถ้า 'ทั้งหมด' ก็ไม่ต้องใส่ dateMatch)
+        // (เธ–เนเธฒ 'เธ—เธฑเนเธเธซเธกเธ”' เธเนเนเธกเนเธ•เนเธญเธเนเธชเน dateMatch)
 
-        // 2. ⭐️ (Pipeline) ค้นหา Order ที่ 'Paid'
+        // 2. โญ๏ธ (Pipeline) เธเนเธเธซเธฒ Order เธ—เธตเน 'Paid'
         const paidOrders = await Order.find({
             status: 'Paid',
-            ...dateMatch // (เพิ่มตัวกรองวันที่)
+            ...dateMatch // (เน€เธเธดเนเธกเธ•เธฑเธงเธเธฃเธญเธเธงเธฑเธเธ—เธตเน)
         }).select('_id');
 
         if (paidOrders.length === 0) {
-            return res.status(200).json([]); // (ถ้าไม่มีบิล ก็ส่ง Array ว่าง)
+            return res.status(200).json([]); // (เธ–เนเธฒเนเธกเนเธกเธตเธเธดเธฅ เธเนเธชเนเธ Array เธงเนเธฒเธ)
         }
         
         const paidOrderIds = paidOrders.map(o => o._id);
 
-        // 3. ⭐️ (Aggregation) สรุปยอดจาก OrderItems
+        // 3. โญ๏ธ (Aggregation) เธชเธฃเธธเธเธขเธญเธ”เธเธฒเธ OrderItems
         const salesSummary = await OrderItem.aggregate([
             {
                 $match: { orderId: { $in: paidOrderIds } }
@@ -215,7 +215,7 @@ exports.getTopSellingMenus = async (req, res) => {
                 }
             },
             {
-                $sort: { [sort]: -1 } // (เรียงตาม 'qty' หรือ 'revenue')
+                $sort: { [sort]: -1 } // (เน€เธฃเธตเธขเธเธ•เธฒเธก 'qty' เธซเธฃเธทเธญ 'revenue')
             }
         ]);
         
@@ -225,3 +225,4 @@ exports.getTopSellingMenus = async (req, res) => {
         res.status(500).json({ message: 'Error fetching top selling menus.', error: error.message });
     }
 };
+

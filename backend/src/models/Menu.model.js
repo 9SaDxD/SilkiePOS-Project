@@ -1,10 +1,10 @@
-// src/models/Menu.model.js
+﻿// src/models/Menu.model.js
 
 const mongoose = require('mongoose');
 
 const MenuSchema = new mongoose.Schema({
     menuId: {
-        type: String, // ID ภายในร้าน เช่น M001
+        type: String, // ID เธ เธฒเธขเนเธเธฃเนเธฒเธ เน€เธเนเธ M001
         required: true,
         unique: true
     },
@@ -19,12 +19,12 @@ const MenuSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    kitchenType: { // สำหรับแยกงานให้ครัว (Ramen, Fry, Drink)
+    kitchenType: { // เธชเธณเธซเธฃเธฑเธเนเธขเธเธเธฒเธเนเธซเนเธเธฃเธฑเธง (Ramen, Fry, Drink)
         type: String,
-        enum: ['Ramen', 'Fry', 'Drink', 'Other'], // **สำคัญ:** ต้องมี Ramen และ Fry
+        enum: ['Ramen', 'Fry', 'Drink', 'Other'], // **เธชเธณเธเธฑเธ:** เธ•เนเธญเธเธกเธต Ramen เนเธฅเธฐ Fry
         required: true
     },
-    imageUrl: { // URL รูปภาพสำหรับแสดงใน App
+    imageUrl: { // URL เธฃเธนเธเธ เธฒเธเธชเธณเธซเธฃเธฑเธเนเธชเธ”เธเนเธ App
         type: String
     },
     isAvailable: {
@@ -36,3 +36,4 @@ const MenuSchema = new mongoose.Schema({
 const Menu = mongoose.models.Menu || mongoose.model('Menu', MenuSchema);
 
 module.exports = Menu;
+

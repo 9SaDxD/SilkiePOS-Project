@@ -1,20 +1,20 @@
-const jwt = require('jsonwebtoken');
+﻿const jwt = require('jsonwebtoken');
 const Employee = require('../models/Employee.model');
 
-// Middleware 1: ตรวจสอบ Token
+// Middleware 1: เธ•เธฃเธงเธเธชเธญเธ Token
 exports.verifyToken = async (req, res, next) => {
     let token;
     const authHeader = req.headers.authorization;
 
     if (authHeader && authHeader.startsWith('Bearer ')) {
         try {
-            // ดึง Token จาก 'Bearer <token>'
+            // เธ”เธถเธ Token เธเธฒเธ 'Bearer <token>'
             token = authHeader.split(' ')[1];
             
-            // ตรวจสอบ Token
+            // เธ•เธฃเธงเธเธชเธญเธ Token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             
-            // ดึงข้อมูล Employee (ไม่เอา passwordHash) มาแนบกับ req
+            // เธ”เธถเธเธเนเธญเธกเธนเธฅ Employee (เนเธกเนเน€เธญเธฒ passwordHash) เธกเธฒเนเธเธเธเธฑเธ req
             req.user = await Employee.findById(decoded.id).select('-passwordHash'); 
             
             if (!req.user) {
@@ -31,10 +31,10 @@ exports.verifyToken = async (req, res, next) => {
     }
 };
 
-// Middleware 2: ตรวจสอบ Role (สิทธิ์)
+// Middleware 2: เธ•เธฃเธงเธเธชเธญเธ Role (เธชเธดเธ—เธเธดเน)
 exports.checkRole = (roles) => {
     return (req, res, next) => {
-        // req.user มาจาก verifyToken
+        // req.user เธกเธฒเธเธฒเธ verifyToken
         if (!roles.includes(req.user.role)) {
             return res.status(403).json({ 
                 message: `Access denied. Requires one of: ${roles.join(', ')}` 
@@ -43,3 +43,4 @@ exports.checkRole = (roles) => {
         next();
     };
 };
+

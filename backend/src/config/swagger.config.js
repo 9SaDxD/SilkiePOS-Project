@@ -1,4 +1,4 @@
-const swaggerJsdoc = require('swagger-jsdoc');
+﻿const swaggerJsdoc = require('swagger-jsdoc');
 
 const options = {
   definition: {
@@ -6,11 +6,11 @@ const options = {
     info: {
       title: 'Silky POS API Documentation',
       version: '1.0.0',
-      description: 'API สำหรับระบบจัดการร้านอาหาร (รองรับ Admin, Staff, Kitchen และระบบอัปโหลดรูปภาพ)',
+      description: 'API เธชเธณเธซเธฃเธฑเธเธฃเธฐเธเธเธเธฑเธ”เธเธฒเธฃเธฃเนเธฒเธเธญเธฒเธซเธฒเธฃ (เธฃเธญเธเธฃเธฑเธ Admin, Staff, Kitchen เนเธฅเธฐเธฃเธฐเธเธเธญเธฑเธเนเธซเธฅเธ”เธฃเธนเธเธ เธฒเธ)',
     },
     servers: [
       {
-        url: 'http://localhost:3000', // หรือ Port ที่คุณใช้
+        url: 'https://silkiepos-project.onrender.com', // เธซเธฃเธทเธญ Port เธ—เธตเนเธเธธเธ“เนเธเน
         description: 'Local Development Server',
       },
     ],
@@ -23,7 +23,7 @@ const options = {
         },
       },
       schemas: {
-        // --- Schemas สำหรับ Request Body ---
+        // --- Schemas เธชเธณเธซเธฃเธฑเธ Request Body ---
         LoginRequest: {
           type: 'object',
           properties: {
@@ -36,7 +36,7 @@ const options = {
           properties: {
             menuId: { type: 'string', example: 'R001' },
             quantity: { type: 'number', example: 1 },
-            note: { type: 'string', example: 'ไม่ใส่ต้นหอม' },
+            note: { type: 'string', example: 'เนเธกเนเนเธชเนเธ•เนเธเธซเธญเธก' },
           }
         },
         CreateOrderRequest: {
@@ -65,7 +65,7 @@ const options = {
           type: 'object',
           properties: {
             menuId: { type: 'string', example: 'M999' },
-            name: { type: 'string', example: 'ข้าวแกงกะหรี่' },
+            name: { type: 'string', example: 'เธเนเธฒเธงเนเธเธเธเธฐเธซเธฃเธตเน' },
             price: { type: 'number', example: 120 },
             kitchenType: { type: 'string', enum: ['Ramen', 'Fry', 'Drink', 'Other'] },
             image: { type: 'string', format: 'binary' }
@@ -76,7 +76,7 @@ const options = {
           properties: {
             tableId: { type: 'string', example: 'T01' },
             seats: { type: 'number', example: 4 },
-            location: { type: 'string', example: 'ชั้น 1' }
+            location: { type: 'string', example: 'เธเธฑเนเธ 1' }
           }
         },
         PaymentRequest: {
@@ -170,19 +170,19 @@ const options = {
     },
     paths: {
       // =======================
-      // 🔐 AUTHENTICATION
+      // ๐” AUTHENTICATION
       // =======================
       '/api/auth/login': {
         post: {
           tags: ['Auth'],
-          summary: 'เข้าสู่ระบบ (Login)',
-          description: 'ใช้ Username/Password เพื่อรับ Token',
+          summary: 'เน€เธเนเธฒเธชเธนเนเธฃเธฐเธเธ (Login)',
+          description: 'เนเธเน Username/Password เน€เธเธทเนเธญเธฃเธฑเธ Token',
           requestBody: {
             required: true,
             content: { 'application/json': { schema: { $ref: '#/components/schemas/LoginRequest' } } },
           },
           responses: {
-            200: { description: 'Login สำเร็จ (ได้รับ Token)', content: { 'application/json': { schema: { $ref: '#/components/schemas/TokenResponse' } } } },
+            200: { description: 'Login เธชเธณเน€เธฃเนเธ (เนเธ”เนเธฃเธฑเธ Token)', content: { 'application/json': { schema: { $ref: '#/components/schemas/TokenResponse' } } } },
             401: { description: 'Unauthorized', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } },
             500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
           },
@@ -190,13 +190,13 @@ const options = {
       },
 
       // =======================
-      // 🛡️ ADMIN API
+      // ๐ก๏ธ ADMIN API
       // =======================
       '/api/admin/stats': {
         get: {
           tags: ['Admin - Dashboard'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูภาพรวมยอดขายและสถานะร้าน (Dashboard Stats)',
+          summary: 'เธ”เธนเธ เธฒเธเธฃเธงเธกเธขเธญเธ”เธเธฒเธขเนเธฅเธฐเธชเธ–เธฒเธเธฐเธฃเนเธฒเธ (Dashboard Stats)',
           responses: { 200: { description: 'Success' } },
         },
       },
@@ -204,25 +204,25 @@ const options = {
         get: {
           tags: ['Admin - Dashboard'],
           security: [{ bearerAuth: [] }],
-          summary: 'รายงานเมนูขายดี (Top Selling)',
+          summary: 'เธฃเธฒเธขเธเธฒเธเน€เธกเธเธนเธเธฒเธขเธ”เธต (Top Selling)',
           parameters: [
-            { in: 'query', name: 'period', schema: { type: 'string', enum: ['วันนี้', 'สัปดาห์นี้', 'เดือนนี้', 'ทั้งหมด'] } },
+            { in: 'query', name: 'period', schema: { type: 'string', enum: ['เธงเธฑเธเธเธตเน', 'เธชเธฑเธเธ”เธฒเธซเนเธเธตเน', 'เน€เธ”เธทเธญเธเธเธตเน', 'เธ—เธฑเนเธเธซเธกเธ”'] } },
             { in: 'query', name: 'sort', schema: { type: 'string', enum: ['qty', 'revenue'], default: 'qty' } }
           ],
-          responses: { 200: { description: 'รายการเมนูขายดี' } },
+          responses: { 200: { description: 'เธฃเธฒเธขเธเธฒเธฃเน€เธกเธเธนเธเธฒเธขเธ”เธต' } },
         },
       },
       '/api/admin/menus': {
         get: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดึงรายการเมนูทั้งหมด',
+          summary: 'เธ”เธถเธเธฃเธฒเธขเธเธฒเธฃเน€เธกเธเธนเธ—เธฑเนเธเธซเธกเธ”',
           responses: { 200: { description: 'Success', content: { 'application/json': { schema: { $ref: '#/components/schemas/MenuListResponse' } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } },
         },
         post: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'สร้างเมนูใหม่ (รองรับอัปโหลดรูปภาพ)',
+          summary: 'เธชเธฃเนเธฒเธเน€เธกเธเธนเนเธซเธกเน (เธฃเธญเธเธฃเธฑเธเธญเธฑเธเนเธซเธฅเธ”เธฃเธนเธเธ เธฒเธ)',
           requestBody: {
             content: {
               'multipart/form-data': {
@@ -230,7 +230,7 @@ const options = {
                   type: 'object',
                   properties: {
                     menuId: { type: 'string', example: 'M999' },
-                    name: { type: 'string', example: 'ข้าวแกงกะหรี่' },
+                    name: { type: 'string', example: 'เธเนเธฒเธงเนเธเธเธเธฐเธซเธฃเธตเน' },
                     price: { type: 'number', example: 120 },
                     kitchenType: { type: 'string', enum: ['Ramen', 'Fry', 'Drink', 'Other'] },
                     image: { type: 'string', format: 'binary' }
@@ -246,7 +246,7 @@ const options = {
         put: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'แก้ไขเมนู',
+          summary: 'เนเธเนเนเธเน€เธกเธเธน',
           parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
           requestBody: {
             content: {
@@ -267,7 +267,7 @@ const options = {
         delete: {
             tags: ['Admin - Menus'],
             security: [{ bearerAuth: [] }],
-            summary: 'ลบเมนู',
+            summary: 'เธฅเธเน€เธกเธเธน',
             parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
             responses: { 200: { description: 'Deleted' } }
         }
@@ -276,13 +276,13 @@ const options = {
           get: {
               tags: ['Admin - Employees'],
               security: [{ bearerAuth: [] }],
-              summary: 'ดูรายชื่อพนักงานทั้งหมด',
+              summary: 'เธ”เธนเธฃเธฒเธขเธเธทเนเธญเธเธเธฑเธเธเธฒเธเธ—เธฑเนเธเธซเธกเธ”',
             responses: { 200: { description: 'Success', content: { 'application/json': { schema: { type: 'array', items: { type: 'object' } } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
           },
           post: {
               tags: ['Admin - Employees'],
               security: [{ bearerAuth: [] }],
-              summary: 'เพิ่มพนักงานใหม่',
+              summary: 'เน€เธเธดเนเธกเธเธเธฑเธเธเธฒเธเนเธซเธกเน',
               requestBody: {
                   content: { 'application/json': { schema: { $ref: '#/components/schemas/EmployeeRequest' } } }
               },
@@ -293,7 +293,7 @@ const options = {
           put: {
               tags: ['Admin - Employees'],
               security: [{ bearerAuth: [] }],
-              summary: 'แก้ไขข้อมูลพนักงาน',
+              summary: 'เนเธเนเนเธเธเนเธญเธกเธนเธฅเธเธเธฑเธเธเธฒเธ',
               parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
               requestBody: { content: { 'application/json': { schema: { $ref: '#/components/schemas/EmployeeRequest' } } } },
             responses: { 200: { description: 'Updated', content: { 'application/json': { schema: { type: 'object' } } } }, 400: { description: 'Bad Request', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
@@ -301,7 +301,7 @@ const options = {
           delete: {
               tags: ['Admin - Employees'],
               security: [{ bearerAuth: [] }],
-              summary: 'ลบพนักงาน',
+              summary: 'เธฅเธเธเธเธฑเธเธเธฒเธ',
               parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
             responses: { 200: { description: 'Deleted', content: { 'application/json': { schema: { $ref: '#/components/schemas/SuccessMessage' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
           }
@@ -311,13 +311,13 @@ const options = {
         get: {
           tags: ['Admin - Tables'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูรายการโต๊ะทั้งหมด',
+          summary: 'เธ”เธนเธฃเธฒเธขเธเธฒเธฃเนเธ•เนเธฐเธ—เธฑเนเธเธซเธกเธ”',
           responses: { 200: { description: 'List of tables', content: { 'application/json': { schema: { type: 'array', items: { $ref: '#/components/schemas/Table' } } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         },
         post: {
           tags: ['Admin - Tables'],
           security: [{ bearerAuth: [] }],
-          summary: 'สร้างโต๊ะใหม่',
+          summary: 'เธชเธฃเนเธฒเธเนเธ•เนเธฐเนเธซเธกเน',
           requestBody: { content: { 'application/json': { schema: { $ref: '#/components/schemas/TableRequest' } } } },
           responses: { 201: { description: 'Created', content: { 'application/json': { schema: { $ref: '#/components/schemas/Table' } } } }, 400: { description: 'Bad Request', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
@@ -326,7 +326,7 @@ const options = {
         delete: {
           tags: ['Admin - Tables'],
           security: [{ bearerAuth: [] }],
-          summary: 'ลบโต๊ะ (Admin)',
+          summary: 'เธฅเธเนเธ•เนเธฐ (Admin)',
           parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'string' } }],
           responses: { 200: { description: 'Deleted', content: { 'application/json': { schema: { $ref: '#/components/schemas/SuccessMessage' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
@@ -336,14 +336,14 @@ const options = {
         get: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูเมนูตาม ID (Admin)',
+          summary: 'เธ”เธนเน€เธกเธเธนเธ•เธฒเธก ID (Admin)',
           parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
           responses: { 200: { description: 'Success', content: { 'application/json': { schema: { $ref: '#/components/schemas/Menu' } } } }, 404: { description: 'Not found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         },
         put: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'แก้ไขเมนู',
+          summary: 'เนเธเนเนเธเน€เธกเธเธน',
           parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
           requestBody: {
             content: {
@@ -357,7 +357,7 @@ const options = {
         delete: {
           tags: ['Admin - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'ลบเมนู',
+          summary: 'เธฅเธเน€เธกเธเธน',
           parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
           responses: { 200: { description: 'Deleted', content: { 'application/json': { schema: { $ref: '#/components/schemas/SuccessMessage' } } } }, 404: { description: 'Not found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
@@ -367,7 +367,7 @@ const options = {
         get: {
           tags: ['Staff - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดึงรายการเมนูสำหรับหน้ารับออเดอร์',
+          summary: 'เธ”เธถเธเธฃเธฒเธขเธเธฒเธฃเน€เธกเธเธนเธชเธณเธซเธฃเธฑเธเธซเธเนเธฒเธฃเธฑเธเธญเธญเน€เธ”เธญเธฃเน',
           responses: { 200: { description: 'List of menus', content: { 'application/json': { schema: { $ref: '#/components/schemas/MenuListResponse' } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
       },
@@ -375,20 +375,20 @@ const options = {
         get: {
           tags: ['Staff - Menus'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูรายละเอียดเมนู (สำหรับ Staff)',
+          summary: 'เธ”เธนเธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เน€เธกเธเธน (เธชเธณเธซเธฃเธฑเธ Staff)',
           parameters: [{ in: 'path', name: 'menuId', required: true, schema: { type: 'string' } }],
           responses: { 200: { description: 'Menu details', content: { 'application/json': { schema: { $ref: '#/components/schemas/Menu' } } } }, 404: { description: 'Not found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
       },
 
       // =======================
-      // 🧑‍🍳 STAFF API
+      // ๐ง‘โ€๐ณ STAFF API
       // =======================
       '/api/staff/tables': {
         get: {
           tags: ['Staff - Main'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูสถานะโต๊ะทั้งหมด',
+          summary: 'เธ”เธนเธชเธ–เธฒเธเธฐเนเธ•เนเธฐเธ—เธฑเนเธเธซเธกเธ”',
           responses: { 200: { description: 'List of tables', content: { 'application/json': { schema: { type: 'array', items: { $ref: '#/components/schemas/Table' } } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } },
         }
       },
@@ -396,7 +396,7 @@ const options = {
         get: {
           tags: ['Staff - Main'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดูบิลปัจจุบันของโต๊ะ (Check Bill)',
+          summary: 'เธ”เธนเธเธดเธฅเธเธฑเธเธเธธเธเธฑเธเธเธญเธเนเธ•เนเธฐ (Check Bill)',
           parameters: [{ in: 'path', name: 'tableId', required: true, schema: { type: 'string' } }],
           responses: { 200: { description: 'Bill details', content: { 'application/json': { schema: { type: 'object' } } } }, 404: { description: 'Not found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } },
         }
@@ -405,7 +405,7 @@ const options = {
         post: {
           tags: ['Staff - Orders'],
           security: [{ bearerAuth: [] }],
-          summary: 'เปิดบิล / สั่งอาหารเพิ่ม',
+          summary: 'เน€เธเธดเธ”เธเธดเธฅ / เธชเธฑเนเธเธญเธฒเธซเธฒเธฃเน€เธเธดเนเธก',
           requestBody: {
             content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateOrderRequest' } } },
           },
@@ -416,8 +416,8 @@ const options = {
         delete: {
           tags: ['Staff - Orders'],
           security: [{ bearerAuth: [] }],
-          summary: 'ยกเลิกรายการอาหาร (Cancel Item)',
-          parameters: [{ in: 'path', name: 'itemId', required: true, description: 'ID ของ OrderItem', schema: { type: 'string' } }],
+          summary: 'เธขเธเน€เธฅเธดเธเธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃ (Cancel Item)',
+          parameters: [{ in: 'path', name: 'itemId', required: true, description: 'ID เธเธญเธ OrderItem', schema: { type: 'string' } }],
           responses: { 200: { description: 'Item Cancelled', content: { 'application/json': { schema: { $ref: '#/components/schemas/SuccessMessage' } } } }, 400: { description: 'Bad Request', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } },
         },
       },
@@ -425,7 +425,7 @@ const options = {
         post: {
             tags: ['Staff - Payment'],
             security: [{ bearerAuth: [] }],
-            summary: 'ชำระเงิน (เช็คบิล)',
+            summary: 'เธเธณเธฃเธฐเน€เธเธดเธ (เน€เธเนเธเธเธดเธฅ)',
             requestBody: {
                 content: {
                     'application/json': {
@@ -447,19 +447,19 @@ const options = {
           get: {
               tags: ['Staff - History'],
               security: [{ bearerAuth: [] }],
-              summary: 'ดูประวัติบิลที่จ่ายแล้วของวันนี้',
+              summary: 'เธ”เธนเธเธฃเธฐเธงเธฑเธ•เธดเธเธดเธฅเธ—เธตเนเธเนเธฒเธขเนเธฅเนเธงเธเธญเธเธงเธฑเธเธเธตเน',
             responses: { 200: { description: 'List of paid orders', content: { 'application/json': { schema: { type: 'array', items: { $ref: '#/components/schemas/Payment' } } } } }, 500: { description: 'Error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
           }
       },
 
       // =======================
-      // 🍳 KITCHEN API
+      // ๐ณ KITCHEN API
       // =======================
       '/api/kitchen/orders/{kitchenType}': {
         get: {
           tags: ['Kitchen'],
           security: [{ bearerAuth: [] }],
-          summary: 'ดึงรายการอาหารที่ต้องทำ (Pending Only)',
+          summary: 'เธ”เธถเธเธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃเธ—เธตเนเธ•เนเธญเธเธ—เธณ (Pending Only)',
           parameters: [
             { in: 'path', name: 'kitchenType', required: true, schema: { type: 'string', enum: ['Ramen', 'Fry', 'Drink'] } }
           ],
@@ -470,7 +470,7 @@ const options = {
         post: {
             tags: ['Kitchen'],
             security: [{ bearerAuth: [] }],
-            summary: 'เปลี่ยนสถานะอาหาร (ทำเสร็จแล้ว/ยังไม่เสร็จ)',
+            summary: 'เน€เธเธฅเธตเนเธขเธเธชเธ–เธฒเธเธฐเธญเธฒเธซเธฒเธฃ (เธ—เธณเน€เธชเธฃเนเธเนเธฅเนเธง/เธขเธฑเธเนเธกเนเน€เธชเธฃเนเธ)',
             parameters: [{ in: 'path', name: 'itemId', required: true, schema: { type: 'string' } }],
             responses: { 200: { description: 'Status toggled', content: { 'application/json': { schema: { type: 'object' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
@@ -479,7 +479,7 @@ const options = {
         post: {
             tags: ['Kitchen'],
             security: [{ bearerAuth: [] }],
-            summary: 'เสิร์ฟครบทุกอย่าง (ปิดงานโต๊ะนี้)',
+            summary: 'เน€เธชเธดเธฃเนเธเธเธฃเธเธ—เธธเธเธญเธขเนเธฒเธ (เธเธดเธ”เธเธฒเธเนเธ•เนเธฐเธเธตเน)',
             parameters: [{ in: 'path', name: 'orderId', required: true, schema: { type: 'string' } }],
             responses: { 200: { description: 'Order Served', content: { 'application/json': { schema: { type: 'object' } } } }, 400: { description: 'Bad Request', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
@@ -488,14 +488,16 @@ const options = {
         post: {
             tags: ['Kitchen'],
             security: [{ bearerAuth: [] }],
-            summary: 'ย้อนกลับสถานะ Served -> Ready (Undo)',
+            summary: 'เธขเนเธญเธเธเธฅเธฑเธเธชเธ–เธฒเธเธฐ Served -> Ready (Undo)',
             parameters: [{ in: 'path', name: 'orderId', required: true, schema: { type: 'string' } }],
             responses: { 200: { description: 'Undone successfully', content: { 'application/json': { schema: { $ref: '#/components/schemas/Order' } } } }, 400: { description: 'Bad Request', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 404: { description: 'Not Found', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }, 500: { description: 'Server error', content: { 'application/json': { schema: { $ref: '#/components/schemas/ErrorResponse' } } } } }
         }
       }
     },
   },
-  apis: [], // ไม่ได้ใช้ comment ในไฟล์ แต่ config ไว้ตรงนี้โดยตรง
+  apis: [], // เนเธกเนเนเธ”เนเนเธเน comment เนเธเนเธเธฅเน เนเธ•เน config เนเธงเนเธ•เธฃเธเธเธตเนเนเธ”เธขเธ•เธฃเธ
 };
 
 module.exports = swaggerJsdoc(options);
+
+

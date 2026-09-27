@@ -1,4 +1,4 @@
-// src/models/Employee.model.js
+﻿// src/models/Employee.model.js
 const mongoose = require('mongoose');
 
 const EmployeeSchema = new mongoose.Schema({
@@ -22,8 +22,8 @@ const EmployeeSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        // --- 👇 (แก้ไข) ---
-        enum: ['Admin', 'Staff', 'Kitchen'], // (ง่ายขึ้น)
+        // --- ๐‘ (เนเธเนเนเธ) ---
+        enum: ['Admin', 'Staff', 'Kitchen'], // (เธเนเธฒเธขเธเธถเนเธ)
         // ------------------
         required: true
     },
@@ -35,3 +35,4 @@ const EmployeeSchema = new mongoose.Schema({
 
 const Employee = mongoose.models.Employee || mongoose.model('Employee', EmployeeSchema);
 module.exports = Employee;
+

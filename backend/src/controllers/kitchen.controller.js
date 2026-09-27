@@ -1,4 +1,4 @@
-// src/controllers/kitchen.controller.js (ฉบับสมบูรณ์ที่ได้รับการแก้ไข)
+﻿// src/controllers/kitchen.controller.js (เธเธเธฑเธเธชเธกเธเธนเธฃเธ“เนเธ—เธตเนเนเธ”เนเธฃเธฑเธเธเธฒเธฃเนเธเนเนเธ)
 const Order = require('../models/Order.model');
 const OrderItem = require('../models/OrderItem.model');
 const mongoose = require('mongoose');
@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 exports.getPendingOrders = async (req, res) => {
     const { kitchenType } = req.params;
     try {
-        // 1. ดึง Order ที่ยัง Active (Preparing หรือ Ready)
+        // 1. เธ”เธถเธ Order เธ—เธตเนเธขเธฑเธ Active (Preparing เธซเธฃเธทเธญ Ready)
         const activeOrders = await Order.find({
             status: { $in: ['Preparing', 'Ready'] } 
         }).select('_id');
@@ -18,19 +18,19 @@ exports.getPendingOrders = async (req, res) => {
 
         const orderIds = activeOrders.map(o => o._id);
         
-        // 2. ดึง OrderItem ที่ผูกกับ Order ที่ Active และ (สำคัญ) ยัง Pending อยู่
+        // 2. เธ”เธถเธ OrderItem เธ—เธตเนเธเธนเธเธเธฑเธ Order เธ—เธตเน Active เนเธฅเธฐ (เธชเธณเธเธฑเธ) เธขเธฑเธ Pending เธญเธขเธนเน
         const items = await OrderItem.find({
             orderId: { $in: orderIds },
             kitchenType: kitchenType,
-            itemStatus: 'Pending' // <--- การแก้ไขที่สำคัญ: ดึงเฉพาะรายการที่ยังไม่เสร็จ
+            itemStatus: 'Pending' // <--- เธเธฒเธฃเนเธเนเนเธเธ—เธตเนเธชเธณเธเธฑเธ: เธ”เธถเธเน€เธเธเธฒเธฐเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธขเธฑเธเนเธกเนเน€เธชเธฃเนเธ
         })
         .sort({ sentToKitchenAt: 1 }) 
-        // Populate orderId เพื่อดึง tableId และ status
+        // Populate orderId เน€เธเธทเนเธญเธ”เธถเธ tableId เนเธฅเธฐ status
         .populate('orderId', 'tableId status');
 
-        // 3. (Optional: สำหรับ Debug)
-        // ถ้าต้องการเห็นรายการที่เสร็จแล้ว (Done) ด้วยชั่วคราว ให้ลบ itemStatus: 'Pending' ออก
-        // แต่ในการทำงานจริง ควรใช้ itemStatus: 'Pending'
+        // 3. (Optional: เธชเธณเธซเธฃเธฑเธ Debug)
+        // เธ–เนเธฒเธ•เนเธญเธเธเธฒเธฃเน€เธซเนเธเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเน€เธชเธฃเนเธเนเธฅเนเธง (Done) เธ”เนเธงเธขเธเธฑเนเธงเธเธฃเธฒเธง เนเธซเนเธฅเธ itemStatus: 'Pending' เธญเธญเธ
+        // เนเธ•เนเนเธเธเธฒเธฃเธ—เธณเธเธฒเธเธเธฃเธดเธ เธเธงเธฃเนเธเน itemStatus: 'Pending'
 
         res.status(200).json({
             message: `Active items for ${kitchenType} kitchen.`,
@@ -42,7 +42,7 @@ exports.getPendingOrders = async (req, res) => {
     }
 };
 
-// POST /api/kitchen/item/:itemId/toggle (Logic นี้ใช้ได้อยู่แล้ว)
+// POST /api/kitchen/item/:itemId/toggle (Logic เธเธตเนเนเธเนเนเธ”เนเธญเธขเธนเนเนเธฅเนเธง)
 exports.toggleItemStatus = async (req, res) => {
     const { itemId } = req.params;
     try {
@@ -56,13 +56,13 @@ exports.toggleItemStatus = async (req, res) => {
         await item.save();
 
         const orderId = item.orderId;
-        // เช็คว่ารายการที่เหลือทั้งหมดในบิลนี้เสร็จหมดหรือยัง
+        // เน€เธเนเธเธงเนเธฒเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเน€เธซเธฅเธทเธญเธ—เธฑเนเธเธซเธกเธ”เนเธเธเธดเธฅเธเธตเนเน€เธชเธฃเนเธเธซเธกเธ”เธซเธฃเธทเธญเธขเธฑเธ
         const pendingItemsCount = await OrderItem.countDocuments({ 
             orderId: orderId, 
             itemStatus: 'Pending' 
         });
 
-        // อัปเดตสถานะบิลหลัก (Order Header)
+        // เธญเธฑเธเน€เธ”เธ•เธชเธ–เธฒเธเธฐเธเธดเธฅเธซเธฅเธฑเธ (Order Header)
         let newOrderStatus = (pendingItemsCount === 0) ? 'Ready' : 'Preparing';
 
         const finalOrder = await Order.findByIdAndUpdate(
@@ -86,7 +86,7 @@ exports.toggleItemStatus = async (req, res) => {
 exports.markOrderServed = async (req, res) => {
     const { orderId } = req.params;
     try {
-        // 1. ⭐️ เช็คก่อนว่ามีรายการไหนในบิลนี้ที่ยังไม่เสร็จ (Pending) หลงเหลืออยู่ไหม (ไม่เกี่ยงประเภทครัว)
+        // 1. โญ๏ธ เน€เธเนเธเธเนเธญเธเธงเนเธฒเธกเธตเธฃเธฒเธขเธเธฒเธฃเนเธซเธเนเธเธเธดเธฅเธเธตเนเธ—เธตเนเธขเธฑเธเนเธกเนเน€เธชเธฃเนเธ (Pending) เธซเธฅเธเน€เธซเธฅเธทเธญเธญเธขเธนเนเนเธซเธก (เนเธกเนเน€เธเธตเนเธขเธเธเธฃเธฐเน€เธ เธ—เธเธฃเธฑเธง)
         const pendingCount = await OrderItem.countDocuments({
             orderId: orderId,
             itemStatus: 'Pending'
@@ -95,9 +95,9 @@ exports.markOrderServed = async (req, res) => {
         let updatedOrder;
 
         if (pendingCount > 0) {
-            // 2.1 ถ้ายังมีรายการค้าง (เช่น ของทอดยังไม่เสร็จ)
-            // ห้ามเปลี่ยนเป็น Served! ให้เปลี่ยนเป็น 'Ready' หรือคงเดิมไว้
-            // (เพื่อให้ครัวอื่นยังดึงข้อมูลบิลนี้เจอ)
+            // 2.1 เธ–เนเธฒเธขเธฑเธเธกเธตเธฃเธฒเธขเธเธฒเธฃเธเนเธฒเธ (เน€เธเนเธ เธเธญเธเธ—เธญเธ”เธขเธฑเธเนเธกเนเน€เธชเธฃเนเธ)
+            // เธซเนเธฒเธกเน€เธเธฅเธตเนเธขเธเน€เธเนเธ Served! เนเธซเนเน€เธเธฅเธตเนเธขเธเน€เธเนเธ 'Ready' เธซเธฃเธทเธญเธเธเน€เธ”เธดเธกเนเธงเน
+            // (เน€เธเธทเนเธญเนเธซเนเธเธฃเธฑเธงเธญเธทเนเธเธขเธฑเธเธ”เธถเธเธเนเธญเธกเธนเธฅเธเธดเธฅเธเธตเนเน€เธเธญ)
 
             checkOrderStatus = await Order.findById(orderId);
             if (!checkOrderStatus) {
@@ -114,7 +114,7 @@ exports.markOrderServed = async (req, res) => {
 
             updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
-                { status: 'Ready' }, // ยังไม่ Served เพราะครัวอื่นยังทำอยู่
+                { status: 'Ready' }, // เธขเธฑเธเนเธกเน Served เน€เธเธฃเธฒเธฐเธเธฃเธฑเธงเธญเธทเนเธเธขเธฑเธเธ—เธณเธญเธขเธนเน
                 { new: true }
             );
             
@@ -125,7 +125,7 @@ exports.markOrderServed = async (req, res) => {
             });
 
         } else {
-            // 2.2 ถ้าไม่เหลือรายการค้างแล้ว (เสร็จทุกครัว) -> ปิดบิลเป็น Served ได้เลย
+            // 2.2 เธ–เนเธฒเนเธกเนเน€เธซเธฅเธทเธญเธฃเธฒเธขเธเธฒเธฃเธเนเธฒเธเนเธฅเนเธง (เน€เธชเธฃเนเธเธ—เธธเธเธเธฃเธฑเธง) -> เธเธดเธ”เธเธดเธฅเน€เธเนเธ Served เนเธ”เนเน€เธฅเธข
             updatedOrder = await Order.findByIdAndUpdate(
                 orderId,
                 { status: 'Served' }, 
@@ -166,3 +166,4 @@ exports.undoServeOrder = async (req, res) => {
         res.status(500).json({ message: 'Error undoing order serve.', error: error.message });
     }
 };
+

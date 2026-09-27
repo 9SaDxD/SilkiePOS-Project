@@ -1,9 +1,9 @@
-// src/models/Payment.model.js (ฉบับอัปเดต)
+﻿// src/models/Payment.model.js (เธเธเธฑเธเธญเธฑเธเน€เธ”เธ•)
 const mongoose = require('mongoose');
 
 const PaymentSchema = new mongoose.Schema({
-    // --- 👇 (แก้ไข) ---
-    // เปลี่ยนจาก orderId (เดี่ยว) เป็น orderIds (Array)
+    // --- ๐‘ (เนเธเนเนเธ) ---
+    // เน€เธเธฅเธตเนเธขเธเธเธฒเธ orderId (เน€เธ”เธตเนเธขเธง) เน€เธเนเธ orderIds (Array)
     orderIds: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order'
@@ -26,3 +26,4 @@ const PaymentSchema = new mongoose.Schema({
 
 const Payment = mongoose.models.Payment || mongoose.model('Payment', PaymentSchema);
 module.exports = Payment;
+

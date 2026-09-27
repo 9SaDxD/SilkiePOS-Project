@@ -1,4 +1,4 @@
-// src/models/Order.model.js
+﻿// src/models/Order.model.js
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const OrderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        // --- 👇 (แก้ไข) เพิ่ม 'Served' ---
+        // --- ๐‘ (เนเธเนเนเธ) เน€เธเธดเนเธก 'Served' ---
         enum: ['Preparing', 'Ready', 'Served', 'Paid', 'Cancelled'],
         default: 'Preparing' 
     },
@@ -29,3 +29,4 @@ const OrderSchema = new mongoose.Schema({
 
 const Order = mongoose.models.Order || mongoose.model('Order', OrderSchema);
 module.exports = Order;
+

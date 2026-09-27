@@ -1,19 +1,19 @@
-// src/controllers/menu.controller.js (ฉบับอัปเดต)
+﻿// src/controllers/menu.controller.js (เธเธเธฑเธเธญเธฑเธเน€เธ”เธ•)
 const Menu = require('../models/Menu.model');
 
 /**
- * 📝 POST /api/admin/menus
- * (แก้ไข) สร้างรายการอาหารใหม่ (พร้อมรับไฟล์)
+ * ๐“ POST /api/admin/menus
+ * (เนเธเนเนเธ) เธชเธฃเนเธฒเธเธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃเนเธซเธกเน (เธเธฃเนเธญเธกเธฃเธฑเธเนเธเธฅเน)
  */
 exports.createMenu = async (req, res) => {
     try {
-        // 1. ข้อมูล (name, price ฯลฯ) จะอยู่ใน req.body
+        // 1. เธเนเธญเธกเธนเธฅ (name, price เธฏเธฅเธฏ) เธเธฐเธญเธขเธนเนเนเธ req.body
         const newMenuData = req.body;
 
-        // 2. (ใหม่) ถ้ามีไฟล์อัปโหลดมา (จาก multer)
+        // 2. (เนเธซเธกเน) เธ–เนเธฒเธกเธตเนเธเธฅเนเธญเธฑเธเนเธซเธฅเธ”เธกเธฒ (เธเธฒเธ multer)
         if (req.file) {
-            // 3. เราจะเก็บ "path" ของไฟล์ที่เซฟแล้ว (เช่น 'uploads/image-12345.png')
-            newMenuData.imageUrl = req.file.path.replace(/\\/g, "/"); // (แก้ \ เป็น / สำหรับ Windows)
+            // 3. เน€เธฃเธฒเธเธฐเน€เธเนเธ "path" เธเธญเธเนเธเธฅเนเธ—เธตเนเน€เธเธเนเธฅเนเธง (เน€เธเนเธ 'uploads/image-12345.png')
+            newMenuData.imageUrl = req.file.path.replace(/\\/g, "/"); // (เนเธเน \ เน€เธเนเธ / เธชเธณเธซเธฃเธฑเธ Windows)
         }
 
         const newMenu = new Menu(newMenuData);
@@ -37,11 +37,11 @@ exports.createMenu = async (req, res) => {
 };
 
 /**
- * 🔍 GET /api/admin/menus
- * (ฟังก์ชันเดิม - ไม่ต้องแก้)
+ * ๐” GET /api/admin/menus
+ * (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก - เนเธกเนเธ•เนเธญเธเนเธเน)
  */
 exports.getAllMenus = async (req, res) => {
-    // ... (โค้ดเดิม) ...
+    // ... (เนเธเนเธ”เน€เธ”เธดเธก) ...
     try {
         const menus = await Menu.find({}).sort({ menuId: 1 });
         res.status(200).json(menus);
@@ -54,11 +54,11 @@ exports.getAllMenus = async (req, res) => {
 };
 
 /**
- * 🔎 GET /api/admin/menus/:menuId
- * (ฟังก์ชันเดิม - ไม่ต้องแก้)
+ * ๐” GET /api/admin/menus/:menuId
+ * (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก - เนเธกเนเธ•เนเธญเธเนเธเน)
  */
 exports.getMenuById = async (req, res) => {
-    // ... (โค้ดเดิม) ...
+    // ... (เนเธเนเธ”เน€เธ”เธดเธก) ...
     const { menuId } = req.params;
     try {
         const menu = await Menu.findOne({ menuId }); 
@@ -75,17 +75,17 @@ exports.getMenuById = async (req, res) => {
 };
 
 /**
- * ✍️ PUT /api/admin/menus/:menuId
- * (แก้ไข) อัปเดตรายการอาหาร (พร้อมรับไฟล์ใหม่ ถ้ามี)
+ * โ๏ธ PUT /api/admin/menus/:menuId
+ * (เนเธเนเนเธ) เธญเธฑเธเน€เธ”เธ•เธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃ (เธเธฃเนเธญเธกเธฃเธฑเธเนเธเธฅเนเนเธซเธกเน เธ–เนเธฒเธกเธต)
  */
 exports.updateMenu = async (req, res) => {
     const { menuId } = req.params;
     const updateData = req.body;
 
-    // (ใหม่) ถ้ามีการอัปโหลดไฟล์ใหม่มาทับ
+    // (เนเธซเธกเน) เธ–เนเธฒเธกเธตเธเธฒเธฃเธญเธฑเธเนเธซเธฅเธ”เนเธเธฅเนเนเธซเธกเนเธกเธฒเธ—เธฑเธ
     if (req.file) {
         updateData.imageUrl = req.file.path.replace(/\\/g, "/");
-        // (หมายเหตุ: เราควรลบรูปเก่าออกจาก /uploads ด้วย แต่ตอนนี้จะข้ามไปก่อน)
+        // (เธซเธกเธฒเธขเน€เธซเธ•เธธ: เน€เธฃเธฒเธเธงเธฃเธฅเธเธฃเธนเธเน€เธเนเธฒเธญเธญเธเธเธฒเธ /uploads เธ”เนเธงเธข เนเธ•เนเธ•เธญเธเธเธตเนเธเธฐเธเนเธฒเธกเนเธเธเนเธญเธ)
     }
     
     try {
@@ -111,12 +111,12 @@ exports.updateMenu = async (req, res) => {
 };
 
 /**
- * 🗑️ DELETE /api/admin/menus/:menuId
- * (ฟังก์ชันเดิม - ไม่ต้องแก้)
+ * ๐—‘๏ธ DELETE /api/admin/menus/:menuId
+ * (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก - เนเธกเนเธ•เนเธญเธเนเธเน)
  */
 exports.deleteMenu = async (req, res) => {
-    // ... (โค้ดเดิม) ...
-    // (หมายเหตุ: เราควรลบรูปออกจาก /uploads ด้วย)
+    // ... (เนเธเนเธ”เน€เธ”เธดเธก) ...
+    // (เธซเธกเธฒเธขเน€เธซเธ•เธธ: เน€เธฃเธฒเธเธงเธฃเธฅเธเธฃเธนเธเธญเธญเธเธเธฒเธ /uploads เธ”เนเธงเธข)
     const { menuId } = req.params;
     try {
         const deletedMenu = await Menu.findOneAndDelete({ menuId });
@@ -134,3 +134,4 @@ exports.deleteMenu = async (req, res) => {
         });
     }
 };
+

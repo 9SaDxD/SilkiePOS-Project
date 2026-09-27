@@ -1,4 +1,4 @@
-// src/controllers/order.controller.js (ฉบับสมบูรณ์)
+﻿// src/controllers/order.controller.js (เธเธเธฑเธเธชเธกเธเธนเธฃเธ“เน)
 
 const Order = require('../models/Order.model');
 const OrderItem = require('../models/OrderItem.model');
@@ -7,8 +7,8 @@ const Table = require('../models/Table.model');
 const mongoose = require('mongoose');
 
 /**
- * 📝 POST /api/staff/orders
- * (แก้ไข) "สร้างบิลใหม่เสมอ" เพื่อไม่ให้แทรกคิว
+ * ๐“ POST /api/staff/orders
+ * (เนเธเนเนเธ) "เธชเธฃเนเธฒเธเธเธดเธฅเนเธซเธกเนเน€เธชเธกเธญ" เน€เธเธทเนเธญเนเธกเนเนเธซเนเนเธ—เธฃเธเธเธดเธง
  */
 exports.createOrder = async (req, res) => {
     const { tableId, items } = req.body; 
@@ -18,21 +18,21 @@ exports.createOrder = async (req, res) => {
     }
 
     try {
-        // 1. ค้นหาโต๊ะ
+        // 1. เธเนเธเธซเธฒเนเธ•เนเธฐ
         const table = await Table.findOne({ tableId: tableId });
         if (!table) {
             return res.status(400).json({ message: 'Table not found.' });
         }
 
-        // --- (Logic ใหม่) ---
-        // 2. ⭐️ สร้างบิล (Order Header) ใหม่ "เสมอ"
+        // --- (Logic เนเธซเธกเน) ---
+        // 2. โญ๏ธ เธชเธฃเนเธฒเธเธเธดเธฅ (Order Header) เนเธซเธกเน "เน€เธชเธกเธญ"
         const newOrder = new Order({ 
             tableId: tableId, 
             status: 'Preparing', 
-            totalAmount: 0 // (เราจะคำนวณด้านล่าง)
+            totalAmount: 0 // (เน€เธฃเธฒเธเธฐเธเธณเธเธงเธ“เธ”เนเธฒเธเธฅเนเธฒเธ)
         });
 
-        // 3. ประมวลผลรายการอาหาร
+        // 3. เธเธฃเธฐเธกเธงเธฅเธเธฅเธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃ
         let newItemsTotal = 0;
         const itemsToCreate = []; 
 
@@ -43,7 +43,7 @@ exports.createOrder = async (req, res) => {
             let itemPrice = menuDoc.price * item.quantity;
 
             itemsToCreate.push({
-                orderId: newOrder._id, // 👈 ผูกกับบิลใหม่
+                orderId: newOrder._id, // ๐‘ เธเธนเธเธเธฑเธเธเธดเธฅเนเธซเธกเน
                 tableId: tableId,
                 menuId: menuDoc._id,
                 menuName: menuDoc.name,
@@ -60,18 +60,18 @@ exports.createOrder = async (req, res) => {
             return res.status(400).json({ message: 'No valid order items found.' });
         }
 
-        // 4. สร้าง OrderItem (รายการอาหาร)
+        // 4. เธชเธฃเนเธฒเธ OrderItem (เธฃเธฒเธขเธเธฒเธฃเธญเธฒเธซเธฒเธฃ)
         await OrderItem.insertMany(itemsToCreate);
 
-        // 5. ⭐️ อัปเดต TotalAmount ของ "บิลใหม่"
+        // 5. โญ๏ธ เธญเธฑเธเน€เธ”เธ• TotalAmount เธเธญเธ "เธเธดเธฅเนเธซเธกเน"
         newOrder.totalAmount = newItemsTotal;
         await newOrder.save();
 
-        // 6. ⭐️ (สำคัญ) "ยัด" ID บิลใหม่นี้เข้าไปใน Array ของโต๊ะ
+        // 6. โญ๏ธ (เธชเธณเธเธฑเธ) "เธขเธฑเธ”" ID เธเธดเธฅเนเธซเธกเนเธเธตเนเน€เธเนเธฒเนเธเนเธ Array เธเธญเธเนเธ•เนเธฐ
         table.currentOrderIds.push(newOrder._id);
         table.status = 'Occupied';
         await table.save();
-        // --- (จบ Logic ใหม่) ---
+        // --- (เธเธ Logic เนเธซเธกเน) ---
 
         res.status(201).json({
             message: 'New order created successfully and added to table.',
@@ -86,8 +86,8 @@ exports.createOrder = async (req, res) => {
 };
 
 /**
- * 🔍 GET /api/staff/orders
- * (ฟังก์ชันเดิม)
+ * ๐” GET /api/staff/orders
+ * (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก)
  */
 exports.getAllOrders = async (req, res) => {
     try {
@@ -102,8 +102,8 @@ exports.getAllOrders = async (req, res) => {
 };
 
 /**
- * 🔎 GET /api/staff/orders/:orderId
- * (ฟังก์ชันเดิม)
+ * ๐” GET /api/staff/orders/:orderId
+ * (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก)
  */
 exports.getOrderById = async (req, res) => {
     const { orderId } = req.params;
@@ -126,18 +126,18 @@ exports.getOrderById = async (req, res) => {
 };
 
 /**
- * 🗑️ DELETE /api/staff/orders/item/:itemId
- * (ฟังก์ชันยกเลิกไอเทม ที่เราเพิ่มไว้)
+ * ๐—‘๏ธ DELETE /api/staff/orders/item/:itemId
+ * (เธเธฑเธเธเนเธเธฑเธเธขเธเน€เธฅเธดเธเนเธญเน€เธ—เธก เธ—เธตเนเน€เธฃเธฒเน€เธเธดเนเธกเนเธงเน)
  */
 exports.cancelOrderItem = async (req, res) => {
-    const { itemId } = req.params; // นี่คือ _id ของ OrderItem
+    const { itemId } = req.params; // เธเธตเนเธเธทเธญ _id เธเธญเธ OrderItem
 
     if (!mongoose.Types.ObjectId.isValid(itemId)) {
          return res.status(400).json({ message: 'Invalid Item ID format.' });
     }
 
     try {
-        // 1. ค้นหารายการที่จะลบ
+        // 1. เธเนเธเธซเธฒเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธเธฐเธฅเธ
         const itemToDelete = await OrderItem.findById(itemId);
         if (!itemToDelete) {
             return res.status(400).json({ message: 'Order item not found.' });
@@ -149,7 +149,7 @@ exports.cancelOrderItem = async (req, res) => {
         const orderId = itemToDelete.orderId;
         const itemPrice = itemToDelete.price;
 
-        // 2. (ป้องกัน) ตรวจสอบสถานะบิลหลัก
+        // 2. (เธเนเธญเธเธเธฑเธ) เธ•เธฃเธงเธเธชเธญเธเธชเธ–เธฒเธเธฐเธเธดเธฅเธซเธฅเธฑเธ
         const parentOrder = await Order.findById(orderId);
         if (!parentOrder) {
             return res.status(400).json({ message: 'Parent order not found.' });
@@ -158,20 +158,20 @@ exports.cancelOrderItem = async (req, res) => {
             return res.status(400).json({ message: `Cannot cancel item. Order is already ${parentOrder.status}.` });
         }
 
-        // 3. ลบ OrderItem
+        // 3. เธฅเธ OrderItem
         await OrderItem.findByIdAndDelete(itemId);
 
-        // 4. อัปเดตบิลหลัก (Order) โดย "ลบ" ยอดเงินของรายการนี้ออก
+        // 4. เธญเธฑเธเน€เธ”เธ•เธเธดเธฅเธซเธฅเธฑเธ (Order) เนเธ”เธข "เธฅเธ" เธขเธญเธ”เน€เธเธดเธเธเธญเธเธฃเธฒเธขเธเธฒเธฃเธเธตเนเธญเธญเธ
         const updatedOrder = await Order.findByIdAndUpdate(
             orderId,
-            { $inc: { totalAmount: -itemPrice } }, // $inc คือการบวก (บวกด้วยค่าติดลบ)
+            { $inc: { totalAmount: -itemPrice } }, // $inc เธเธทเธญเธเธฒเธฃเธเธงเธ (เธเธงเธเธ”เนเธงเธขเธเนเธฒเธ•เธดเธ”เธฅเธ)
             { new: true }
         );
 
-        // หากบิลเหลือ 0 บาท ให้ลบบิลนั้นเลย
+        // เธซเธฒเธเธเธดเธฅเน€เธซเธฅเธทเธญ 0 เธเธฒเธ— เนเธซเนเธฅเธเธเธดเธฅเธเธฑเนเธเน€เธฅเธข
         if (updatedOrder.totalAmount <= 0) {
             await Order.findByIdAndDelete(orderId);
-            // และลบ ID บิลนี้ออกจากโต๊ะด้วย
+            // เนเธฅเธฐเธฅเธ ID เธเธดเธฅเธเธตเนเธญเธญเธเธเธฒเธเนเธ•เนเธฐเธ”เนเธงเธข
             const table = await Table.findOne({ tableId: updatedOrder.tableId });
             if (table) {
                 table.status = 'Open';
@@ -190,3 +190,4 @@ exports.cancelOrderItem = async (req, res) => {
         res.status(500).json({ message: 'Error cancelling order item.', error: error.message });
     }
 };
+

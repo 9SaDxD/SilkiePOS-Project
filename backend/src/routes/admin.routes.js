@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 
 const menuController = require('../controllers/menu.controller');
@@ -11,30 +11,31 @@ const upload = require('../middleware/upload.middleware');
 router.use(verifyToken);
 router.use(checkRole(['Admin']));
 
-// --- 🛡️ API สำหรับ Admin เท่านั้น 🛡️ ---
+// --- ๐ก๏ธ API เธชเธณเธซเธฃเธฑเธ Admin เน€เธ—เนเธฒเธเธฑเนเธ ๐ก๏ธ ---
 
 // 1. Dashboard
 router.get('/stats', staffController.getDashboardStats); 
 
-// 2. การจัดการเมนู
+// 2. เธเธฒเธฃเธเธฑเธ”เธเธฒเธฃเน€เธกเธเธน
 router.get('/menus', menuController.getAllMenus);
 router.post('/menus', upload.single('image'), menuController.createMenu);
 router.put('/menus/:menuId', upload.single('image'), menuController.updateMenu);
 router.delete('/menus/:menuId', menuController.deleteMenu);
 
-// 4. การจัดการโต๊ะ
+// 4. เธเธฒเธฃเธเธฑเธ”เธเธฒเธฃเนเธ•เนเธฐ
 router.get('/tables', staffController.getAllTables);
 router.post('/tables', staffController.createTable);
 router.delete('/tables/:id', staffController.adminDeleteTable);
 
-// 5. การจัดการพนักงาน
+// 5. เธเธฒเธฃเธเธฑเธ”เธเธฒเธฃเธเธเธฑเธเธเธฒเธ
 router.post('/employees', authController.registerEmployee);
 router.get('/employees', authController.getAllEmployees);
 router.put('/employees/:id', authController.updateEmployee);
 router.delete('/employees/:id', authController.deleteEmployee);
 
-// --- 👇 (นี่คือบรรทัดใหม่) ---
-// 6. รายงานยอดขาย
+// --- ๐‘ (เธเธตเนเธเธทเธญเธเธฃเธฃเธ—เธฑเธ”เนเธซเธกเน) ---
+// 6. เธฃเธฒเธขเธเธฒเธเธขเธญเธ”เธเธฒเธข
 router.get('/sales/top-menu', staffController.getTopSellingMenus);
 
 module.exports = router;
+

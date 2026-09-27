@@ -1,11 +1,11 @@
-// src/server.js
+﻿// src/server.js
 
 require('dotenv').config(); 
 const express = require('express');
 const connectDB = require('./src/config/db.config');
 const cors = require('cors');
 
-// --- เพิ่ม Swagger ---
+// --- เน€เธเธดเนเธก Swagger ---
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./src/config/swagger.config');
 // -------------------
@@ -13,7 +13,7 @@ const swaggerSpec = require('./src/config/swagger.config');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// เชื่อมต่อฐานข้อมูล
+// เน€เธเธทเนเธญเธกเธ•เนเธญเธเธฒเธเธเนเธญเธกเธนเธฅ
 connectDB();
 
 // Middleware
@@ -43,5 +43,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`๐€ Server is running on port ${PORT}`);
 });
+

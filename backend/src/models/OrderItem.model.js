@@ -1,20 +1,20 @@
-// src/models/OrderItem.model.js (สร้างไฟล์ใหม่)
+﻿// src/models/OrderItem.model.js (เธชเธฃเนเธฒเธเนเธเธฅเนเนเธซเธกเน)
 
 const mongoose = require('mongoose');
 
 const OrderItemSchema = new mongoose.Schema({
-    // อ้างอิงกลับไปที่ Order หลัก (บิล)
+    // เธญเนเธฒเธเธญเธดเธเธเธฅเธฑเธเนเธเธ—เธตเน Order เธซเธฅเธฑเธ (เธเธดเธฅ)
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order',
         required: true
     },
-    // อ้างอิงกลับไปที่ Table (เพื่อความสะดวกของ KDS)
+    // เธญเนเธฒเธเธญเธดเธเธเธฅเธฑเธเนเธเธ—เธตเน Table (เน€เธเธทเนเธญเธเธงเธฒเธกเธชเธฐเธ”เธงเธเธเธญเธ KDS)
     tableId: {
         type: String,
         required: true
     },
-    // รายละเอียดจาก Menu
+    // เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธเธฒเธ Menu
     menuId: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Menu', 
@@ -30,7 +30,7 @@ const OrderItemSchema = new mongoose.Schema({
         enum: ['Ramen', 'Fry', 'Drink', 'Other'],
         required: true
     },
-    // สถานะของ "จานนี้" (นี่คือสิ่งที่เราจะ Mark Done)
+    // เธชเธ–เธฒเธเธฐเธเธญเธ "เธเธฒเธเธเธตเน" (เธเธตเนเธเธทเธญเธชเธดเนเธเธ—เธตเนเน€เธฃเธฒเธเธฐ Mark Done)
     itemStatus: { 
         type: String,
         enum: ['Pending', 'Done'],
@@ -40,7 +40,7 @@ const OrderItemSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    price: Number, // ราคารวมของรายการนี้ (รวมท็อปปิ้ง)
+    price: Number, // เธฃเธฒเธเธฒเธฃเธงเธกเธเธญเธเธฃเธฒเธขเธเธฒเธฃเธเธตเน (เธฃเธงเธกเธ—เนเธญเธเธเธดเนเธ)
     sentToKitchenAt: { 
         type: Date,
         default: Date.now 
@@ -49,3 +49,4 @@ const OrderItemSchema = new mongoose.Schema({
 
 const OrderItem = mongoose.models.OrderItem || mongoose.model('OrderItem', OrderItemSchema);
 module.exports = OrderItem;
+
