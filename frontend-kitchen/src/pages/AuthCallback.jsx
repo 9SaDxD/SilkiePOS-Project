@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
@@ -12,15 +12,15 @@ function AuthCallback() {
     const role = searchParams.get('role');
     const username = searchParams.get('username');
 
-    // --- ๐‘ (เนเธเนเนเธ) ---
-    // (เน€เธเนเธเธงเนเธฒ Role เธเธทเธญ 'Kitchen' เธซเธฃเธทเธญ 'Admin')
+    // --- 👇 (แก้ไข) ---
+    // (เช็คว่า Role คือ 'Kitchen' หรือ 'Admin')
     if (token && role && (role === 'Kitchen' || role === 'Admin')) {
       // ------------------
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', role);
       localStorage.setItem('username', username);
       
-      // (เธชเธณเธเธฑเธ) เธชเนเธเนเธเธซเธเนเธฒ "Choose" เน€เธชเธกเธญ
+      // (สำคัญ) ส่งไปหน้า "Choose" เสมอ
       navigate('/', { replace: true });
 
     } else {
@@ -31,7 +31,7 @@ function AuthCallback() {
 
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
-      เธเธณเธฅเธฑเธเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเนเธชเธณเธซเธฃเธฑเธเธเธฃเธฑเธง...
+      กำลังตรวจสอบสิทธิ์สำหรับครัว...
     </div>
   );
 }

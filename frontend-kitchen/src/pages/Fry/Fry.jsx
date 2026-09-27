@@ -1,4 +1,4 @@
-﻿// src/pages/Fry/Fry.jsx (เธเธเธฑเธเนเธเนเนเธ: Smart Merge)
+// src/pages/Fry/Fry.jsx (ฉบับแก้ไข: Smart Merge)
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../layouts/Header/Header';
@@ -18,12 +18,12 @@ const getAgeClass = (sentAt) => {
 };
 
 const formatTime = (dateString) => {
-    if (!dateString) return "เนเธกเนเธฃเธฐเธเธธเน€เธงเธฅเธฒ";
+    if (!dateString) return "ไม่ระบุเวลา";
     const d = new Date(dateString);
-    if (isNaN(d.getTime())) return "เนเธกเนเธฃเธฐเธเธธเน€เธงเธฅเธฒ";
+    if (isNaN(d.getTime())) return "ไม่ระบุเวลา";
     const hours = d.getHours().toString().padStart(2, "0");
     const minutes = d.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes} เธ.`;
+    return `${hours}:${minutes} น.`;
 };
 
 const Fry = () => {
@@ -49,7 +49,7 @@ const Fry = () => {
         return acc;
       }, {});
 
-      // โญ๏ธ Smart Merge Logic
+      // ⭐️ Smart Merge Logic
       setOrders(prevOrders => {
           const newOrdersMap = { ...apiOrders };
           const finalOrders = [];
@@ -107,7 +107,7 @@ const Fry = () => {
   const handleHeaderClick = async (order) => { 
     const pendingItems = order.items.filter(item => item.itemStatus !== 'Done');
     if (pendingItems.length > 0) { 
-        alert('เธขเธฑเธเธกเธตเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธ•เนเธญเธเธ—เธณ: ' + pendingItems.map(i => i.menuName).join(', ')); 
+        alert('ยังมีรายการที่ต้องทำ: ' + pendingItems.map(i => i.menuName).join(', ')); 
         return; 
     }
     
@@ -122,7 +122,7 @@ const Fry = () => {
   };
 
   const handleUndo = async () => {
-    if (!lastServedOrder) { alert("เนเธกเนเธกเธตเธฃเธฒเธขเธเธฒเธฃเนเธซเน Undo"); return; }
+    if (!lastServedOrder) { alert("ไม่มีรายการให้ Undo"); return; }
     const orderToRestore = { ...lastServedOrder, status: 'Ready' };
     const undoneOrderId = lastServedOrder._id;
     setLastServedOrder(null); 
@@ -146,7 +146,7 @@ const Fry = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Header 
-        title={`เธเธฃเธฑเธง${kitchenType}`}
+        title={`ครัว${kitchenType}`}
         onBack={() => navigate("/")} 
         onRefresh={handleUndo} 
       />
@@ -160,7 +160,7 @@ const Fry = () => {
                   className={`order-header-fry ${isAllDone ? 'ready' : ''} ${getAgeClass(order.sentAt)}`}
                   onClick={() => handleHeaderClick(order)}
                 >
-                  <div className="order-info-fry"><h3>เนเธ•เนเธฐ {order.table}</h3>{order.time}</div>
+                  <div className="order-info-fry"><h3>โต๊ะ {order.table}</h3>{order.time}</div>
                 </div>
                 <ul className="menu-list-fry">
                   {order.items.map((item) => (

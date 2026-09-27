@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Choose from './pages/Choose/Choose.jsx';
 import Ramen from './pages/Ramen/Ramen.jsx';
@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   const userRole = localStorage.getItem('userRole');
 
-  // --- ๐‘ (เนเธเนเนเธ) ---
+  // --- 👇 (แก้ไข) ---
   if (token && userRole && (userRole === 'Kitchen' || userRole === 'Admin')) {
   // ------------------
     return children;
