@@ -4,7 +4,7 @@ import StaffSidebar from './StaffSidebar'; // (ไฟล์นี้เราต
 import './StaffLayout.css'; // (ไฟล์นี้เราต้องสร้างในขั้นตอนต่อไป)
 
 // URL ของประตูหน้า (Login Hub)
-const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
+const LOGIN_HUB_URL = 'https://csi400-login.vercel.app';
 
 const StaffLayout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

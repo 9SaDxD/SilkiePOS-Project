@@ -12,7 +12,7 @@ import PaymentPage from './pages/PaymentPage';
 import BillHistoryPage from './pages/BillHistoryPage';
 import BillDetailPage from './pages/BillDetailPage'; // 👈 (ใหม่)
 
-const LOGIN_HUB_URL = 'https://silkie-login.vercel.app';
+const LOGIN_HUB_URL = 'https://csi400-login.vercel.app';
 
 // (Axios Interceptor - เหมือนเดิม)
 axios.interceptors.request.use(
