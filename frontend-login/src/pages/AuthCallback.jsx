@@ -1,40 +1,41 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-// (ใหม่) หน้านี้มีหน้าที่เดียว:
-// 1. อ่าน Token/Role จาก URL
-// 2. บันทึกลง localStorage
-// 3. พาไปหน้า Dashboard (/)
+// (เนเธซเธกเน) เธซเธเนเธฒเธเธตเนเธกเธตเธซเธเนเธฒเธ—เธตเนเน€เธ”เธตเธขเธง:
+// 1. เธญเนเธฒเธ Token/Role เธเธฒเธ URL
+// 2. เธเธฑเธเธ—เธถเธเธฅเธ localStorage
+// 3. เธเธฒเนเธเธซเธเนเธฒ Dashboard (/)
 
 function AuthCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1. อ่านค่าจาก URL
+    // 1. เธญเนเธฒเธเธเนเธฒเธเธฒเธ URL
     const token = searchParams.get('token');
     const role = searchParams.get('role');
     const username = searchParams.get('username');
 
-    // 2. ตรวจสอบว่าใช่ Admin หรือไม่
+    // 2. เธ•เธฃเธงเธเธชเธญเธเธงเนเธฒเนเธเน Admin เธซเธฃเธทเธญเนเธกเน
     if (token && role === 'Admin') {
-      // 3. บันทึกลง localStorage (ตอนนี้ปลอดภัยแล้ว เพราะเราอยู่ใน Port 5176)
+      // 3. เธเธฑเธเธ—เธถเธเธฅเธ localStorage (เธ•เธญเธเธเธตเนเธเธฅเธญเธ”เธ เธฑเธขเนเธฅเนเธง เน€เธเธฃเธฒเธฐเน€เธฃเธฒเธญเธขเธนเนเนเธ Port 5176)
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', role);
       localStorage.setItem('username', username);
       
-      // 4. พาไปหน้า Dashboard
+      // 4. เธเธฒเนเธเธซเธเนเธฒ Dashboard
       navigate('/', { replace: true });
     } else {
-      // ถ้าไม่ใช่ Admin ให้ล้างค่าและเด้งกลับ
+      // เธ–เนเธฒเนเธกเนเนเธเน Admin เนเธซเนเธฅเนเธฒเธเธเนเธฒเนเธฅเธฐเน€เธ”เนเธเธเธฅเธฑเธ
       localStorage.clear();
-      window.location.replace('http://localhost:5173'); // กลับไป Login Hub
+      window.location.replace('https://silkie-login.vercel.app'); // เธเธฅเธฑเธเนเธ Login Hub
     }
   }, [searchParams, navigate]);
 
   return (
-    <div>กำลังตรวจสอบสิทธิ์...</div>
+    <div>เธเธณเธฅเธฑเธเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเน...</div>
   );
 }
 
 export default AuthCallback;
+
