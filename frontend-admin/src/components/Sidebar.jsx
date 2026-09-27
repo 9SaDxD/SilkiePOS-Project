@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import "../styles/Sidebar.css"; //
 
@@ -9,40 +9,40 @@ const Sidebar = ({ onLogout }) => {
     if (onLogout) {
         onLogout();
     }
-    // (App.jsx จะจัดการส่งผู้ใช้กลับไปหน้า Login Hub เอง)
+    // (App.jsx เธเธฐเธเธฑเธ”เธเธฒเธฃเธชเนเธเธเธนเนเนเธเนเธเธฅเธฑเธเนเธเธซเธเนเธฒ Login Hub เน€เธญเธ)
   };
 
   return (
     <div className="sidebar">
-      <img src="/images/logo.png" alt="หัวข้อ" className="sidebar-logo" />
+      <img src="/images/logo.png" alt="เธซเธฑเธงเธเนเธญ" className="sidebar-logo" />
 
       <ul className="menu">
         <li>
           <NavLink to="/" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            หน้าหลัก
+            เธซเธเนเธฒเธซเธฅเธฑเธ
           </NavLink>
         </li>
         <li>
           <NavLink to="/sales-menu" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            เมนูขายดี
+            เน€เธกเธเธนเธเธฒเธขเธ”เธต
           </NavLink>
         </li>
         <li>
           <NavLink to="/edit-menu" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            แก้ไขเมนู
+            เนเธเนเนเธเน€เธกเธเธน
           </NavLink>
         </li>
         
-        {/* --- (ลบ "แก้ไขท็อปปิ้ง" และ "แก้ไขน้ำ" ออก) --- */}
+        {/* --- (เธฅเธ "เนเธเนเนเธเธ—เนเธญเธเธเธดเนเธ" เนเธฅเธฐ "เนเธเนเนเธเธเนเธณ" เธญเธญเธ) --- */}
         
         <li>
           <NavLink to="/tables" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            โต๊ะ
+            เนเธ•เนเธฐ
           </NavLink>
         </li>
         <li>
           <NavLink to="/staff" className={({ isActive }) => isActive ? "menu-item active" : "menu-item"}>
-            พนักงาน
+            เธเธเธฑเธเธเธฒเธ
           </NavLink>
         </li>
       </ul>
@@ -55,3 +55,4 @@ const Sidebar = ({ onLogout }) => {
 }
 
 export default Sidebar;
+

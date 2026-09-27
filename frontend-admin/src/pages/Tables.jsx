@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
-import axios from "axios"; // (ใหม่)
+﻿import { useState, useEffect, useCallback } from "react";
+import axios from "axios"; // (เนเธซเธกเน)
 import "../styles/Tables.css"; //
 
-// (ใหม่) API URL
-const API_URL = "http://localhost:3000/api/admin/tables";
+// (เนเธซเธกเน) API URL
+const API_URL = "https://silkiepos-project.onrender.com/api/admin/tables";
 
 export default function TablesGrid() {
   const [tables, setTables] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // (แก้ไข) State สำหรับฟอร์ม
+  // (เนเธเนเนเธ) State เธชเธณเธซเธฃเธฑเธเธเธญเธฃเนเธก
   const [newTableId, setNewTableId] = useState("");
 
-  // --- (ใหม่) ฟังก์ชันดึงข้อมูลโต๊ะ ---
+  // --- (เนเธซเธกเน) เธเธฑเธเธเนเธเธฑเธเธ”เธถเธเธเนเธญเธกเธนเธฅเนเธ•เนเธฐ ---
   const fetchTables = useCallback(async () => {
     setLoading(true);
     try {
@@ -20,7 +20,7 @@ export default function TablesGrid() {
       setTables(response.data);
     } catch (error) {
       console.error("Error fetching tables:", error);
-      alert("ไม่สามารถดึงข้อมูลโต๊ะได้: " + error.response?.data?.message);
+      alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ”เธถเธเธเนเธญเธกเธนเธฅเนเธ•เนเธฐเนเธ”เน: " + error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -30,70 +30,70 @@ export default function TablesGrid() {
     fetchTables();
   }, [fetchTables]);
 
-  // --- (แก้ไข) ฟังก์ชันเพิ่มโต๊ะ ---
+  // --- (เนเธเนเนเธ) เธเธฑเธเธเนเธเธฑเธเน€เธเธดเนเธกเนเธ•เนเธฐ ---
   const handleAddTable = async () => {
-    if (!newTableId.trim()) return alert("กรุณากรอก ID โต๊ะ (เช่น T04)");
+    if (!newTableId.trim()) return alert("เธเธฃเธธเธ“เธฒเธเธฃเธญเธ ID เนเธ•เนเธฐ (เน€เธเนเธ T04)");
 
     try {
-      // (ส่ง tableId ให้ตรงกับ Model)
+      // (เธชเนเธ tableId เนเธซเนเธ•เธฃเธเธเธฑเธ Model)
       await axios.post(API_URL, { tableId: newTableId });
-      alert(`เพิ่มโต๊ะ ${newTableId} สำเร็จ!`);
+      alert(`เน€เธเธดเนเธกเนเธ•เนเธฐ ${newTableId} เธชเธณเน€เธฃเนเธ!`);
       setNewTableId("");
-      fetchTables(); // โหลดใหม่
+      fetchTables(); // เนเธซเธฅเธ”เนเธซเธกเน
     } catch (error) {
       console.error("Error adding table:", error);
-      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
+      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
     }
   };
 
-  // --- (แก้ไข) ฟังก์ชันลบโต๊ะ ---
+  // --- (เนเธเนเนเธ) เธเธฑเธเธเนเธเธฑเธเธฅเธเนเธ•เนเธฐ ---
   const handleDelete = async (id, tableId) => {
-    if (!window.confirm(`คุณแน่ใจหรือไม่ที่จะลบโต๊ะ ${tableId}?`)) return;
+    if (!window.confirm(`เธเธธเธ“เนเธเนเนเธเธซเธฃเธทเธญเนเธกเนเธ—เธตเนเธเธฐเธฅเธเนเธ•เนเธฐ ${tableId}?`)) return;
     
     try {
-      await axios.delete(`${API_URL}/${id}`); // (ส่ง _id ของ MongoDB)
-      alert(`ลบโต๊ะ ${tableId} สำเร็จ!`);
-      fetchTables(); // โหลดใหม่
+      await axios.delete(`${API_URL}/${id}`); // (เธชเนเธ _id เธเธญเธ MongoDB)
+      alert(`เธฅเธเนเธ•เนเธฐ ${tableId} เธชเธณเน€เธฃเนเธ!`);
+      fetchTables(); // เนเธซเธฅเธ”เนเธซเธกเน
     } catch (error) {
       console.error("Error deleting table:", error);
-      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
+      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
     }
   };
 
   return (
     <div className="tables-container">
-      <h2>🪑 จัดการโต๊ะ</h2>
+      <h2>๐ช‘ เธเธฑเธ”เธเธฒเธฃเนเธ•เนเธฐ</h2>
 
-      {/* (แก้ไข) ฟอร์มเพิ่มโต๊ะ */}
+      {/* (เนเธเนเนเธ) เธเธญเธฃเนเธกเน€เธเธดเนเธกเนเธ•เนเธฐ */}
       <div className="add-table-box">
         <input
           type="text"
-          placeholder="ID โต๊ะใหม่ (เช่น T04, T05)"
+          placeholder="ID เนเธ•เนเธฐเนเธซเธกเน (เน€เธเนเธ T04, T05)"
           value={newTableId}
           onChange={e => setNewTableId(e.target.value)}
         />
-        <button onClick={handleAddTable}>➕ เพิ่มโต๊ะ</button>
+        <button onClick={handleAddTable}>โ• เน€เธเธดเนเธกเนเธ•เนเธฐ</button>
       </div>
 
-      {/* (แก้ไข) ตารางแสดงผล */}
+      {/* (เนเธเนเนเธ) เธ•เธฒเธฃเธฒเธเนเธชเธ”เธเธเธฅ */}
       <div className="tables-grid">
-        {loading ? <p>กำลังโหลด...</p> : 
-         tables.length === 0 ? <p>ไม่พบข้อมูลโต๊ะ (ลอง Seed ข้อมูล)</p> :
+        {loading ? <p>เธเธณเธฅเธฑเธเนเธซเธฅเธ”...</p> : 
+         tables.length === 0 ? <p>เนเธกเนเธเธเธเนเธญเธกเธนเธฅเนเธ•เนเธฐ (เธฅเธญเธ Seed เธเนเธญเธกเธนเธฅ)</p> :
          tables.map((table) => (
           <div
-            key={table._id} // (ใช้ _id)
-            // (แก้ไข) ใช้ class "open" หรือ "occupied"
+            key={table._id} // (เนเธเน _id)
+            // (เนเธเนเนเธ) เนเธเน class "open" เธซเธฃเธทเธญ "occupied"
             className={`table-card ${table.status.toLowerCase()}`} 
           >
             <h3>{table.tableId}</h3>
             <p className="status">{table.status}</p>
             <div className="table-actions">
-              {/* (ลบปุ่มสลับสถานะ) */}
+              {/* (เธฅเธเธเธธเนเธกเธชเธฅเธฑเธเธชเธ–เธฒเธเธฐ) */}
               <button 
                 className="delete-btn" 
                 onClick={() => handleDelete(table._id, table.tableId)}
               >
-                🗑️ ลบ
+                ๐—‘๏ธ เธฅเธ
               </button>
             </div>
           </div>
@@ -102,3 +102,6 @@ export default function TablesGrid() {
     </div>
   );
 }
+
+
+

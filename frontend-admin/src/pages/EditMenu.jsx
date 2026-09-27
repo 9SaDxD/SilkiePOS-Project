@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+﻿import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "../styles/EditMenu.css";
 
-const API_URL = "http://localhost:3000/api/admin/menus";
-const BASE_URL = "http://localhost:3000"; // (ใหม่) สำหรับแสดงรูป
+const API_URL = "https://silkiepos-project.onrender.com/api/admin/menus";
+const BASE_URL = "https://silkiepos-project.onrender.com"; // (เนเธซเธกเน) เธชเธณเธซเธฃเธฑเธเนเธชเธ”เธเธฃเธนเธ
 
-// (ฟังก์ชันสร้าง ID - เหมือนเดิม)
+// (เธเธฑเธเธเนเธเธฑเธเธชเธฃเนเธฒเธ ID - เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก)
 const generateNextMenuId = (kitchenType, allMenus) => {
   const prefix = kitchenType.charAt(0).toUpperCase();
   const relevantMenus = allMenus.filter(m => m.menuId && m.menuId.startsWith(prefix));
@@ -25,19 +25,19 @@ export default function EditMenu() {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // --- 👇 (แก้ไข) State สำหรับฟอร์ม "เพิ่ม" ---
+  // --- ๐‘ (เนเธเนเนเธ) State เธชเธณเธซเธฃเธฑเธเธเธญเธฃเนเธก "เน€เธเธดเนเธก" ---
   const [newMenu, setNewMenu] = useState({
     name: "",
     price: "",
     kitchenType: "Ramen",
-    imageFile: null, // (เปลี่ยนจาก imageUrl เป็น imageFile)
+    imageFile: null, // (เน€เธเธฅเธตเนเธขเธเธเธฒเธ imageUrl เน€เธเนเธ imageFile)
   });
-  const [preview, setPreview] = useState(null); // (ใหม่) สำหรับโชว์รูป
+  const [preview, setPreview] = useState(null); // (เนเธซเธกเน) เธชเธณเธซเธฃเธฑเธเนเธเธงเนเธฃเธนเธ
   
   const [editMenu, setEditMenu] = useState(null);
-  const [editPreview, setEditPreview] = useState(null); // (ใหม่)
+  const [editPreview, setEditPreview] = useState(null); // (เนเธซเธกเน)
 
-  // (ฟังก์ชัน fetchMenus - เหมือนเดิม)
+  // (เธเธฑเธเธเนเธเธฑเธ fetchMenus - เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก)
   const fetchMenus = useCallback(async () => {
     setLoading(true);
     try {
@@ -45,7 +45,7 @@ export default function EditMenu() {
       setMenus(response.data);
     } catch (error) {
       console.error("Error fetching menus:", error);
-      alert("ไม่สามารถดึงข้อมูลเมนูได้: " + error.response?.data?.message);
+      alert("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ”เธถเธเธเนเธญเธกเธนเธฅเน€เธกเธเธนเนเธ”เน: " + error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -55,91 +55,91 @@ export default function EditMenu() {
     fetchMenus();
   }, [fetchMenus]);
 
-  // --- 👇 (แก้ไข) ฟังก์ชัน "เพิ่มเมนู" (ใช้ FormData) ---
+  // --- ๐‘ (เนเธเนเนเธ) เธเธฑเธเธเนเธเธฑเธ "เน€เธเธดเนเธกเน€เธกเธเธน" (เนเธเน FormData) ---
   const handleAdd = async () => {
     if (!newMenu.name || !newMenu.price || !newMenu.kitchenType) {
-      alert("กรุณากรอกข้อมูลให้ครบ (ชื่อ, ราคา, ประเภทครัว)");
+      alert("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธเนเธญเธกเธนเธฅเนเธซเนเธเธฃเธ (เธเธทเนเธญ, เธฃเธฒเธเธฒ, เธเธฃเธฐเน€เธ เธ—เธเธฃเธฑเธง)");
       return;
     }
     
     const generatedMenuId = generateNextMenuId(newMenu.kitchenType, menus);
 
-    // 1. (ใหม่) สร้าง FormData
+    // 1. (เนเธซเธกเน) เธชเธฃเนเธฒเธ FormData
     const formData = new FormData();
     formData.append('menuId', generatedMenuId);
     formData.append('name', newMenu.name);
     formData.append('price', newMenu.price);
     formData.append('kitchenType', newMenu.kitchenType);
     
-    // 2. (ใหม่) เพิ่มไฟล์ (ถ้ามี)
+    // 2. (เนเธซเธกเน) เน€เธเธดเนเธกเนเธเธฅเน (เธ–เนเธฒเธกเธต)
     if (newMenu.imageFile) {
-      formData.append('image', newMenu.imageFile); // 'image' ต้องตรงกับ `upload.single('image')`
+      formData.append('image', newMenu.imageFile); // 'image' เธ•เนเธญเธเธ•เธฃเธเธเธฑเธ `upload.single('image')`
     }
 
     try {
-      // 3. (ใหม่) ส่ง FormData
+      // 3. (เนเธซเธกเน) เธชเนเธ FormData
       await axios.post(API_URL, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       
-      alert(`เพิ่มเมนูสำเร็จ! (ID: ${generatedMenuId})`);
+      alert(`เน€เธเธดเนเธกเน€เธกเธเธนเธชเธณเน€เธฃเนเธ! (ID: ${generatedMenuId})`);
       setNewMenu({ name: "", price: "", kitchenType: "Ramen", imageFile: null });
       setPreview(null);
       fetchMenus();
     } catch (error) {
       console.error("Error adding menu:", error);
-      alert("เกิดข้อผิดพลาด: " + error.response?.data?.error);
+      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.error);
     }
   };
 
-  // --- 👇 (แก้ไข) ฟังก์ชัน "บันทึกการแก้ไข" (ใช้ FormData) ---
+  // --- ๐‘ (เนเธเนเนเธ) เธเธฑเธเธเนเธเธฑเธ "เธเธฑเธเธ—เธถเธเธเธฒเธฃเนเธเนเนเธ" (เนเธเน FormData) ---
   const handleSave = async () => {
     if (!editMenu) return;
 
-    // 1. (ใหม่) สร้าง FormData
+    // 1. (เนเธซเธกเน) เธชเธฃเนเธฒเธ FormData
     const formData = new FormData();
     formData.append('name', editMenu.name);
     formData.append('price', editMenu.price);
     formData.append('kitchenType', editMenu.kitchenType);
     
-    // 2. (ใหม่) ถ้ามีการเลือกไฟล์ใหม่ (imageFile คือไฟล์ใหม่)
+    // 2. (เนเธซเธกเน) เธ–เนเธฒเธกเธตเธเธฒเธฃเน€เธฅเธทเธญเธเนเธเธฅเนเนเธซเธกเน (imageFile เธเธทเธญเนเธเธฅเนเนเธซเธกเน)
     if (editMenu.imageFile) {
       formData.append('image', editMenu.imageFile);
     }
-    // (ถ้าไม่มีไฟล์ใหม่ Backend จะไม่แก้ไข imageUrl เดิม)
+    // (เธ–เนเธฒเนเธกเนเธกเธตเนเธเธฅเนเนเธซเธกเน Backend เธเธฐเนเธกเนเนเธเนเนเธ imageUrl เน€เธ”เธดเธก)
 
     try {
-      // 3. (ใหม่) ส่ง FormData
+      // 3. (เนเธซเธกเน) เธชเนเธ FormData
       await axios.put(`${API_URL}/${editMenu.menuId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       
-      alert("บันทึกการแก้ไขสำเร็จ!");
+      alert("เธเธฑเธเธ—เธถเธเธเธฒเธฃเนเธเนเนเธเธชเธณเน€เธฃเนเธ!");
       setEditMenu(null);
       setEditPreview(null);
       fetchMenus();
     } catch (error) {
       console.error("Error updating menu:", error);
-      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
+      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
     }
   };
 
-  // --- (ฟังก์ชันเดิม) ---
+  // --- (เธเธฑเธเธเนเธเธฑเธเน€เธ”เธดเธก) ---
   const handleDelete = async (menuId) => {
-    if (!window.confirm(`คุณแน่ใจหรือไม่ที่จะลบเมนู ${menuId}?`)) return;
+    if (!window.confirm(`เธเธธเธ“เนเธเนเนเธเธซเธฃเธทเธญเนเธกเนเธ—เธตเนเธเธฐเธฅเธเน€เธกเธเธน ${menuId}?`)) return;
     try {
       await axios.delete(`${API_URL}/${menuId}`);
-      alert("ลบเมนูสำเร็จ!");
+      alert("เธฅเธเน€เธกเธเธนเธชเธณเน€เธฃเนเธ!");
       fetchMenus();
     } catch (error) {
       console.error("Error deleting menu:", error);
-      alert("เกิดข้อผิดพลาด: " + error.response?.data?.message);
+      alert("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”: " + error.response?.data?.message);
     }
   };
 
   const handleEdit = (menu) => {
-    setEditMenu({ ...menu, imageFile: null }); // เริ่มต้นที่ยังไม่มีไฟล์ใหม่
-    setEditPreview(menu.imageUrl ? `${BASE_URL}/${menu.imageUrl}` : null); // แสดงรูปเก่า
+    setEditMenu({ ...menu, imageFile: null }); // เน€เธฃเธดเนเธกเธ•เนเธเธ—เธตเนเธขเธฑเธเนเธกเนเธกเธตเนเธเธฅเนเนเธซเธกเน
+    setEditPreview(menu.imageUrl ? `${BASE_URL}/${menu.imageUrl}` : null); // เนเธชเธ”เธเธฃเธนเธเน€เธเนเธฒ
   };
   
   const handleChangeNew = (field, value) => {
@@ -149,45 +149,45 @@ export default function EditMenu() {
     setEditMenu({ ...editMenu, [field]: value });
   };
 
-  // (ใหม่) Handler สำหรับอัปโหลดไฟล์ (ฟอร์ม "เพิ่ม")
+  // (เนเธซเธกเน) Handler เธชเธณเธซเธฃเธฑเธเธญเธฑเธเนเธซเธฅเธ”เนเธเธฅเน (เธเธญเธฃเนเธก "เน€เธเธดเนเธก")
   const handleNewFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setNewMenu({ ...newMenu, imageFile: file });
-      setPreview(URL.createObjectURL(file)); // สร้าง URL ชั่วคราวสำหรับโชว์
+      setPreview(URL.createObjectURL(file)); // เธชเธฃเนเธฒเธ URL เธเธฑเนเธงเธเธฃเธฒเธงเธชเธณเธซเธฃเธฑเธเนเธเธงเน
     }
   };
   
-  // (ใหม่) Handler สำหรับอัปโหลดไฟล์ (ฟอร์ม "แก้ไข")
+  // (เนเธซเธกเน) Handler เธชเธณเธซเธฃเธฑเธเธญเธฑเธเนเธซเธฅเธ”เนเธเธฅเน (เธเธญเธฃเนเธก "เนเธเนเนเธ")
   const handleEditFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setEditMenu({ ...editMenu, imageFile: file });
-      setEditPreview(URL.createObjectURL(file)); // โชว์รูปใหม่
+      setEditPreview(URL.createObjectURL(file)); // เนเธเธงเนเธฃเธนเธเนเธซเธกเน
     }
   };
 
 
-  if (loading) return <p>กำลังโหลดข้อมูล...</p>;
+  if (loading) return <p>เธเธณเธฅเธฑเธเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅ...</p>;
 
   return (
     <div className="main-wrapper">
-      <h2 className="page-title">➕ เพิ่ม/แก้ไขเมนู</h2>
+      <h2 className="page-title">โ• เน€เธเธดเนเธก/เนเธเนเนเธเน€เธกเธเธน</h2>
 
-      {/* --- 👇 (แก้ไข) ฟอร์มเพิ่มเมนู --- */}
+      {/* --- ๐‘ (เนเธเนเนเธ) เธเธญเธฃเนเธกเน€เธเธดเนเธกเน€เธกเธเธน --- */}
       <div className="menu-card new-card">
-        <h3>เพิ่มเมนูใหม่</h3>
+        <h3>เน€เธเธดเนเธกเน€เธกเธเธนเนเธซเธกเน</h3>
         <input
           type="text"
           className="full-row" 
           value={newMenu.name}
-          placeholder="ชื่อเมนู"
+          placeholder="เธเธทเนเธญเน€เธกเธเธน"
           onChange={(e) => handleChangeNew("name", e.target.value)}
         />
         <input
           type="number"
           value={newMenu.price}
-          placeholder="ราคา"
+          placeholder="เธฃเธฒเธเธฒ"
           onChange={(e) => handleChangeNew("price", e.target.value)}
         />
         <select
@@ -200,25 +200,25 @@ export default function EditMenu() {
           <option value="Other">Other</option>
         </select>
         
-        {/* (เปลี่ยนเป็น type="file") */}
+        {/* (เน€เธเธฅเธตเนเธขเธเน€เธเนเธ type="file") */}
         <input
           type="file"
           className="full-row"
           accept="image/png, image/jpeg, image/jpg"
           onChange={handleNewFileChange}
         />
-        {/* (แสดงรูป Preview) */}
+        {/* (เนเธชเธ”เธเธฃเธนเธ Preview) */}
         {preview && <img src={preview} alt="Preview" className="menu-preview full-row" />}
         
         <button className="add-btn-full" onClick={handleAdd}>
-          ➕ เพิ่มเมนู
+          โ• เน€เธเธดเนเธกเน€เธกเธเธน
         </button>
       </div>
 
-      {/* --- 👇 (แก้ไข) ฟอร์มแก้ไข --- */}
+      {/* --- ๐‘ (เนเธเนเนเธ) เธเธญเธฃเนเธกเนเธเนเนเธ --- */}
       {editMenu && (
         <div className="menu-card new-card">
-          <h3>✏️ แก้ไขเมนู (ID: {editMenu.menuId})</h3>
+          <h3>โ๏ธ เนเธเนเนเธเน€เธกเธเธน (ID: {editMenu.menuId})</h3>
           <input
             type="text"
             value={editMenu.name}
@@ -245,38 +245,38 @@ export default function EditMenu() {
             <option value="Other">Other</option>
           </select>
 
-          {/* (เปลี่ยนเป็น type="file") */}
+          {/* (เน€เธเธฅเธตเนเธขเธเน€เธเนเธ type="file") */}
           <input
             type="file"
             className="full-row"
             accept="image/png, image/jpeg, image/jpg"
             onChange={handleEditFileChange}
           />
-          {/* (แสดงรูป Preview) */}
+          {/* (เนเธชเธ”เธเธฃเธนเธ Preview) */}
           {editPreview && <img src={editPreview} alt="Preview" className="menu-preview full-row" />}
 
           <div className="button-group full-row">
             <button onClick={handleSave} className="add-btn">
-              💾 บันทึก
+              ๐’พ เธเธฑเธเธ—เธถเธ
             </button>
             <button onClick={() => setEditMenu(null)} className="delete-btn">
-              ❌ ยกเลิก
+              โ เธขเธเน€เธฅเธดเธ
             </button>
           </div>
         </div>
       )}
 
-      {/* --- 👇 (แก้ไข) ตาราง (แสดงรูปจาก Backend) --- */}
+      {/* --- ๐‘ (เนเธเนเนเธ) เธ•เธฒเธฃเธฒเธ (เนเธชเธ”เธเธฃเธนเธเธเธฒเธ Backend) --- */}
       <div className="table-wrapper">
         <table className="employees-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>ชื่อเมนู</th>
-              <th>ราคา</th>
-              <th>ประเภทครัว</th>
-              <th>รูป</th>
-              <th>จัดการ</th>
+              <th>เธเธทเนเธญเน€เธกเธเธน</th>
+              <th>เธฃเธฒเธเธฒ</th>
+              <th>เธเธฃเธฐเน€เธ เธ—เธเธฃเธฑเธง</th>
+              <th>เธฃเธนเธ</th>
+              <th>เธเธฑเธ”เธเธฒเธฃ</th>
             </tr>
           </thead>
           <tbody>
@@ -289,7 +289,7 @@ export default function EditMenu() {
                 <td>
                   {m.imageUrl ? (
                     <img
-                      // (สำคัญ) เราดึงรูปมาจาก Backend ที่รัน 'express.static'
+                      // (เธชเธณเธเธฑเธ) เน€เธฃเธฒเธ”เธถเธเธฃเธนเธเธกเธฒเธเธฒเธ Backend เธ—เธตเนเธฃเธฑเธ 'express.static'
                       src={`${BASE_URL}/${m.imageUrl}`} 
                       alt={m.name}
                       style={{ width: "80px", height: "50px", objectFit: "cover", borderRadius: "6px" }}
@@ -298,10 +298,10 @@ export default function EditMenu() {
                 </td>
                 <td>
                   <button className="btn-edit" onClick={() => handleEdit(m)}>
-                    ✏️ แก้ไข
+                    โ๏ธ เนเธเนเนเธ
                   </button>
                   <button className="btn-delete" onClick={() => handleDelete(m.menuId)}>
-                    🗑️ ลบ
+                    ๐—‘๏ธ เธฅเธ
                   </button>
                 </td>
               </tr>
@@ -312,3 +312,6 @@ export default function EditMenu() {
     </div>
   );
 }
+
+
+

@@ -1,42 +1,43 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const LOGIN_HUB_URL = 'http://localhost:5173'; // Port ประตูหน้า
+const LOGIN_HUB_URL = 'https://silkie-login.vercel.app'; // Port เธเธฃเธฐเธ•เธนเธซเธเนเธฒ
 
-// หน้านี้มีหน้าที่เดียว:
-// 1. อ่าน Token/Role จาก URL
-// 2. บันทึกลง localStorage
-// 3. พาไปหน้า Dashboard (/)
+// เธซเธเนเธฒเธเธตเนเธกเธตเธซเธเนเธฒเธ—เธตเนเน€เธ”เธตเธขเธง:
+// 1. เธญเนเธฒเธ Token/Role เธเธฒเธ URL
+// 2. เธเธฑเธเธ—เธถเธเธฅเธ localStorage
+// 3. เธเธฒเนเธเธซเธเนเธฒ Dashboard (/)
 
 function AuthCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1. อ่านค่าจาก URL
+    // 1. เธญเนเธฒเธเธเนเธฒเธเธฒเธ URL
     const token = searchParams.get('token');
     const role = searchParams.get('role');
     const username = searchParams.get('username');
 
-    // 2. ตรวจสอบว่าใช่ Admin หรือไม่
+    // 2. เธ•เธฃเธงเธเธชเธญเธเธงเนเธฒเนเธเน Admin เธซเธฃเธทเธญเนเธกเน
     if (token && role === 'Admin') {
-      // 3. บันทึกลง localStorage (ตอนนี้ปลอดภัยแล้ว)
+      // 3. เธเธฑเธเธ—เธถเธเธฅเธ localStorage (เธ•เธญเธเธเธตเนเธเธฅเธญเธ”เธ เธฑเธขเนเธฅเนเธง)
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', role);
       localStorage.setItem('username', username);
       
-      // 4. พาไปหน้า Dashboard
+      // 4. เธเธฒเนเธเธซเธเนเธฒ Dashboard
       navigate('/', { replace: true });
     } else {
-      // ถ้าไม่ใช่ Admin ให้ล้างค่าและเด้งกลับ
+      // เธ–เนเธฒเนเธกเนเนเธเน Admin เนเธซเนเธฅเนเธฒเธเธเนเธฒเนเธฅเธฐเน€เธ”เนเธเธเธฅเธฑเธ
       localStorage.clear();
       window.location.replace(LOGIN_HUB_URL);
     }
   }, [searchParams, navigate]);
 
   return (
-    <div>กำลังตรวจสอบสิทธิ์...</div>
+    <div>เธเธณเธฅเธฑเธเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเน...</div>
   );
 }
 
 export default AuthCallback;
+
