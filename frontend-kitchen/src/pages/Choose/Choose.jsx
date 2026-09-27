@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Choose.css'; //
 
 // (ใหม่) 1. URL ของประตูหน้า (Login Hub)
-const LOGIN_HUB_URL = 'https://silkie-login.vercel.app'; 
+const LOGIN_HUB_URL = 'https://silkie-pos-login.vercel.app'; 
 
 const Choose = () => {
   const navigate = useNavigate();
