@@ -1,8 +1,8 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginPage.css'; //
 
-// (URL Port เธเธญเธเนเธญเธเธ•เนเธฒเธเน - เน€เธซเธกเธทเธญเธเน€เธ”เธดเธก)
+// (URL Port ของแอปต่างๆ - เหมือนเดิม)
 const APP_URLS = {
     Admin: 'https://silkie-admin.vercel.app',
     Staff: 'https://silkie-staff.vercel.app',
@@ -18,7 +18,7 @@ function LoginPage() {
         e.preventDefault();
         setError('');
         if (!username || !password) {
-            setError('เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธเนเธญเธกเธนเธฅ');
+            setError('กรุณากรอกข้อมูล');
             return;
         }
 
@@ -32,23 +32,23 @@ function LoginPage() {
             const targetAppUrl = APP_URLS[user.role];
 
             if (targetAppUrl) {
-                // --- ๐‘ (เนเธเนเนเธ) ---
-                // เน€เธฃเธฒเธเธฐเนเธกเนเธเธฑเธเธ—เธถเธเธฅเธ localStorage เธ—เธตเนเธเธตเน
-                // เนเธ•เนเธเธฐเธชเนเธ Token เนเธฅเธฐ Role เนเธเนเธ URL เนเธ—เธ
+                // --- 👇 (แก้ไข) ---
+                // เราจะไม่บันทึกลง localStorage ที่นี่
+                // แต่จะส่ง Token และ Role ไปใน URL แทน
                 
-                // (เธชเธฃเนเธฒเธ URL เนเธซเธกเน เน€เธเนเธ: http://localhost:5176/auth-callback?token=...&role=Admin)
+                // (สร้าง URL ใหม่ เช่น: http://localhost:5176/auth-callback?token=...&role=Admin)
                 const authUrl = `${targetAppUrl}/auth-callback?token=${token}&role=${user.role}&username=${user.username}`;
                 
-                // เธชเธฑเนเธ Browser เนเธซเนเธขเนเธฒเธขเนเธเธ—เธตเน URL เนเธซเธกเน
+                // สั่ง Browser ให้ย้ายไปที่ URL ใหม่
                 window.location.replace(authUrl);
                 
             } else {
-                setError('เนเธกเนเธเธ Role เธ—เธตเนเธ–เธนเธเธ•เนเธญเธ เธซเธฃเธทเธญเนเธกเนเนเธ”เนเธฃเธฑเธเธญเธเธธเธเธฒเธ•');
+                setError('ไม่พบ Role ที่ถูกต้อง หรือไม่ได้รับอนุญาต');
             }
 
         } catch (err) {
             console.error('Login error:', err.response?.data || err.message);
-            setError(err.response?.data?.message || 'เธเธทเนเธญเธเธนเนเนเธเนเธซเธฃเธทเธญเธฃเธซเธฑเธชเธเนเธฒเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ');
+            setError(err.response?.data?.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         }
     };
 
@@ -80,10 +80,10 @@ function LoginPage() {
                     </div>
                     {error && <p className="login-error">{error}</p>}
                     <button type="submit" className="login-button">
-                        เน€เธเนเธฒเธชเธนเนเธฃเธฐเธเธ
+                        เข้าสู่ระบบ
                     </button>
-                    <div style={{ marginTop: '20px', fontSize: '0.9em', color: '#666', textAlign: 'center' }}>
-                        <p><strong>เธเธฑเธเธเธตเธชเธณเธซเธฃเธฑเธเธ—เธ”เธชเธญเธ:</strong></p>
+                                        <div style={{ marginTop: '20px', fontSize: '0.9em', color: '#666', textAlign: 'center' }}>
+                        <p><strong>�ѭ������Ѻ���ͺ:</strong></p>
                         <p>Admin: admin / 1234</p>
                         <p>Staff: staff / 1234</p>
                         <p>Kitchen: chef / 1234</p>
