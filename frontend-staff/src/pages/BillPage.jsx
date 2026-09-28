@@ -19,7 +19,7 @@ function BillPage() {
         if (!tableId) return;
         setLoading(true);
         try {
-            const res = await axios.get('https://silkiepos-project.onrender.com/api/staff/tables/${tableId}/bill`);
+            const res = await axios.get(`https://silkiepos-project.onrender.com/api/staff/tables/${tableId}/bill`);
             setBillData(res.data);
         } catch (err) {
             console.error("Error fetching bill", err);
@@ -44,7 +44,7 @@ function BillPage() {
         }
         try {
             setLoading(true);
-            await axios.delete('https://silkiepos-project.onrender.com/api/staff/orders/item/${itemId}`);
+            await axios.delete(`https://silkiepos-project.onrender.com/api/staff/orders/item/${itemId}`);
             fetchBill(); 
         } catch (err) {
             console.log(err.response.data.message);
