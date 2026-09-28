@@ -16,7 +16,7 @@ function BillDetailPage() {
         setLoading(true);
         try {
             // (เรียก API เดิมที่ใช้ในหน้า OrderSummary)
-            const res = await axios.get("https://silkiepos-project.onrender.com/api/staff/orders/${orderId}`);
+            const res = await axios.get(`https://silkiepos-project.onrender.com/api/staff/orders/${orderId}`);
             setBillDetails(res.data);
         } catch (err) {
             console.error("Error fetching bill details", err);
