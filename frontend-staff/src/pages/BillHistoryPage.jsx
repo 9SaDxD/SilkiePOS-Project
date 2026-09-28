@@ -13,7 +13,7 @@ function BillHistoryPage() {
     const fetchHistory = useCallback(async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`https://silkiepos-project.onrender.com/api/staff/history/paid-orders`);
+            const res = await axios.get('https://silkiepos-project.onrender.com/api/staff/history/paid-orders');
             setPaidOrders(res.data);
         } catch (err) {
             console.error("Error fetching bill history", err);

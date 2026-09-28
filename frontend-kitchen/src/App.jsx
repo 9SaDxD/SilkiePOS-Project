@@ -5,7 +5,7 @@ import Ramen from './pages/Ramen/Ramen.jsx';
 import Fry from './pages/Fry/Fry.jsx';
 import AuthCallback from './pages/AuthCallback.jsx';
 
-const LOGIN_HUB_URL = 'https://silkie-pos-login.vercel.app';
+const LOGIN_HUB_URL = 'https://csi400-login.vercel.app';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');

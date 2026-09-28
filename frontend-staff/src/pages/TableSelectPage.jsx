@@ -12,7 +12,7 @@ function TableSelectPage() {
     useEffect(() => {
         const fetchTables = async () => {
             try {
-                const res = await axios.get(`https://silkiepos-project.onrender.com/api/staff/tables`);
+                const res = await axios.get('https://silkiepos-project.onrender.com/api/staff/tables');
                 setTables(res.data);
             } catch (err) { console.error("Error fetching tables", err); } 
             finally { setLoading(false); }

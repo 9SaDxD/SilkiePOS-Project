@@ -55,7 +55,7 @@ function OrderPage() {
     useEffect(() => {
         const fetchMenus = async () => {
             try {
-                const response = await axios.get(`https://silkiepos-project.onrender.com/api/staff/menus`);
+                const response = await axios.get('https://silkiepos-project.onrender.com/api/staff/menus');
                 setMenus(response.data);
                 setGroupedMenus(groupMenusByCategory(response.data));
             } catch (error) { console.error('Error fetching menus:', error); } 
@@ -123,7 +123,7 @@ function OrderPage() {
 
         try {
             // (ใหม่) ยิง API ไปที่ Backend
-            const response = await axios.post(`https://silkiepos-project.onrender.com/api/staff/orders`, orderData);
+            const response = await axios.post('https://silkiepos-project.onrender.com/api/staff/orders', orderData);
             
             console.log("ส่งออเดอร์สำเร็จ:", response.data);
             alert(`ออเดอร์สำหรับโต๊ะ ${tableId} ถูกส่งไปที่ครัวแล้ว!`);

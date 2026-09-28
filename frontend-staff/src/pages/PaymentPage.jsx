@@ -46,7 +46,7 @@ function PaymentPage() {
         };
         try {
             setLoading(true);
-            await axios.post(`https://silkiepos-project.onrender.com/api/staff/payments`, paymentData);
+            await axios.post('https://silkiepos-project.onrender.com/api/staff/payments', paymentData);
             alert(`ชำระเงินด้วย ${method} สำเร็จ! ปิดโต๊ะ`);
             navigate('/');
         } catch (err) {
