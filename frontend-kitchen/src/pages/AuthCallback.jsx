@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const LOGIN_HUB_URL = 'https://csi400-login.vercel.app';
+const LOGIN_HUB_URL = 'https://silkie-pos-login.vercel.app/';
 
 function AuthCallback() {
   const [searchParams] = useSearchParams();
