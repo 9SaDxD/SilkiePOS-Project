@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const LOGIN_HUB_URL = 'https://csi400-login.vercel.app'; // Port ประตูหน้า
+const LOGIN_HUB_URL = `https://silkie-pos-login.vercel.app`; // Port ประตูหน้า
 
 // หน้านี้มีหน้าที่เดียว:
 // 1. อ่าน Token/Role จาก URL
