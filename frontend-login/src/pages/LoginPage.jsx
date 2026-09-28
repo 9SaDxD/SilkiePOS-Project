@@ -4,9 +4,9 @@ import './LoginPage.css'; //
 
 // (URL Port ของแอปต่างๆ - เหมือนเดิม)
 const APP_URLS = {
-    Admin: 'https://silkie-admin.vercel.app',
-    Staff: 'https://silkie-staff.vercel.app',
-    Kitchen: 'https://silkie-kitchen.vercel.app'
+    Admin: 'https://csi400-admin.vercel.app',
+    Staff: 'https://csi400-staff.vercel.app',
+    Kitchen: 'https://csi400-kitchen.vercel.app'
 };
 
 function LoginPage() {
@@ -83,7 +83,7 @@ function LoginPage() {
                         เข้าสู่ระบบ
                     </button>
                                         <div style={{ marginTop: '20px', fontSize: '0.9em', color: '#666', textAlign: 'center' }}>
-                        <p><strong>รหัสสำหรับทดลอง:</strong></p>
+                        <p><strong>�ѭ������Ѻ���ͺ:</strong></p>
                         <p>Admin: admin / 1234</p>
                         <p>Staff: staff / 1234</p>
                         <p>Kitchen: chef / 1234</p>
