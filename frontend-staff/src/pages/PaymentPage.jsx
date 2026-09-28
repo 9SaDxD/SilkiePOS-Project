@@ -21,7 +21,7 @@ function PaymentPage() {
         if (!tableId) return;
         setLoading(true);
         try {
-            const res = await axios.get("https://silkiepos-project.onrender.com/api/staff/tables/${tableId}/bill`);
+            const res = await axios.get(`https://silkiepos-project.onrender.com/api/staff/tables/${tableId}/bill`);
             setBillData(res.data);
         } catch (err) {
             console.error("Error fetching bill", err);
@@ -46,7 +46,7 @@ function PaymentPage() {
         };
         try {
             setLoading(true);
-            await axios.post('https://silkiepos-project.onrender.com/api/staff/payments', paymentData);
+            await axios.post(`https://silkiepos-project.onrender.com/api/staff/payments`, paymentData);
             alert(`ชำระเงินด้วย ${method} สำเร็จ! ปิดโต๊ะ`);
             navigate('/');
         } catch (err) {
