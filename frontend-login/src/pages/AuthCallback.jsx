@@ -28,7 +28,7 @@ function AuthCallback() {
     } else {
       // ถ้าไม่ใช่ Admin ให้ล้างค่าและเด้งกลับ
       localStorage.clear();
-      window.location.replace('https://csi400-login.vercel.app'); // กลับไป Login Hub
+      window.location.replace('https://silkie-pos-login.vercel.app'); // กลับไป Login Hub
     }
   }, [searchParams, navigate]);
 

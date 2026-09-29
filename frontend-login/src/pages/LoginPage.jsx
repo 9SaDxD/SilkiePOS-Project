@@ -4,9 +4,9 @@ import './LoginPage.css'; //
 
 // (URL Port ของแอปต่างๆ - เหมือนเดิม)
 const APP_URLS = {
-    Admin: 'https://csi400-admin.vercel.app',
-    Staff: 'https://csi400-staff.vercel.app',
-    Kitchen: 'https://csi400-kitchen.vercel.app'
+    Admin: 'https://silkie-pos-admin.vercel.app',
+    Staff: 'https://silkie-pos-staff.vercel.app',
+    Kitchen: 'https://silkie-pos-kitchen.vercel.app'
 };
 
 function LoginPage() {
