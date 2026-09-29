@@ -83,7 +83,7 @@ function LoginPage() {
                         เข้าสู่ระบบ
                     </button>
                                         <div style={{ marginTop: '20px', fontSize: '0.9em', color: '#666', textAlign: 'center' }}>
-                        <p><strong>�ѭ������Ѻ���ͺ:</strong></p>
+                        <p><strong>ทดลองเข้าสู่ระบบ:</strong></p>
                         <p>Admin: admin / 1234</p>
                         <p>Staff: staff / 1234</p>
                         <p>Kitchen: chef / 1234</p>
